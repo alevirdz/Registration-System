@@ -1,0 +1,17 @@
+body{
+    background: #fff;
+  }
+  .wrapper{
+    margin-top:3rem;
+  }
+  .form-login{
+    max-width: 300px;
+    margin:0 auto;
+    background: white;
+    padding:15px 40px 50px;
+    border: 1px solid #f1eded;
+    -webkit-box-shadow: 2px 5px 9px 5px rgba(0,0,0,0.17); 
+    box-shadow: 2px 5px 9px 5px rgba(0,0,0,0.17); 
+  }
+
+span.msg-error{ color: red; font-size: 0.8em; }
