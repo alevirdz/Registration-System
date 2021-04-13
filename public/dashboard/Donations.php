@@ -18,7 +18,7 @@
                 <div class="row">
                 <div class="d-none" id="correcto"></div>
                     <form class="form-donation" id="formG">
-                        <h2 class="text-center">Registro</h2>
+                        <h2 class="text-center">A Donar</h2>
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombre</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" required>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Presupuesto de la donación</label>
-                            <input type="text" class="form-control" name="donacion" id="donacion" placeholder="$0.00" required>
+                            <input type="number" step="any" class="form-control" name="donacion" id="donacion" placeholder="$0.00" required>
                         </div>
 
                         <div class="d-grid gap-2">
@@ -46,4 +46,3 @@
         </div>
     </div>
 </section>
-
