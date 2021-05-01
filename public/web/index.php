@@ -1,6 +1,6 @@
 <?php 
 session_start ();
-include '../resources/links/links-page.php'; 
+include '../resources/layouts/links-header-index.php'; 
 include '../resources/layouts/header.php'; 
 ?>
 
@@ -29,6 +29,6 @@ include '../resources/layouts/header.php';
 </div>
 
 <?php 
-include '../resources/layouts/footer.php'; 
+include '../resources/layouts/links-footer-index.php';
 ?>
 

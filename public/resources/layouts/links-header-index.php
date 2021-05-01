@@ -10,6 +10,6 @@
     <link rel="stylesheet" href="../../assets/css/main.css"/>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <!-- Title -->
-    <title>Recaudacion</title>
+    <title>Site Web</title>
   </head>
   <body>

@@ -33,11 +33,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Presupuesto de la donación</label>
-                            <input type="number" step="any" class="form-control" name="donacion" id="donacion" placeholder="$0.00" required>
+                            <input class="form-control" name="donacion" id="donacion" placeholder="$0.00" required>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <input type="button" class="btn btn-dark" name="btn-donation" value="¡Donar!" onclick="donations()">
+                            <a type="button" class="btn btn-dark" name="btn-donation" id="btn-donation" onclick="donations()">¡Donar!</a>
                         </div>
                     </form>
 

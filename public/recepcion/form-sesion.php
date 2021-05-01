@@ -10,13 +10,13 @@ if(isset($_POST['correo']) && isset($_POST['contraseña']) ){
         $userPwd = $_POST['contraseña'];
 
         // Preparacion BD
-        $stmt = $BD->prepare("SELECT nombre, correo, contraseña, id FROM usuarios WHERE correo = :correo");
+        $stmt = $BD->prepare("SELECT nombre, correo, contrasena, id FROM usuarios WHERE correo = :correo");
         $stmt->bindParam (':correo', $userEmail);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
         //Si coincide
-        if($result > 0 && password_verify($userPwd, $result['contraseña'])){
+        if($result > 0 && password_verify($userPwd, $result['contrasena'])){
           //Variables sesion
             $nameUser = $_SESSION['user_name'] = $result['nombre'];
             $mailUser = $_SESSION['user_mail'] = $result['correo'];

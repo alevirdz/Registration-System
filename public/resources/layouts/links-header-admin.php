@@ -11,6 +11,6 @@
     <link rel="stylesheet" href="../../../assets/css/theme.css"/>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <!-- Title -->
-    <title>Recaudacion</title>
+    <title>Panel Administrativo</title>
   </head>
   <body>

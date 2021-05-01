@@ -1,14 +1,17 @@
 <?php 
-include '../resources/links/links-page.php'; 
-include '../resources/layouts/header.php'; 
+include '../resources/layouts/links-header-index.php'; 
+include '../resources/layouts/header.php';
 ?>
 
 <div class="container">
   <div class="row">
     <div class="wrapper">
-    <div class="d-none" id="correcto"></div>
     <form class="form-login" id="formG">
           <h2 class="text-center">Registro</h2>
+          <div class="mb-3">
+            <label for="user" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
+          </div>
           <div class="mb-3">
             <label for="user" class="form-label">Correo</label>
             <input type="email" class="form-control" name="correo" id="correo" placeholder="correo" required>
@@ -31,7 +34,8 @@ include '../resources/layouts/header.php';
   </div>
 </div>
 
+<div id="messageRegister"></div>
 <?php 
-include '../resources/layouts/footer.php'; 
+include '../resources/layouts/links-footer-index.php';
 ?>
 

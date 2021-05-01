@@ -1,9 +1,10 @@
 <?php 
 require '../../config/database.php';
 
-if(isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['contraseña_d']) ){
+if(isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['contraseña_d']) ){
      //Verificacion
-     if(!empty($_POST['correo']) && !empty($_POST['contraseña'])  && !empty($_POST['contraseña_d']) ){
+     if(!empty($_POST['nombre']) && !empty($_POST['correo']) && !empty($_POST['contraseña'])  && !empty($_POST['contraseña_d']) ){
+        $username = $_POST['nombre'];
         $userEmail = $_POST['correo'];
         $userPwd = $_POST['contraseña'];
         $iqualPwd = $_POST['contraseña_d'];
@@ -23,10 +24,11 @@ if(isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['con
                 </div>';
             }else{
                 // Prepare
-                $stmt = $BD->prepare("INSERT INTO usuarios (correo, contraseña) VALUES (?, ?)");
+                $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena) VALUES (?, ?, ?)");
                 $hashedpwd = password_hash( $userPwd, PASSWORD_BCRYPT);
-                $stmt->bindParam(1, $userEmail);
-                $stmt->bindParam(2, $hashedpwd);
+                $stmt->bindParam(1, $username);
+                $stmt->bindParam(2, $userEmail);
+                $stmt->bindParam(3, $hashedpwd);
                 // Excecute
                 $stmt->execute();
                 echo 'Registrado';

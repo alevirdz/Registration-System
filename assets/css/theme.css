@@ -1,3 +1,67 @@
+/* Usar algunos colores 
+https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&utm_medium=reactlist&utm_campaign=architectangular */
 body{
-    background: #fff !important;
+    overflow: hidden;
+    background: rgb(237 240 242) !important;
   }
+.bg-light{
+    background-color: rgb(250 251 252);
+  }
+.bg-primary{
+  background-color: rgb(32 27 56) !important;
+}
+.btn-dark{
+  background-color: rgb(33 37 41);
+}
+.card{
+  background-color: rgb(250 251 252);
+}
+span.msg-error{ color: red; font-size: 0.8em; }
+.white{
+  color:#fff;
+}
+.display-logo{
+  display:inline-block;
+  padding:1rem;
+}
+.menu span{
+  display:inline-block;
+  margin-left:10px;
+}
+.menu {
+  font-size: 17px;
+}
+.btn{
+  border:0;
+}
+a{
+  text-decoration:none;
+}
+a:hover{
+  text-decoration:none;
+  color:#9da0ff;
+}
+#sidebar-container{
+  min-height: 100vh;
+}
+#sidebar-container .logo{
+  padding: .875rem 1.25rem;
+  color: white;
+  font-weight: bold;
+}
+#sidebar-container .menu{
+  width:18rem;
+}
+.btn-search{
+  right:5px;
+}
+
+#content{
+  overflow-y:auto;
+  height: 100vh;
+  padding-button:5rem;
+}
+.line{
+  border-right: 1px solid gray;
+}
+

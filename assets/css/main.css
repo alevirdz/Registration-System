@@ -15,3 +15,7 @@ body{
   }
 
 span.msg-error{ color: red; font-size: 0.8em; }
+.background-header{
+  background: #673bb6;
+  height: 15vh;
+}

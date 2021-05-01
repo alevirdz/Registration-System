@@ -371,6 +371,7 @@ $.extend( $.validator, {
 		dateISO: "La fecha no es válida.",
 		number: "Solo se aceptan números enteros o decimales.",
 		digits: "Solo se aceptan dígitos.",
+		pesoMXN: "Solo se aceptan pesos Mexicanos",
 		lettersdigits: "Solo se aceptan números y letras.",
 		equalTo: "El valor no coincide.",
 		extension: "La extensión no es válida.",
@@ -441,7 +442,7 @@ $.extend( $.validator, {
 			$( this.currentForm )
 				.on( "focusin.validate focusout.validate keyup.validate",
 					":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'], " +
-					"[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], " +
+					"[type='tel'], [type='url'], [type='email'], [type='pesoMXN'], [type='datetime'], [type='date'], [type='month'], " +
 					"[type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'], " +
 					"[type='radio'], [type='checkbox'], [contenteditable], [type='button']", delegate )
 
@@ -1187,6 +1188,7 @@ $.extend( $.validator, {
 		dateISO: { dateISO: true },
 		number: { number: true },
 		digits: { digits: true },
+		pesoMXN:{pesoMXN: true },
 		lettersdigits: { lettersdigits: true },
 		creditcard: { creditcard: true }
 	},
@@ -1425,6 +1427,12 @@ $.extend( $.validator, {
 			//Si tiene un problema con esta implementación, informe un error contra la especificación anterior
 			// O use métodos personalizados para implementar su propia validación de correo electrónico
 			return this.optional( element ) || /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/.test( value );
+		},
+		pesoMXN: function( value, element ) {
+
+			// From https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
+			//ALEVI PESO MEXICANO
+			return this.optional( element ) || /^[0-9]{1,3}(\,[0-9]{3})$/.test( value );
 		},
 
 		// https://jqueryvalidation.org/url-method/
