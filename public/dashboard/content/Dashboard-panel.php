@@ -3,20 +3,26 @@ include '../Sesiones.php';
 include '../../resources/layouts/links-header-admin.php';
 ?>
 
+<!--Wrapper padre -->
+<div class="wrapper">
+	<!-- Barra lateral izquierda -->
+	<?php include 'Sidebar-panel.php';?>
 
-<div class="d-flex">
-     <!-- content sidebar menu to show left -->
-    <?php include 'Sidebar-panel.php';?>
+	<!-- Menu arriba -->
+	<div class="main">
+		<?php include 'Navbar-menu.php';?>
+		<!-- Panel de contenido -->
+		<main class="content">
+			<div class="container-fluid p-0">
+				<!-- contenido -->
+				<div id="content">
+				<?php include '../Homepage.php';?>
+			</div>
+		</main> 
+		<!-- Footer de creditos -->
+		<?php include 'Footer-credits.php';?>
+	</div>
 
-    <div class="w-100"> 
-        <!-- content navbar menu to show -->
-        <?php include 'Navbar-menu.php';?>
-        <div id="content">
-            <!-- content page -->
-            <?php include '../Homepage.php';?> 
-        </div>
-    </div>
-    
 </div>
 
 

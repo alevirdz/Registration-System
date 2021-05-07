@@ -126,3 +126,5 @@ if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_PO
 
     }
 }
+
+

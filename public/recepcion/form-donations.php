@@ -1,6 +1,27 @@
 <?php 
 require '../../config/database.php';
 
+
+
+//Muestra la tabla de usuarios
+if( isset($_POST['viewDonation']) ){
+    // Preparacion BD Consulta automatica
+    $stmt = $BD->prepare("SELECT * FROM donaciones");
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+   
+     if($result ){
+        //returns data as JSON format
+        echo json_encode($result);
+     }else{
+       echo '<div class="alert alert-danger" role="alert">
+         No existe el usuario
+         </div>';
+     };
+        
+}
+
+// Inserta
 if(isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['correo'])  && isset($_POST['donacion']) ){
 
      //Verificacion
@@ -37,4 +58,15 @@ if(isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['corre
     }else{
         echo "empy";
     }
+}
+
+
+//Eliminar donacion
+if( isset($_POST['deleteDonations'])  ){
+    // Prepare
+    $userId = trim($_POST['deleteDonations']);
+    $stmt = $BD->prepare("DELETE FROM donaciones WHERE id=$userId ");
+    $stmt->execute();
+    echo "donationDelete";
+
 }

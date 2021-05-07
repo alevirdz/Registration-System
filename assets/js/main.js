@@ -149,7 +149,6 @@ function register(){
 }
 
 function donations(){
-    console.log("¿Quieres donar?");
     const data = {
         "nombre":    $('#nombre').val(), 
         "apellidos": $('#apellidos').val(), 
@@ -199,6 +198,84 @@ function donations(){
            console.log("EROOR")
         }
     });
+}
+
+function showDonation(){
+    $('#subtitle-donations').text("Revisa la información detallada");
+    $('#actionDonations').replaceWith('<button class="btn btn btn-primary white w-100 align-self-center" onclick=actionMenu((this.id)) id="donations">Nueva donación</button>')
+    $('#table-donations').replaceWith(`  
+    <h5 class="card-title mb-0">Lista de Donaciones</h5>              
+    <table class="table table-responsive table-striped table-hover">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Donacion</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="table-register">
+        
+    </tbody>
+    </table>`);
+    // Send the request
+    $.post("../../recepcion/form-donations.php", {viewDonation: true}, function(resp) {
+        $('#table-register').empty()
+        $.each( resp, function( clave, valor ) {
+            var fila=`
+                <tr>
+                <th scope="row">${valor.id}</th>
+                <td>${valor.nombre}</td>
+                <td>${valor.apellidos}</td>
+                <td>$${valor.donacion}</td>
+                <td>${valor.fecha}</td>
+                <td>
+                <a  class="btn btn-danger" onclick="deleteDonation(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
+                </td>
+                </tr>     
+                `;
+            $('#table-register').append(fila);
+        });
+        
+    }, 'json');
+}
+
+function deleteDonation( id ){
+    $("#modalDonations").modal('show');
+    $("#genericoTitle").text('¿Estás seguro de que quieres eliminar?');
+    $("#activeCenter").addClass('modal-dialog-centered')
+    var alert=`
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="yes">Si,eliminar</button>
+    `;
+    $('#contentEdit').html(alert);
+
+    $("#yes").click( function(){    
+        const data = {
+            "deleteDonations": id,
+        };
+        $.ajax({
+            type: "POST",
+            url: "../../recepcion/form-donations.php",
+            data: data,
+            success: function(resp){
+                console.log(resp)
+                if(resp == "donationDelete"){
+                    $('#table-register').empty()
+                    showDonation();
+                    $("#modalDonations").modal('hide');
+                }
+                else if(resp == "error_letters" || "error_email"){
+                    console.log("No se pudo eliminar")
+                }
+            },
+            error: function(resp){
+            console.log("Error")
+            }
+        });
+    })
 }
 
 function inscriptions(){
@@ -256,9 +333,11 @@ function inscriptions(){
 }
 
 function showInscriptions(){
-    $('#inscription').addClass("d-none");
-    $('#inscription').replaceWith(`
-    <h2 class="text-center">Tabla</h2>                 
+    $('#subtitle-inscriptions').text("Revisa la información detallada");
+    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white w-100 align-self-center" onclick=actionMenu((this.id)) id="inscriptions">Crear registro</button>') 
+    // $('#inscription').addClass("d-none");
+    $('#inscription').replaceWith(`  
+    <h5 class="card-title mb-0">Lista de inscripciones</h5>              
     <table class="table table-responsive table-striped table-hover">
     <thead>
         <tr>
@@ -288,8 +367,8 @@ function showInscriptions(){
                 <td>${valor.telefono}</td>
                 <td>${valor.correo}</td>
                 <td>
-                <a href="#!" class="btn btn-warning" onclick="editInscriptions(${valor.id})"><ion-icon name="pencil-outline"></ion-icon></a>
-                <a href="#!" class="btn btn-danger" onclick="deleteInscriptions(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
+                <a class="btn btn-warning" onclick="editInscriptions(${valor.id})"><ion-icon name="pencil-outline"></ion-icon></a>
+                <a class="btn btn-danger" onclick="deleteInscriptions(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
                 </td>
                 </tr>     
                 `;
@@ -477,7 +556,9 @@ function Saveprofile( id ){
                     }, 800,);
                     userUpdate.text("Guardar");
                 }, 1000);
-                  
+                setTimeout(function() {
+                    actionMenu('profile')
+                }, 1400);
             }else if(resp == "error_letters" || "error_email"){
                     var userUpdate =  $("#btn-profileUpdate");
                     userUpdate.css(btnWarning);
@@ -498,6 +579,117 @@ function Saveprofile( id ){
     });
 }
 
+function editRemember( id ){
+    // console.log('id '+id +" Descubriste una nueva funcion que no se ha programado")
+    var fila=`
+        <div class="modal fade" id="editremember" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-donation" id="formG">
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Actualizar recordatorio</label>
+                    <input type="text" class="form-control" name="remember" id="textremember" placeholder="Recordatorio..." required>
+                </div>
+                <div class="d-grid gap-2">
+                    <a type="button" class="btn btn-dark" name="btn-update-remember" id="btn-update-remember" onclick="updateRemember(${id})"><ion-icon name="checkmark-outline"></ion-icon>Actualizar</a>
+                </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+    `;
+
+$('#rememberEdit').html(fila);
+$("#editremember").modal("show");
+
+}
+
+function updateRemember( id ){
+    const data = {
+        "recordatorio": $('#textremember').val(), 
+        "upDataRemember": id,
+    };
+    $.ajax({
+        type: "POST",
+        url: "../../recepcion/form-profile.php",
+        data: data,
+        success: function(resp){
+            if(resp == "rememberUpdate"){
+                var userUpdate =  $("#btn-update-remember");
+                userUpdate.css(btnSuccess);
+                userUpdate.text("Guardando");
+                userUpdate.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    userUpdate.css(btnSuccess);
+                    userUpdate.text("Guardando");
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    userUpdate.css(btnStatic);
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 800,);
+                    userUpdate.text("Guardar");
+                }, 1000);
+                setTimeout(function() {
+                    actionMenu('profile')
+                    $("#editremember").modal("hide");
+                }, 1400);
+               
+            }else if(resp == "error_letters" || "error_email"){
+                    var userUpdate =  $("#btn-update-remember");
+                    userUpdate.css(btnWarning);
+                    userUpdate.text("Verificar los campos");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("Guardar");
+                    }, 1000);
+                    $('#message').modal('show')
+                    $('#messageTitle').text('Verificar');
+                    $('#messageDescription').text('Uno o más campos no son correctos'); 
+            }
+           
+        },
+        error: function(resp){
+            alert("no se guardo");
+        }
+    });
+    // console.log('id '+id +" Descubriste una nueva funcion que no se ha programado")
+}
+
+
+function updatePhoto( id ){
+    var fila=`
+        <div class="modal fade" id="editremember" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-profile" id="formG" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Cambiar foto de perfil</label><br>
+                    <input name="foto-perfil" type="file" />
+                </div>
+                <div class="d-grid gap-2">
+                    
+                </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+    `;
+
+$('#rememberEdit').html(fila);
+$("#editremember").modal("show");
+
+}
 
 function actionMenu( item ){
     console.log(item)
@@ -506,18 +698,56 @@ function actionMenu( item ){
         //     $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); });
         //   break;
         case 'donations':
-            $.post("../Donations.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); });
+            $.post("../Donations.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
+            $('#item-donation').addClass("active");});
           break;
         case 'inscriptions':
-            $.post("../Inscriptions.php", function(contents){ $("#content").html(contents); validateForm(); });
+            $.post("../Inscriptions.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
+            $('#item-inscriptions').addClass("active");});
           break;
         case 'profile':
-            $.post("../Profile.php", function(contents){ $("#content").html(contents); validateForm(); });
+            $.post("../Profile.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
+            $('#item-profile').addClass("active");});
           break;
         case 'configurations':
-            $.post("../Configurations.php", function(contents){ $("#content").html(contents); });
+            $.post("../Configurations.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
+            $('#item-configurations').addClass("active");});
+          break;
+        case 'createUser':
+            $.post("../SignUp.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
+            $('#item-configurations').addClass("active");});
+          break;
+        case 'showUsers':
+            $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
+            $('#item-configurations').addClass("active");});
+          break;
+        case 'direction':
+            $.post("../Direction.php", function(contents){ $("#content").html(contents); cleanItemMenu();
+            $('#item-direction').addClass("active");});
+          break;
+        case 'maps':
+            $.post("../Maps.php", function(contents){ $("#content").html(contents); cleanItemMenu();
+            $('#item-maps').addClass("active");});
           break;
         default:
           console.log('No se ha encontrado la opcion seleccionada ' + item + '.');
       }
 }
+
+
+function cleanItemMenu (){
+    var itemsMenu = [
+        'item-desktop',
+        'item-donation',
+        'item-inscriptions',
+        'item-profile',
+        'item-configurations',
+        'item-user-management',
+        'item-direction',
+        'item-maps',
+    ]
+    jQuery.each( itemsMenu, function( i, item ) {
+       $('#'+item).removeClass("active");
+      });
+}
+

@@ -4,27 +4,49 @@ require 'Alerts.php';
 $idUser;
 $nameUser;
 $mailUser;
+$rememberUser;
+$perfilUser;
 ?>
-<section class="py-3">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <h1 class="font-weight-bold">Bienvenido Perfil</h1>
-                            <p class="lead text-muted">Revisa tu informacion </p>
-                        </div>
-                        <!-- <div class="col-lg-3 d-flex">
-                            <button class="btn bg-primary white w-100 align-self-center">Descargar algo</button>
-                        </div> -->
-                    </div>
+<p class="none" id="id" value="<?php echo $idUser ?>"></p>
+<h1 class="h3 mb-3">Perfil</h1>
+
+<div class="row">
+    <div class="col-md-4 col-xl-3">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Detalles del perfil</h5>
+            </div>
+            <div class="card-body text-center">
+                <div class="img-profile">
+                <!-- https://picsum.photos/30/30 -->
+                <img  src="../../../assets/profile_img/CARLOS-PERFIL.png" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
+                <span style="font-size: 15px;vertical-align: middle; position:absolute; top:180px; left:150;" onclick="updatePhoto(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span>
                 </div>
-</section>
-'<section class="py-3">
-    <div class="container">
-        <div class="card">
+
+                <h5 class="card-title mb-0" id="name"><?php echo $nameUser ?></h5>
+                <!-- <a class="btn btn-primary btn-sm">Developer</a> -->
+                <div class="text-muted mb-2"><?php echo $perfilUser ?></div>
+            </div>
+            <hr class="my-0" />
             <div class="card-body">
-                <div class="row">
-                    <form class="form-donation" id="formG">
-                        <h2 class="text-center">Tu información</h2>
+                <h5 class="h6 card-title">Recordatorio <span style="font-size: 15px;vertical-align: middle;" onclick="editRemember(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span></h5>
+                <div class="text-muted mb-2" id="remember"><?php echo $rememberUser ?></div>
+            </div>
+            <hr class="my-0" />
+
+        </div>
+    </div>
+    
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card">
+            <div class="card-header">
+
+                <h5 class="card-title mb-0">Revisa tu información</h5>
+            </div>
+            <div class="card-body h-100">
+            <form class="form-donation" id="formG">
+                        <!-- <h2 class="text-center">Actualizar información</h2> -->
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombre</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $nameUser ?>" disabled required>
@@ -39,9 +61,8 @@ $mailUser;
                             <a type="button" class="btn btn-dark d-none" name="btn-donation" id="btn-profileUpdate" onclick="Saveprofile(<?php echo $idUser ?>)">Guardar</a>
                         </div>
                     </form>
-
-                </div> 
             </div>
         </div>
     </div>
-</section>
+</div>
+<div id="rememberEdit"></div>

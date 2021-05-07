@@ -1,19 +1,30 @@
+<?php 
+require './Sesiones.php';
+?>
 
 <section class="py-3">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-7">
                             <h1 class="font-weight-bold">INSCRIPCIONES EVENTO</h1>
-                            <p class="lead text-muted">Revisa la informacion</p>
+                            <p class="lead text-muted" id="subtitle-inscriptions">Registro para las inscripciones</p>
                         </div>
-                        <div class="col-lg-5 d-flex">
-                            <button class="btn bg-primary white w-50 align-self-center" id="#ver_registros" onclick="showInscriptions()">Ver registros</button>
-                            <button class="btn bg-primary white w-50 align-self-center d-none" id="#createInscriptions" onclick=actionMenu((this.id))>Crear registro</button>
-                            <button class="btn bg-primary white w-50 align-self-center">Descargar registros</button>
-                        </div>
+                        <?php if ($rolUser == 1): ?>
+                            <div class="col-sm-6 col-lg-5 d-flex">
+                                <button class="btn btn btn-primary white w-100 align-self-center" id="actionInscriptions" onclick="showInscriptions()">Ver registros</button>
+                                <a href="../Excel_Inscriptions.php" class="btn btn btn-primary white w-100 align-self-center">Descargar registros</a>
+                            </div>
+                        <?php else:?>
+                            <div class="col-sm-6 col-lg-5 d-flex">
+                                <button class="btn btn btn-primary white w-100 align-self-center" id="actionInscriptions" onclick="showInscriptions()">Ver registros</button>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 </div>
 </section>
+
+
 <section class="py-3">
     <div class="container">
         <div class="card">
@@ -22,7 +33,7 @@
 
                 <div class="content" id="inscription">
                     <form class="form-donation" id="formG">
-                        <h2 class="text-center">Inscripcion</h2>
+                        <h2 class="text-center">Inscripción</h2>
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombres</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" required>
@@ -70,5 +81,4 @@
       </div>
     </div>
   </div>
-</div>
 </div>

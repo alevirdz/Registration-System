@@ -6,8 +6,8 @@ $idUser;
 
 
 //consulta usuario por id
-if(isset($idUser)){
- $stmt = $BD->prepare("SELECT nombre, correo FROM usuarios WHERE id = :id");
+if( isset($idUser) ){
+ $stmt = $BD->prepare("SELECT nombre, correo, recordatorio, perfil, rol FROM usuarios WHERE id = :id");
  $stmt->bindParam (':id', $idUser);
  $stmt->execute();
  $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -16,7 +16,9 @@ if(isset($idUser)){
     //Variables sesion
     $nameUser = $result['nombre'];
     $mailUser = $result['correo'];
-
+    $rememberUser = $result['recordatorio'];
+    $perfilUser = $result['perfil'];
+    $rolUser = $result['rol'];
   }else{
     echo '<div class="alert alert-danger" role="alert">
       No existe el usuario
@@ -50,4 +52,21 @@ if( isset($_POST['upData']) && isset($_POST['nombre']) && isset($_POST['correo']
           $stmt->execute();
           echo 'userUpdate';
         }
+}
+
+
+
+//Actuliza recordatorio al usuario
+if( isset($_POST['upDataRemember']) && isset($_POST['recordatorio']) ){
+        
+  $userId       = trim($_POST['upDataRemember']);
+  $userRemember = trim($_POST['recordatorio']);
+
+    // Prepare
+    $stmt = $BD->prepare("UPDATE usuarios SET recordatorio=? WHERE id=$userId ");
+    $stmt->bindParam(1, $userRemember);
+    // Excecute
+    $stmt->execute();
+    echo 'rememberUpdate';
+  
 }

@@ -1,67 +1,31 @@
 /* Usar algunos colores 
 https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&utm_medium=reactlist&utm_campaign=architectangular */
-body{
-    overflow: hidden;
-    background: rgb(237 240 242) !important;
-  }
-.bg-light{
-    background-color: rgb(250 251 252);
-  }
-.bg-primary{
-  background-color: rgb(32 27 56) !important;
-}
-.btn-dark{
-  background-color: rgb(33 37 41);
-}
-.card{
-  background-color: rgb(250 251 252);
-}
+
 span.msg-error{ color: red; font-size: 0.8em; }
-.white{
-  color:#fff;
-}
-.display-logo{
-  display:inline-block;
-  padding:1rem;
-}
-.menu span{
-  display:inline-block;
-  margin-left:10px;
-}
-.menu {
-  font-size: 17px;
-}
-.btn{
-  border:0;
-}
-a{
-  text-decoration:none;
-}
-a:hover{
-  text-decoration:none;
-  color:#9da0ff;
-}
-#sidebar-container{
-  min-height: 100vh;
-}
-#sidebar-container .logo{
-  padding: .875rem 1.25rem;
-  color: white;
-  font-weight: bold;
-}
-#sidebar-container .menu{
-  width:18rem;
-}
-.btn-search{
-  right:5px;
+
+
+/* Item links */
+.sidebar-link-black, a.sidebar-link-black{
+  display:block !important;
+  padding:.625rem 1.625rem !important;
+  font-weight:400 !important;
+  transition:background .1s ease-in-out !important;
+  position:relative !important;
+  text-decoration:none !important;
+  cursor:pointer !important;
+  color:rgba(233,236,239,.5) !important;
+  background:#000000!important;
+  border-left:3px solid transparent !important;
 }
 
-#content{
-  overflow-y:auto;
-  height: 100vh;
-  padding-button:5rem;
+/* Background */
+.sidebar, .sidebar-content {
+    transition: margin-left .35s ease-in-out,left .35s ease-in-out,margin-right .35s ease-in-out,right .35s ease-in-out;
+    background: #000000 !important;
 }
-.line{
-  border-right: 1px solid gray;
+/* Select item */
+.sidebar-item.active .sidebar-link-black:focus, .sidebar-item.active>.sidebar-link-black {
+  color: #e9ecef;
+  background: linear-gradient(90deg,rgba(59,125,221,.1),rgba(59,125,221,.0875) 50%,transparent )!important;
+  border-left-color: #ffffff !important;
 }
-

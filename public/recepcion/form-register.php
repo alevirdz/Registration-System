@@ -23,18 +23,19 @@ if(isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contrase√
                 El nombre de usuario proporcionado ya est√° en uso.
                 </div>';
             }else{
+                $defaultRemember = 'Este es un espacio para agregar una mensaje personal, como una cita, un recordatorio o un mensaje positivo...';
                 // Prepare
-                $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena) VALUES (?, ?, ?)");
+                $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena, recordatorio) VALUES (?, ?, ?, ?)");
                 $hashedpwd = password_hash( $userPwd, PASSWORD_BCRYPT);
                 $stmt->bindParam(1, $username);
                 $stmt->bindParam(2, $userEmail);
                 $stmt->bindParam(3, $hashedpwd);
+                $stmt->bindParam(4, $defaultRemember);
                 // Excecute
                 $stmt->execute();
                 echo 'Registrado';
             }
         }
-
         
     }else{
         echo "NA";
