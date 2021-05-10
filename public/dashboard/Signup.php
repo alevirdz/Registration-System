@@ -14,34 +14,40 @@
 									<form>
 										<div class="mb-3">
 											<label class="form-label">Nombre</label>
-											<input class="form-control form-control-lg" type="text" name="name" placeholder="Enter your name" />
+											<input class="form-control form-control-lg" type="text" name="nombre" id="nombre" placeholder="Nombre del usuario" required/>
 										</div>
 										
 										<div class="mb-3">
 											<label class="form-label">Correo</label>
-											<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
+											<input class="form-control form-control-lg" type="email" name="correo" id="correo" placeholder="Ingresa el correo" required/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Contraseña</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" />
+											<input class="form-control form-control-lg" type="password" name="contraseña" id="contraseña" placeholder="Ingresa una contraseña" />
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Confirma la contraseña</label>
+											<input class="form-control form-control-lg" type="password" name="contraseña_d" id="contraseña_d" placeholder="Confirmar contraseña" />
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Tipo de perfil</label>
+
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-												<label class="form-check-label" for="flexRadioDefault1">
+												<input class="form-check-input" type="radio" name="flexRadioDefault" id="t_admin" value="1">
+												<label class="form-check-label" for="label_admin">
 													Administrador
 												</label>
 											</div>
 											<div class="form-check">
-												<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-												<label class="form-check-label" for="flexRadioDefault2">
-													Usuario
+												<input class="form-check-input" type="radio" name="flexRadioDefault" id="t_user" checked value="2">
+												<label class="form-check-label" for="label_user">
+													Usuario normal
 												</label>
 											</div>
+
 										</div>
 										<div class="text-center mt-3">
-											<a class="btn btn-lg btn-primary">Crear</a>
+										<input type="button" class="btn btn-primary" name="btn-register" value="Crear cuenta" onclick="registerdesdeAdmin()">
 										</div>
 									</form>
 								</div>

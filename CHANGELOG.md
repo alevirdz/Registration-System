@@ -49,3 +49,4 @@ https://es.stackoverflow.com/questions/186706/c%C3%B3mo-puedo-crear-un-registro-
 -Se agregaron a todos los cruds
 -Todas las alertas se testearon y funcionan como deberian.
 -Se añadio una funcion para eliminar todos los registros
+-Se modifico clases y estilos en el css para el lado del administrador

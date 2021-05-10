@@ -114,7 +114,56 @@ function login (){
     });
 }
 
+function registerdesdeAdmin(){
+    var tipo_admin = $('#t_admin').val()
+    var tipo_user = $('#t_user').val()
+
+    $("input:radio:checked").each(function() {
+        var select_tipo =  $(this).val();
+        alert(select_tipo);
+        if( select_tipo != 1){
+            console.log("se trata de un usuario mortal")
+        }else{
+            console.log("se trata del administrador")
+        }
+   });
+
+    const data = {
+        "nombre":       $('#nombre').val(), 
+        "correo":       $('#correo').val(), 
+        "contraseña":   $('#contraseña').val(), 
+        "contraseña_d": $('#contraseña_d').val(), 
+    };
+    $.ajax({
+        type: "POST",
+        url:"../../recepcion/form-register.php",
+        data: data,
+        success: function(resp){
+            if(resp == "Registrado"){
+                var fila=`
+                    <div class="modal animated fadeIn" id="userRegister" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                        <h5 class="modal-title text-center">Registrado con éxito</h5>
+                        </div>       
+                    </div>
+                    </div>
+                    </div>
+                `;
+                $('#messageRegister').html(fila);
+                $("#userRegister").modal("show");
+                // window.location="../public/dashboard/panel.php";
+            }
+        },
+        error: function(resp){
+            console.log("EROOR")
+         }
+    });
+}
+
 function register(){
+    alert("SI DIO EL CLICK")
     const data = {
         "nombre":       $('#nombre').val(), 
         "correo":       $('#correo').val(), 
@@ -791,7 +840,12 @@ function updateRemember( id ){
                     actionMenu('profile')
                     $("#editremember").modal("hide");
                 }, 1400);
-               
+                Swal.fire({
+                    type: 'success',
+                    title: 'Recordatorio Actualizado',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                })
             }else if(resp == "error_letters" || "error_email"){
                     var userUpdate =  $("#btn-update-remember");
                     userUpdate.css(btnWarning);
