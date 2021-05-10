@@ -399,6 +399,12 @@ function inscriptions(){
                     btnDonate.text("¡Inscribirme!");
                     $('#formG').trigger("reset");
                 }, 1000);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Gracias por registrarte',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                })
             }
             else if(resp == "error_letters" || "error_email"){
                 var userUpdate =  $("#btn-donation");
@@ -415,10 +421,10 @@ function inscriptions(){
         }
     });
 }
-
+// calendar-clear-outline
 function showInscriptions(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
-    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white w-100 align-self-center" onclick=actionMenu((this.id)) id="inscriptions">Crear registro</button>') 
+    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon>Crear registro</button>') 
     // $('#inscription').addClass("d-none");
     $('#inscription').replaceWith(`  
     <h5 class="card-title mb-0">Lista de inscripciones</h5>          

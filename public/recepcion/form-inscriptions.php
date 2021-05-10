@@ -1,6 +1,29 @@
 <?php 
 require '../../config/database.php';
 
+function checkedEmail($email){
+    $isCorrect = false;
+    return (1 === preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $email, $isCorrect));
+    }
+function checkedText($text){
+     $isCorrect = false;
+     return (1 === preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/', $text, $isCorrect ));
+}
+function checkedMoneda($moneda){
+    $isCorrect = false;
+    return (1 === preg_match('/^[, .]+$/', $moneda, $isCorrect ));
+}
+function checkedPhone($phone){
+    // $phone = '000-0000-0000';
+    // /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/
+    $isCorrect = false;
+    return (1 === preg_match('/^[0-9]{2}[0-9]{10}$/', $phone, $isCorrect ));
+}
+function checkedAge($age){
+    $isCorrect = false;
+    return (1 === preg_match('/^[0-9]{2}$/', $age, $isCorrect ));
+}
+
 //Muestra la tabla de usuarios
 if( isset($_POST['showRegister']) ){
     // Preparacion BD Consulta automatica
@@ -89,42 +112,41 @@ if( isset($_POST['deleteInscriptions'])  ){
 
 }
 
-//Se guarda en la BD
+//Inserta
 if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
 
      //Verificacion
-     if( !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['edad'])  && !empty($_POST['telefono']) && !empty($_POST['correo']) ){
-        $usernName    = trim($_POST['nombre']);
+     if( !empty($_POST['createInscriptions']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['edad'])  && !empty($_POST['telefono']) && !empty($_POST['correo']) ){
+        $userName     = trim($_POST['nombre']);
         $userSurname  = trim($_POST['apellidos']);
         $userAge      = trim($_POST['edad']);
         $userPhone    = trim($_POST['telefono']);
         $userEmail    = trim($_POST['correo']);
 
+        $checkedName    = checkedText($userName);
+        $checkedSurname = checkedText($userSurname);
+        $checkedAge     = checkedAge($userAge);
+        $checkedPhone   = checkedPhone($userPhone);
+        $checkedEmail   = checkedEmail($userEmail);
 
-        $letterSpace = "/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/";
-        $onlyEmail   = "/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/";
-
-        
-        if (!preg_match($letterSpace, $usernName)) {
-            echo "error_letters";
-        } elseif (!preg_match($letterSpace, $userSurname)) {
-            echo "error_letters";
-        } 
-        elseif (!preg_match($onlyEmail, $userEmail)) {
-            echo "error_email";
-        }else{
-             // Prepare
+        if($checkedName && $checkedSurname && $checkedAge && $checkedPhone && $checkedEmail === true){
+            // Prepare
             $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bindParam(1, $usernName);
+            $stmt->bindParam(1, $userName);
             $stmt->bindParam(2, $userSurname);
             $stmt->bindParam(3, $userAge);
             $stmt->bindParam(4, $userPhone);
             $stmt->bindParam(5, $userEmail);
             // Excecute
             $stmt->execute();
-            echo 'inscrito';
+            echo 'true';
+        }else{
+            echo "false";
         }
+        
 
+    }else{
+        echo "empty_fields";
     }
 }
 

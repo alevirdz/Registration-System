@@ -13,8 +13,8 @@ require './Sesiones.php';
                         </div>
                         <?php if ($rolUser == 1): ?>
                             <div class="col-sm-6 col-lg-5 d-flex">
-                                <button class="btn btn btn-primary white w-100 align-self-center" id="actionInscriptions" onclick="showInscriptions()">Ver registros</button>
-                                <a href="../Excel_Inscriptions.php" class="btn btn btn-primary white w-100 align-self-center">Descargar registros</a>
+                                <button class="btn btn btn-primary white align-self-center d-flex align-icons" id="actionInscriptions" onclick="showInscriptions()"><ion-icon name="list-outline" size="small"></ion-icon>Ver Inscripciones</button>
+                                <a href="../Excel_Inscriptions.php" class="btn btn btn-success white d-flex align-icons align-self-center"><ion-icon name="document-text-outline" size="small"></ion-icon>Descargar Excel</a>
                             </div>
                         <?php else:?>
                             <div class="col-sm-6 col-lg-5 d-flex">
