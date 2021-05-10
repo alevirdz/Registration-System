@@ -278,11 +278,6 @@ function showDonation(){
     }, 'json');
 }
 
-
-
-
-
-
 function deleteDonation( id ){
     Swal.fire({
         type: 'info',
@@ -320,7 +315,6 @@ function deleteDonation( id ){
         }
         });
 }
-
 
 function deleteDonationAll( ){
     Swal.fire({
@@ -360,7 +354,6 @@ function deleteDonationAll( ){
         }
         });
 }
-
 
 function inscriptions(){
     const data = {
@@ -449,7 +442,12 @@ function showInscriptions(){
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon>Crear registro</button>') 
     // $('#inscription').addClass("d-none");
     $('#inscription').replaceWith(`  
-    <h5 class="card-title mb-0">Lista de inscripciones</h5>          
+    <div class="col col-lg-10">
+        <h5 class="card-title mb-0">Lista de inscripciones</h5> 
+    </div>
+    <div class="col col-lg-2">
+        <a class="btn btn btn-danger d-block align-icons align-self-center" id="inscriptionDeleteAll" onclick="inscriptionDeleteAll()"><ion-icon name="flame-outline" size="small"></ion-icon>Restaurar</a>
+    </div>      
     <table class="table table-responsive table-striped table-hover">
     <thead>
         <tr>
@@ -511,7 +509,7 @@ function editInscriptions( id ){
             <input type="number" class="form-control" name="edad" id="edad" placeholder="Edad" value="${resp.edad}" required>
         </div>
         <div class="mb-3">
-            <label for="user" class="form-label">Telefono--</label>
+            <label for="user" class="form-label">Telefono</label>
             <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="${resp.telefono}" required>
         </div>
         <div class="mb-3">
@@ -592,39 +590,77 @@ function updateInscriptions( id ){
 }
 
 function deleteInscriptions( id ){
-    $("#modalInscriptions").modal('show');
-    $("#genericoTitle").text('¿Estás seguro de que quieres eliminar?');
-    $("#activeCenter").addClass('modal-dialog-centered')
-    var alert=`
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="yes">Si,eliminar</button>
-    `;
-    $('#contentEdit').html(alert);
-
-    $("#yes").click( function(){    
-    const data = {
-        "deleteInscriptions": id,
-    };
-    $.ajax({
-        type: "POST",
-        url: "../../recepcion/form-inscriptions.php",
-        data: data,
-        success: function(resp){
-            console.log(resp)
-            if(resp == "userDelete"){
-                $('#table-register').empty()
-                showInscriptions();
-                $("#modalInscriptions").modal('hide');
-            }
-            else if(resp == "error_letters" || "error_email"){
-                console.log("No se pudo eliminar")
-            }
-        },
-        error: function(resp){
-           console.log("Error")
+    Swal.fire({
+        type: 'info',
+        title: "Deshacer",
+        text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteInscriptions": id,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-inscriptions.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#table-register').empty()
+                        showInscriptions();
+                    }
+                },
+                error: function(resp){
+                console.log("Error")
+                }
+            });
+    
+        } else {
+            // console.log("*NO Quiere eliminar*");
         }
-    });
-    })
+        });
+}
+
+function inscriptionDeleteAll( ){
+    Swal.fire({
+        type: 'warning',
+        title: "Ops...",
+        text: "Está acción eliminará todos los registros y no se podrán recuperar, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteInscriptionsAll": true,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-inscriptions.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#table-register').empty()
+                        showInscriptions();
+                    }
+                },
+                error: function(resp){
+                console.log("Error")
+                }
+            });
+
+        } else {
+            // console.log("*NO Quiere eliminar*");
+        }
+        });
 }
 
 function Updateprofile(){
@@ -802,8 +838,6 @@ $('#rememberEdit').html(fila);
 $("#editremember").modal("show");
 
 }
-
-
 
 function smss(){
     const data = {

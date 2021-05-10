@@ -32,7 +32,7 @@ require './Sesiones.php';
 <section class="py-3">
     <div class="container">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <div class="row">
 
                 <div class="content" id="inscription">
@@ -52,7 +52,7 @@ require './Sesiones.php';
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Telefono</label>
-                            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Telefono" required>
+                            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Telefono" placeholder="529379000123" required>
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Correo electrónico</label>

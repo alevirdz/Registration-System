@@ -108,7 +108,7 @@ if( isset($_POST['deleteInscriptions'])  ){
     $userId = trim($_POST['deleteInscriptions']);
     $stmt = $BD->prepare("DELETE FROM inscripciones WHERE id=$userId ");
     $stmt->execute();
-    echo "userDelete";
+    echo "true";
 
 }
 
@@ -151,3 +151,9 @@ if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_PO
 }
 
 
+if(isset($_POST["deleteInscriptionsAll"]) ){
+    // Prepare
+    $stmt = $BD->prepare("DELETE FROM inscripciones");
+    $stmt->execute();
+    echo "true";
+}

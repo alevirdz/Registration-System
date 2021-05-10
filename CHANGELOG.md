@@ -32,3 +32,20 @@ All notable changes to this project will be documented in this file.
 
 
 https://es.stackoverflow.com/questions/186706/c%C3%B3mo-puedo-crear-un-registro-de-nuevo-usuario-m%C3%A1s-su-foto-de-perfil
+
+
+## [0.0.1] 2021-05-08
+-Se se arreglo el encabezado donde se encuentran los botones de las acciones, juntamente con los titulos.
+-Se agrego la libreria de Sweet Alert 2
+-Se añadieron algunas alertar en las donaciones
+
+## [0.0.1] 2021-05-09
+-Se programaron las alertas con sus respectivas acciones para los cruds.
+-Se añadio una funcion para enviar mensajes sms desde una API
+-Se creo la vista y el funcionamiento para enviar mensajes con la API
+
+## [0.0.1] 2021-05-10
+-Se crearon alertas y se ajustaron las descripciones para que tengan un poco de humor.
+-Se agregaron a todos los cruds
+-Todas las alertas se testearon y funcionan como deberian.
+-Se añadio una funcion para eliminar todos los registros
