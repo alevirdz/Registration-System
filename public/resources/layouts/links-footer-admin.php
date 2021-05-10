@@ -6,6 +6,7 @@
     <script src="../../../assets/js/jquery-3.3.1.min.js"></script>
     <script src="../../../assets/js/app.js"></script>
     <script src="../../../assets/js/jquery.validate.js"></script>
+    <script src="../../../assets/js/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script src="../../../assets/js/main.js"></script>
   </body>

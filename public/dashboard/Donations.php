@@ -3,16 +3,19 @@ require './Sesiones.php';
 ?>
 <section class="py-3">
     <div class="container">
+        <div class="card">
+        <div class="card-body">
         <div class="row">
-            <div class="col-lg-7">
+            <div class="col-lg-8">
                 <h1 class="font-weight-bold">Donaciones</h1>
                 <p class="lead text-muted" id="subtitle-donations">Registro para las donaciones</p>
             </div>
 
             <?php if ($rolUser == 1): ?>
-                <div class="col-sm-6 col-lg-5 d-flex">
-                    <button class="btn btn btn-primary white w-100 align-self-center" id="actionDonations" onclick="showDonation()">Ver Donaciones</button>
-                    <a href="../Excel_Donations.php" class="btn btn btn-primary white w-100 align-self-center">Descargar registros</a>
+                <div class="col-sm-6 col-lg-4 d-flex">
+                    <button class="btn btn btn-primary white align-self-center d-flex align-icons" id="actionDonations" onclick="showDonation()"><ion-icon name="list-outline" size="small"></ion-icon>Ver Donaciones</button>
+                    <a href="../Excel_Donations.php" class="btn btn btn-success white d-flex align-icons align-self-center"><ion-icon name="document-text-outline" size="small"></ion-icon>Descargar Excel</a>
+
                 </div>
             <?php else:?>
                 <div class="col-sm-6 col-lg-5 d-flex">
@@ -20,13 +23,15 @@ require './Sesiones.php';
                 </div>
             <?php endif; ?>
         </div>
+        </div>
+        </div>
     </div>
 </section>
 
 <section class="py-3">
     <div class="container">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <div class="row">
 
                <div class="content" id="table-donations">
@@ -63,7 +68,7 @@ require './Sesiones.php';
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="modalDonations" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="modalDonations" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog" id="activeCenter">
     <div class="modal-content">
       <div class="modal-header">
@@ -78,4 +83,4 @@ require './Sesiones.php';
     </div>
   </div>
 </div>
-</div>
+</div> -->

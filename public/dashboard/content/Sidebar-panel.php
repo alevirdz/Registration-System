@@ -23,6 +23,7 @@
             			</a>
 					</li>
 
+
 					<li class="sidebar-item" id="item-inscriptions">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="inscriptions">
               			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones</span>
@@ -41,7 +42,13 @@
             			</a>
 					</li>
 
+					<li class="sidebar-item" id="item-sms">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="sms">
+              			<i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Mensajes</span>
+            			</a>
+					</li>
 
+					
 					<li class="sidebar-item" id="item-user-management">
 						<a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
               			<i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestion de usuarios</span>

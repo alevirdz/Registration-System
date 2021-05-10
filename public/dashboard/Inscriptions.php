@@ -4,9 +4,11 @@ require './Sesiones.php';
 
 <section class="py-3">
                 <div class="container">
+                    <div class="card">
+                    <div class="card-body">
                     <div class="row">
                         <div class="col-lg-7">
-                            <h1 class="font-weight-bold">INSCRIPCIONES EVENTO</h1>
+                            <h1 class="font-weight-bold">Inscripciones de Evento</h1>
                             <p class="lead text-muted" id="subtitle-inscriptions">Registro para las inscripciones</p>
                         </div>
                         <?php if ($rolUser == 1): ?>
@@ -20,6 +22,8 @@ require './Sesiones.php';
                             </div>
                         <?php endif; ?>
 
+                    </div>
+                    </div>
                     </div>
                 </div>
 </section>

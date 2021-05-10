@@ -7,7 +7,7 @@ if( isset($_POST['showRegister']) ){
     $stmt = $BD->prepare("SELECT * FROM inscripciones");
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-   
+
      if($result ){
         //returns data as JSON format
         echo json_encode($result);
@@ -18,6 +18,7 @@ if( isset($_POST['showRegister']) ){
      };
         
 }
+
 
 //edita la inscripcion
 if( isset($_POST['editInscription']) ){

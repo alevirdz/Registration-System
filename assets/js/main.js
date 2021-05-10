@@ -2,6 +2,7 @@ console.log('Conectado al archivo main js');
 var btnStatic = {"background": 'rgb(33 37 41)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s'};
 var btnSuccess = {"background": '#3ac47d', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 var btnWarning = {"background": 'rgb(208 148 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
+var btnDanger = {"background": 'rgb(208 80 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 window.onload = validateForm();
 
 
@@ -153,14 +154,15 @@ function donations(){
         "nombre":    $('#nombre').val(), 
         "apellidos": $('#apellidos').val(), 
         "correo":    $('#correo').val(), 
-        "donacion":  $('#donacion').val()
+        "donacion":  $('#donacion').val(),
+        "insertDonations": true,
     };
     $.ajax({
         type: "POST",
         url: "../../recepcion/form-donations.php",
         data: data,
         success: function(resp){
-            if(resp == "donado"){
+            if(resp == "true"){
                 var btnDonate = $("#btn-donation");
                 btnDonate.css(btnSuccess);
                 btnDonate.text("¡Gracias por Donar!");
@@ -183,15 +185,44 @@ function donations(){
                     btnDonate.text("¡Donar!");
                     $('#formG').trigger("reset");
                 }, 1000);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Gracias por donar',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                })
             }
-            else if(resp == "error_letters" || "error_email"){
+            else if(resp == "false"){
                 var userUpdate =  $("#btn-donation");
                     userUpdate.css(btnWarning);
-                    userUpdate.text("Sin registro");
+                    userUpdate.text("Sin registro, Se detectaron campos erroneos");
                     setTimeout(function() {
                         userUpdate.css(btnStatic);
                         userUpdate.text("¡Donar!");
                     }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }
+            else if(resp == "empty_fields"){
+                var userUpdate =  $("#btn-donation");
+                    userUpdate.css(btnDanger);
+                    userUpdate.text("Los campos estan vacios");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("¡Donar!");
+                    }, 1000);
+                    Swal.fire({
+                        type: 'question',
+                        title: '¡Vaya! No recibi ningun dato',
+                        text: '¿Deseas intentarlo nuevamente?',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
             }
         },
         error: function(resp){
@@ -202,9 +233,14 @@ function donations(){
 
 function showDonation(){
     $('#subtitle-donations').text("Revisa la información detallada");
-    $('#actionDonations').replaceWith('<button class="btn btn btn-primary white w-100 align-self-center" onclick=actionMenu((this.id)) id="donations">Nueva donación</button>')
-    $('#table-donations').replaceWith(`  
-    <h5 class="card-title mb-0">Lista de Donaciones</h5>              
+    $('#actionDonations').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="donations"><ion-icon name="heart-outline" size="small"></ion-icon>Nueva donación</button>')
+    $('#table-donations').replaceWith(`
+    <div class="col col-lg-10">
+        <h5 class="card-title mb-0">Lista de Donaciones</h5> 
+    </div>
+    <div class="col col-lg-2">
+        <a class="btn btn btn-danger d-block align-icons align-self-center" id="actionDeleteAll" onclick="deleteDonationAll()"><ion-icon name="flame-outline" size="small"></ion-icon>Restaurar</a>
+    </div>
     <table class="table table-responsive table-striped table-hover">
     <thead>
         <tr>
@@ -242,41 +278,89 @@ function showDonation(){
     }, 'json');
 }
 
-function deleteDonation( id ){
-    $("#modalDonations").modal('show');
-    $("#genericoTitle").text('¿Estás seguro de que quieres eliminar?');
-    $("#activeCenter").addClass('modal-dialog-centered')
-    var alert=`
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="yes">Si,eliminar</button>
-    `;
-    $('#contentEdit').html(alert);
 
-    $("#yes").click( function(){    
-        const data = {
-            "deleteDonations": id,
-        };
-        $.ajax({
-            type: "POST",
-            url: "../../recepcion/form-donations.php",
-            data: data,
-            success: function(resp){
-                console.log(resp)
-                if(resp == "donationDelete"){
-                    $('#table-register').empty()
-                    showDonation();
-                    $("#modalDonations").modal('hide');
+
+
+
+
+function deleteDonation( id ){
+    Swal.fire({
+        type: 'info',
+        title: "Deshacer",
+        text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteDonations": id,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-donations.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#table-register').empty()
+                        showDonation();
+                        
+                    }
+                },
+                error: function(resp){
+                console.log("Error")
                 }
-                else if(resp == "error_letters" || "error_email"){
-                    console.log("No se pudo eliminar")
-                }
-            },
-            error: function(resp){
-            console.log("Error")
-            }
+            });
+    
+        } else {
+            // console.log("*NO Quiere eliminar*");
+        }
         });
-    })
 }
+
+
+function deleteDonationAll( ){
+    Swal.fire({
+        type: 'warning',
+        title: "Ops...",
+        text: "Está acción eliminará todos los registros y no se podrán recuperar, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteDonationsAll": true,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-donations.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#table-register').empty()
+                        showDonation();
+                        $("#modalDonations").modal('hide');
+                        
+                    }
+                },
+                error: function(resp){
+                console.log("Error")
+                }
+            });
+
+        } else {
+            // console.log("*NO Quiere eliminar*");
+        }
+        });
+}
+
 
 function inscriptions(){
     const data = {
@@ -337,7 +421,7 @@ function showInscriptions(){
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white w-100 align-self-center" onclick=actionMenu((this.id)) id="inscriptions">Crear registro</button>') 
     // $('#inscription').addClass("d-none");
     $('#inscription').replaceWith(`  
-    <h5 class="card-title mb-0">Lista de inscripciones</h5>              
+    <h5 class="card-title mb-0">Lista de inscripciones</h5>          
     <table class="table table-responsive table-striped table-hover">
     <thead>
         <tr>
@@ -399,8 +483,8 @@ function editInscriptions( id ){
             <input type="number" class="form-control" name="edad" id="edad" placeholder="Edad" value="${resp.edad}" required>
         </div>
         <div class="mb-3">
-            <label for="user" class="form-label">Telefono</label>
-            <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="${resp.telefono}" required>
+            <label for="user" class="form-label">Telefono--</label>
+            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="${resp.telefono}" required>
         </div>
         <div class="mb-3">
             <label for="user" class="form-label">Correo electrónico</label>
@@ -691,6 +775,59 @@ $("#editremember").modal("show");
 
 }
 
+
+
+function smss(){
+    const data = {
+        "message":    $('#message').val(), 
+        "smss": true, //Intencionalmente
+    };
+    $.ajax({
+        type: "POST",
+        url: "../../recepcion/form-message.php",
+        data: data,
+        success: function(resp){
+            if(resp == "inscrito"){
+                var btnDonate = $("#btn-donation");
+                btnDonate.css(btnSuccess);
+                btnDonate.text("Se ha registrado");
+                btnDonate.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    btnDonate.css(btnSuccess);
+                    btnDonate.text("Se ha registrado");
+                    btnDonate.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    btnDonate.css(btnStatic);
+                    btnDonate.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 800,);
+                    btnDonate.text("¡Inscribirme!");
+                    $('#formG').trigger("reset");
+                }, 1000);
+            }
+            else if(resp == "error_letters" || "error_email"){
+                var userUpdate =  $("#btn-donation");
+                    userUpdate.css(btnWarning);
+                    userUpdate.text("Sin registro");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("¡Inscribirme!");
+                    }, 1000);
+            }
+        },
+        error: function(resp){
+           console.log("EROOR")
+        }
+    });
+}
+
+
 function actionMenu( item ){
     console.log(item)
     switch (item) {
@@ -728,6 +865,10 @@ function actionMenu( item ){
         case 'maps':
             $.post("../Maps.php", function(contents){ $("#content").html(contents); cleanItemMenu();
             $('#item-maps').addClass("active");});
+          break;
+          case 'sms':
+            $.post("../mensajes.php", function(contents){ $("#content").html(contents); cleanItemMenu();
+            $('#item-sms').addClass("active");});
           break;
         default:
           console.log('No se ha encontrado la opcion seleccionada ' + item + '.');
