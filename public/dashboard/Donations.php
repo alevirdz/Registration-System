@@ -6,16 +6,16 @@ require './Sesiones.php';
         <div class="card">
         <div class="card-body">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-7">
                 <h1 class="font-weight-bold">Donaciones</h1>
                 <p class="lead text-muted" id="subtitle-donations">Registro para las donaciones</p>
             </div>
 
             <?php if ($rolUser == 1): ?>
-                <div class="col-sm-6 col-lg-4 d-flex">
-                    <button class="btn btn btn-primary white align-self-center d-flex align-icons" id="actionDonations" onclick="showDonation()"><ion-icon name="list-outline" size="small"></ion-icon>Ver Donaciones</button>
-                    <a href="../Excel_Donations.php" class="btn btn btn-success white d-flex align-icons align-self-center"><ion-icon name="document-text-outline" size="small"></ion-icon>Descargar Excel</a>
-
+                <div class="col-sm-6 col-lg-5 d-flex" id="options_donations">
+                    <a class="btn btn btn-primary white align-self-center d-flex align-icons" id="actionDonations" onclick="showDonation()"><ion-icon name="list-outline" size="small"></ion-icon><span id="text-option">Ver Donaciones</span></a>
+                    <a href="../Excel_Donations.php" class="btn btn btn-success white d-flex align-icons align-self-center"><ion-icon name="document-text-outline" size="small"></ion-icon><span id="text-option">Descargar Excel</span></a>
+                    <a class="btn btn btn-danger white align-icons align-self-center d-flex align-icons" id="actionDeleteAll" onclick="deleteDonationAll()"><ion-icon name="flame-outline" size="small"></ion-icon><span id="text-option">Restaurar tabla</span></a>
                 </div>
             <?php else:?>
                 <div class="col-sm-6 col-lg-5 d-flex">

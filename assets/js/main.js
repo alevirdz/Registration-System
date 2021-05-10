@@ -239,7 +239,7 @@ function showDonation(){
         <h5 class="card-title mb-0">Lista de Donaciones</h5> 
     </div>
     <div class="col col-lg-2">
-        <a class="btn btn btn-danger d-block align-icons align-self-center" id="actionDeleteAll" onclick="deleteDonationAll()"><ion-icon name="flame-outline" size="small"></ion-icon>Restaurar</a>
+        
     </div>
     <table class="table table-responsive table-striped table-hover">
     <thead>
@@ -436,17 +436,18 @@ function inscriptions(){
         }
     });
 }
-// calendar-clear-outline
+// calendar-clear-outline <
+//codigo que saque de la tabla para que un usario comun no tenga acceso
+// a class="btn btn btn-danger d-block align-icons align-self-center" id="inscriptionDeleteAll" onclick="inscriptionDeleteAll()"><ion-icon name="flame-outline" size="small"></ion-icon>Restaurar</a>
 function showInscriptions(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
-    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon>Crear registro</button>') 
-    // $('#inscription').addClass("d-none");
+    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
     $('#inscription').replaceWith(`  
     <div class="col col-lg-10">
         <h5 class="card-title mb-0">Lista de inscripciones</h5> 
     </div>
     <div class="col col-lg-2">
-        <a class="btn btn btn-danger d-block align-icons align-self-center" id="inscriptionDeleteAll" onclick="inscriptionDeleteAll()"><ion-icon name="flame-outline" size="small"></ion-icon>Restaurar</a>
+        
     </div>      
     <table class="table table-responsive table-striped table-hover">
     <thead>

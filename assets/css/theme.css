@@ -2,8 +2,19 @@
 https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&utm_medium=reactlist&utm_campaign=architectangular */
 
 span.msg-error{ color: red; font-size: 0.8em; }
+
 .align-icons{
   align-items: center;
+}
+/* oculta el texto de las opciones en ´pantallas chicas*/
+@media only screen and (max-width : 768px) {
+  #text-option{
+    display: none;
+  }
+  #options_inscriptions{
+    text-align: center;
+    /* text-align: -webkit-center; */
+  }
 }
 
 /* Item links */

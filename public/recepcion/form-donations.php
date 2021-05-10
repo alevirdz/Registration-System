@@ -44,7 +44,7 @@ if( isset( $_POST['viewDonation']) ){
 // Insertar
 if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['correo'])  && isset($_POST['donacion']) ){
      //Verificacion
-     if( !empty($_POST['insertDonations']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['correo']) && !empty($_POST['donacion']) ){
+     if( !empty($_POST['insertDonations'])  && !empty($_POST['donacion']) ){
 
         $userName    = trim($_POST['nombre']);
         $userSurname  = trim($_POST['apellidos']);
