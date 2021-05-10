@@ -376,7 +376,7 @@ function inscriptions(){
         url: "../../recepcion/form-inscriptions.php",
         data: data,
         success: function(resp){
-            if(resp == "inscrito"){
+            if(resp == "true"){
                 var btnDonate = $("#btn-donation");
                 btnDonate.css(btnSuccess);
                 btnDonate.text("Se ha registrado");
@@ -406,14 +406,36 @@ function inscriptions(){
                     showCloseButton: true
                 })
             }
-            else if(resp == "error_letters" || "error_email"){
+            else if(resp == "false"){
                 var userUpdate =  $("#btn-donation");
                     userUpdate.css(btnWarning);
-                    userUpdate.text("Sin registro");
+                    userUpdate.text("Sin registro, Se detectaron campos erroneos");
                     setTimeout(function() {
                         userUpdate.css(btnStatic);
                         userUpdate.text("¡Inscribirme!");
                     }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }else if(resp == "empty_fields"){
+                var userUpdate =  $("#btn-donation");
+                    userUpdate.css(btnDanger);
+                    userUpdate.text("Los campos estan vacios");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("¡Inscribirme!");
+                    }, 1000);
+                    Swal.fire({
+                        type: 'question',
+                        title: '¡Vaya! No recibi ningun dato',
+                        text: '¿Deseas intentarlo nuevamente?',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
             }
         },
         error: function(resp){
