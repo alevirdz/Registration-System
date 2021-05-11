@@ -127,8 +127,7 @@
 								<a class="dropdown-item"onclick=actionMenu((this.id)) id="configurations"><i class="align-middle me-1" data-feather="settings"></i>Configuración</a>
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i>Ayuda</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item"  id="logoutSesion" onclick=logoutSesion() >Log out2</a>
-								<a class="dropdown-item"  href="../../recepcion/logout.php">Log out</a>
+								<a class="dropdown-item"  id="logoutSesion" onclick=logoutSesion() >Cerrar sesión</a>
 							</div>
 						</li>
 					</ul>

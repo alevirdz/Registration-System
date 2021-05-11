@@ -57,3 +57,15 @@ https://es.stackoverflow.com/questions/186706/c%C3%B3mo-puedo-crear-un-registro-
 -Se añadieron validaciones en el login y con contraseña minima de 6 digitos.
 -Se agregaron expresiones regulares para las validaciones de contraseñas con un minimo y maximo.
 -Se agregaron expresiones regulares para las validaciones de solo letras y numeros con algunos caracteres especiales permitidos.
+
+
+Pendientes:
+Crear un form para consultas en Donaciones, inscripciones y contar cuantos usuarios hay en cada una.
+Crear un crud con funcion de eliminar usuario o desactivar, Base de datos una nueva columna Activo 1, desactivado 0
+
+
+example para contar
+$consulta = $conexion->prepare("SELECT COUNT(name) FROM profiles WHERE email = :mail");
+$consulta->execute([":mail" => $mail]);
+$procesa = $result->fetchColumn();
+echo "Hay :".$procesa;
