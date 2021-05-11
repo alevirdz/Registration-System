@@ -101,48 +101,60 @@ function login (){
         url:"../../public/recepcion/form-sesion.php",
         data: data,
         cache: false,
-        dataType: "json",
+        // dataType: "json",
         success: function(resp){
-            console.log(resp);        
+            console.log(resp)   
             if(resp == "true"){
-                 console.log("entre")
-                 window.location="../dashboard/content/Dashboard-panel.php";
-            }else if(resp == 'no_pwd_mail'){
-                Swal.fire({
-                    type: 'question',
-                    title: 'Usuario invalido',
-                    text: 'El usuario/contraseña no son correctos',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Continuar',
-                    timer: 1500,
-                });
-            }else if(resp == 'data_invalid'){
-                Swal.fire({
-                    type: 'question',
-                    title: 'Intento',
-                    text: 'Estás intentando escribir un dato invalido en el sistema',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Continuar',
-                    timer: 1500,
-                });
-            }else if(resp == 'empty_fields'){
-                Swal.fire({
-                    type: 'question',
-                    title: '¡Vaya! No recibi ningun dato',
-                    text: '¿Deseas intentarlo nuevamente?',
-                    showConfirmButton: true,
-                    confirmButtonText: 'Continuar',
-                    timer: 1500,
-                });
-            }
+                window.location="../dashboard/content/Dashboard-panel.php";
+           }else if(resp == 'no_pwd_mail'){
+               Swal.fire({
+                   type: 'question',
+                   title: 'Usuario invalido',
+                   text: 'El usuario/contraseña no son correctos',
+                   showConfirmButton: true,
+                   confirmButtonText: 'Continuar',
+                   timer: 2100,
+               });
+           }else if(resp == 'data_invalid'){
+               Swal.fire({
+                   type: 'question',
+                   title: 'Intento',
+                   text: 'Estás intentando escribir un dato invalido en el sistema',
+                   showConfirmButton: true,
+                   confirmButtonText: 'Continuar',
+                   timer: 2100,
+               });
+           }else if(resp == 'empty_fields'){
+               Swal.fire({
+                   type: 'question',
+                   title: '¡Vaya! No recibi ningun dato',
+                   text: '¿Deseas intentarlo nuevamente?',
+                   showConfirmButton: true,
+                   confirmButtonText: 'Continuar',
+               });
+           }
         }
-
-
     });
 }
 
 function logoutSesion(){
-    alert("cerramos?")
+    Swal.fire({
+        type: 'info',
+        title: "sesión",
+        text: "¿Estas seguro en cerrar la sesion?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, Salir",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            console.log("que pasa?")
+            window.location.href="../../recepcion/logout.php";
+        }else {
+            // console.log("*NO Quiere eliminar*");
+        }
+        })
 }
 
 function registerdesdeAdmin(){

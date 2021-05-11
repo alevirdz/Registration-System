@@ -50,3 +50,10 @@ https://es.stackoverflow.com/questions/186706/c%C3%B3mo-puedo-crear-un-registro-
 -Todas las alertas se testearon y funcionan como deberian.
 -Se añadio una funcion para eliminar todos los registros
 -Se modifico clases y estilos en el css para el lado del administrador
+
+## [0.0.1] 2021-05-11
+-Se Crearon nuevos mensajes de alerta para cerra sesion y para iniciar sesion.
+-Se añadieron los enlaces de sweet alert del lado del cliente.
+-Se añadieron validaciones en el login y con contraseña minima de 6 digitos.
+-Se agregaron expresiones regulares para las validaciones de contraseñas con un minimo y maximo.
+-Se agregaron expresiones regulares para las validaciones de solo letras y numeros con algunos caracteres especiales permitidos.

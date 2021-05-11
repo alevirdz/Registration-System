@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 $name  = $_SESSION['user_name'];
 $email  = $_SESSION['user_mail'];
