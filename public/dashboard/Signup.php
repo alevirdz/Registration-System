@@ -41,7 +41,7 @@
 											<div class="form-check">
 												<input class="form-check-input" type="radio" name="flexRadioDefault" id="t_user" checked value="2">
 												<label class="form-check-label" for="label_user">
-													Usuario normal
+													Colaborador
 												</label>
 											</div>
 

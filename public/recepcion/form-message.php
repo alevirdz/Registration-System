@@ -1,6 +1,6 @@
 <?php 
 require '../../config/database.php';
-include('../../assets/js/alteria/httpPHPAltiria.php');
+include('../../assets/lib/alteria/httpPHPAltiria.php');
 
 
 //enviar mensaje

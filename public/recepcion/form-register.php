@@ -1,34 +1,10 @@
 <?php 
 require '../../config/database.php';
-
-function checkedEmail($email){
-    $isCorrect = false;
-    return (1 === preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $email, $isCorrect));
-    }
-function checkedText($text){
-     $isCorrect = false;
-     return (1 === preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/', $text, $isCorrect ));
-}
-function checkedMoneda($moneda){
-    $isCorrect = false;
-    return (1 === preg_match('/^[, .]+$/', $moneda, $isCorrect ));
-}
-function checkedPhone($phone){
-    // $phone = '000-0000-0000';
-    // /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/
-    $isCorrect = false;
-    return (1 === preg_match('/^[0-9]{2}[0-9]{10}$/', $phone, $isCorrect ));
-}
-function checkedAge($age){
-    $isCorrect = false;
-    return (1 === preg_match('/^[0-9]{2}$/', $age, $isCorrect ));
-}
-function checkedPassword($pass){
-    $isCorrect = false;
-    // /debe contener al menos entre 6 a 10 caracteres
-    //caracteres permitos a z A Z, @#$%-_.
-    return (1 === preg_match('/^[a-zA-Z0-9\.@\-_#%$]{6,18}$/', $pass, $isCorrect ));
-}
+require 'validations.php';
+/*
+Este archivo contiene las siguientes opciones:
+Insertar
+*/
 
 
 // if(isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['contraseña_d']) ){
@@ -73,7 +49,7 @@ function checkedPassword($pass){
 // }
 
 
-
+//Inserta un nuevo usuario con un tipo de rol
 if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['contraseña_d']) ){
     //Verificacion
     if( !empty($_POST['rol_usuario']) && !empty($_POST['tipo_perfil']) && !empty($_POST['nombre']) && !empty($_POST['correo']) && !empty($_POST['contraseña'])  && !empty($_POST['contraseña_d']) ){
@@ -100,9 +76,7 @@ if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST
            
                //Si coincide
                if(!empty($row['correo'])){
-                   echo '<div class="alert alert-warning" role="alert">
-                   El nombre de usuario proporcionado ya está en uso.
-                   </div>';
+                   echo 'mail_use';
                }else{
                    $defaultRemember = 'Este es un espacio para agregar un mensaje personal, como una cita, un recordatorio o un mensaje positivo...';
                    // Prepare

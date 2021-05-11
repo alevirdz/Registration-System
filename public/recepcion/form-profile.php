@@ -3,9 +3,12 @@
 require '../../config/database.php';
 require '../Dashboard/Sesiones.php';
 $idUser;
+/*
+Este archivo contiene las siguientes opciones:
+Consultas, Actualiza el usuario, Actualizar recordatorio
+*/
 
-
-//consulta usuario por id
+//consulta la informacion del usuario
 if( isset($idUser) ){
  $stmt = $BD->prepare("SELECT nombre, correo, recordatorio, perfil, rol FROM usuarios WHERE id = :id");
  $stmt->bindParam (':id', $idUser);
@@ -26,47 +29,60 @@ if( isset($idUser) ){
   };
 }
 
-//Actuliza al usuario
+//Actuliza la informacion del usuario
 if( isset($_POST['upData']) && isset($_POST['nombre']) && isset($_POST['correo']) ){
-        
-        $userId    = trim($_POST['upData']);
-        $usernName = trim($_POST['nombre']);
-        $userEmail = trim($_POST['correo']);
 
-        $letterSpace = "/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/";
-        $onlyEmail   = "/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/";
+  if( !empty($_POST['upData']) && !empty($_POST['nombre']) && !empty($_POST['correo']) ){
+    $userId    = trim($_POST['upData']);
+    $usernName = trim($_POST['nombre']);
+    $userEmail = trim($_POST['correo']);
 
-        //Verification
-        if (!preg_match($letterSpace, $usernName)) {
-          echo "error_letters";
-        } 
-        elseif (!preg_match($onlyEmail, $userEmail)) {
-          echo "error_email";
-        }
-        else{
-          // Prepare
-          $stmt = $BD->prepare("UPDATE usuarios SET nombre=?, correo=? WHERE id=$userId ");
-          $stmt->bindParam(1, $usernName);
-          $stmt->bindParam(2, $userEmail);
-          // Excecute
-          $stmt->execute();
-          echo 'userUpdate';
-        }
+    $checkedName  = checkedText($usernName);
+    $checkedEmail = checkedEmail($userEmail);
+
+    if( $checkedName && $checkedEmail == true){
+      // Prepare
+      $stmt = $BD->prepare("UPDATE usuarios SET nombre=?, correo=? WHERE id=$userId ");
+      $stmt->bindParam(1, $usernName);
+      $stmt->bindParam(2, $userEmail);
+      // Excecute
+      $stmt->execute();
+      echo 'true';
+    }else{
+      echo "data_invalid";
+    }
+  }else{
+    echo "empty_fields";
+  }
+
 }
 
 
 
-//Actuliza recordatorio al usuario
+//Actuliza el recordatorio de la informacion del usuario
 if( isset($_POST['upDataRemember']) && isset($_POST['recordatorio']) ){
-        
-  $userId       = trim($_POST['upDataRemember']);
-  $userRemember = trim($_POST['recordatorio']);
+  
+  if( !empty($_POST['upDataRemember']) && !empty($_POST['recordatorio']) ){
+            
+    $userId       = trim($_POST['upDataRemember']);
+    $userRemember = trim($_POST['recordatorio']);
 
-    // Prepare
-    $stmt = $BD->prepare("UPDATE usuarios SET recordatorio=? WHERE id=$userId ");
-    $stmt->bindParam(1, $userRemember);
-    // Excecute
-    $stmt->execute();
-    echo 'rememberUpdate';
+    $checkedRemember  = checkedNormal($userRemember);
+
+    if( $checkedRemember == true){
+          // Prepare
+        $stmt = $BD->prepare("UPDATE usuarios SET recordatorio=? WHERE id=$userId ");
+        $stmt->bindParam(1, $userRemember);
+        // Excecute
+        $stmt->execute();
+        echo 'true';
+
+    }else{
+      echo "data_invalid";
+    }
+  }else{
+    echo "empty_fields";
+  }
+
   
 }

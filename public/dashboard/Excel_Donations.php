@@ -1,7 +1,7 @@
 <?php 
 
 require '../../config/database.php';
-require '../../assets/js/PHPExcel/Classes/PHPExcel.php';
+require '../../assets/lib/PHPExcel/Classes/PHPExcel.php';
 
 
 //excel

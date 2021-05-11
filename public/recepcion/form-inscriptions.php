@@ -1,30 +1,12 @@
 <?php 
 require '../../config/database.php';
+require 'validations.php';
+/*
+Este archivo contiene las siguientes opciones:
+Consultas, Insertar, Editar, Actualizar, Eliminar, Resetear
+*/
 
-function checkedEmail($email){
-    $isCorrect = false;
-    return (1 === preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $email, $isCorrect));
-    }
-function checkedText($text){
-     $isCorrect = false;
-     return (1 === preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/', $text, $isCorrect ));
-}
-function checkedMoneda($moneda){
-    $isCorrect = false;
-    return (1 === preg_match('/^[, .]+$/', $moneda, $isCorrect ));
-}
-function checkedPhone($phone){
-    // $phone = '000-0000-0000';
-    // /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/
-    $isCorrect = false;
-    return (1 === preg_match('/^[0-9]{2}[0-9]{10}$/', $phone, $isCorrect ));
-}
-function checkedAge($age){
-    $isCorrect = false;
-    return (1 === preg_match('/^[0-9]{2}$/', $age, $isCorrect ));
-}
-
-//Muestra la tabla de usuarios
+//Consulta en la base de datos
 if( isset($_POST['showRegister']) ){
     // Preparacion BD Consulta automatica
     $stmt = $BD->prepare("SELECT * FROM inscripciones");
@@ -42,8 +24,45 @@ if( isset($_POST['showRegister']) ){
         
 }
 
+//Inserta una nueva inscripcion de un usuario
+if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
 
-//edita la inscripcion
+    //Verificacion
+    if( !empty($_POST['createInscriptions']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['edad'])  && !empty($_POST['telefono']) && !empty($_POST['correo']) ){
+       $userName     = trim($_POST['nombre']);
+       $userSurname  = trim($_POST['apellidos']);
+       $userAge      = trim($_POST['edad']);
+       $userPhone    = trim($_POST['telefono']);
+       $userEmail    = trim($_POST['correo']);
+
+       $checkedName    = checkedText($userName);
+       $checkedSurname = checkedText($userSurname);
+       $checkedAge     = checkedAge($userAge);
+       $checkedPhone   = checkedPhone($userPhone);
+       $checkedEmail   = checkedEmail($userEmail);
+
+       if($checkedName && $checkedSurname && $checkedAge && $checkedPhone && $checkedEmail === true){
+           // Prepare
+           $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo) VALUES (?, ?, ?, ?, ?)");
+           $stmt->bindParam(1, $userName);
+           $stmt->bindParam(2, $userSurname);
+           $stmt->bindParam(3, $userAge);
+           $stmt->bindParam(4, $userPhone);
+           $stmt->bindParam(5, $userEmail);
+           // Excecute
+           $stmt->execute();
+           echo 'true';
+       }else{
+           echo "false";
+       }
+       
+
+   }else{
+       echo "empty_fields";
+   }
+}
+
+//Edita la inscripcion de un usuario
 if( isset($_POST['editInscription']) ){
     $idUser = trim($_POST['editInscription']);
     
@@ -64,7 +83,7 @@ if( isset($_POST['editInscription']) ){
 
 }
 
-//actualiza la inscripcion
+//Actualiza la inscripcion del usuario
 if( isset($_POST['updateInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
     
     //Verificacion
@@ -102,7 +121,7 @@ if( isset($_POST['updateInscriptions']) && isset($_POST['nombre']) && isset($_PO
     }
 }
 
-//Eliminar inscripcion
+//Eliminar inscripcion de un usuario
 if( isset($_POST['deleteInscriptions'])  ){
     // Prepare
     $userId = trim($_POST['deleteInscriptions']);
@@ -112,45 +131,7 @@ if( isset($_POST['deleteInscriptions'])  ){
 
 }
 
-//Inserta
-if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
-
-     //Verificacion
-     if( !empty($_POST['createInscriptions']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['edad'])  && !empty($_POST['telefono']) && !empty($_POST['correo']) ){
-        $userName     = trim($_POST['nombre']);
-        $userSurname  = trim($_POST['apellidos']);
-        $userAge      = trim($_POST['edad']);
-        $userPhone    = trim($_POST['telefono']);
-        $userEmail    = trim($_POST['correo']);
-
-        $checkedName    = checkedText($userName);
-        $checkedSurname = checkedText($userSurname);
-        $checkedAge     = checkedAge($userAge);
-        $checkedPhone   = checkedPhone($userPhone);
-        $checkedEmail   = checkedEmail($userEmail);
-
-        if($checkedName && $checkedSurname && $checkedAge && $checkedPhone && $checkedEmail === true){
-            // Prepare
-            $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bindParam(1, $userName);
-            $stmt->bindParam(2, $userSurname);
-            $stmt->bindParam(3, $userAge);
-            $stmt->bindParam(4, $userPhone);
-            $stmt->bindParam(5, $userEmail);
-            // Excecute
-            $stmt->execute();
-            echo 'true';
-        }else{
-            echo "false";
-        }
-        
-
-    }else{
-        echo "empty_fields";
-    }
-}
-
-
+//Resetear toda la tabla
 if(isset($_POST["deleteInscriptionsAll"]) ){
     // Prepare
     $stmt = $BD->prepare("DELETE FROM inscripciones");

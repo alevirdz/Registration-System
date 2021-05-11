@@ -1,31 +1,12 @@
 <?php 
 require '../../config/database.php';
-/*! * ViewDonations, Insert, Delete !*/
+require 'validations.php';
+/*
+Este archivo contiene las siguientes opciones:
+Consultas, Insertar, Eliminar, Resetear
+*/
 
-function checkedEmail($email){
-    $isCorrect = false;
-    return (1 === preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $email, $isCorrect));
-    }
-function checkedText($text){
-     $isCorrect = false;
-     return (1 === preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙ\s]+$/', $text, $isCorrect ));
-}
-function checkedMoneda($moneda){
-    $isCorrect = false;
-    return (1 === preg_match('/^[, .]+$/', $moneda, $isCorrect ));
-}
-
-// function key($querys) {
-//     $querysBD = array('create', 'insert', 'update', 'delete', 'drop', 'select', 'alter');
-//     foreach ($querysBD as $query) {
-//        echo $query;
-//     }
-//     return trim($querys);
-// }
-
-
-
-//Consulta completa
+//Consulta en la base de datos
 if( isset( $_POST['viewDonation']) ){
     // Preparacion
     $stmt = $BD->prepare("SELECT * FROM donaciones");
@@ -41,7 +22,7 @@ if( isset( $_POST['viewDonation']) ){
         
 }
 
-// Insertar
+// Inserta en la base de datos
 if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['correo'])  && isset($_POST['donacion']) ){
      //Verificacion
      if( !empty($_POST['insertDonations']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['correo']) && !empty($_POST['donacion']) ){
@@ -75,7 +56,7 @@ if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST
 }
 
 
-//Eliminar la donacion del usuario
+//Eliminar en la base de datos
 if( isset($_POST['deleteDonations']) && !empty($_POST['deleteDonations'])  ){
     // Prepare
     $userId = trim($_POST['deleteDonations']);
@@ -85,7 +66,7 @@ if( isset($_POST['deleteDonations']) && !empty($_POST['deleteDonations'])  ){
 
 }
 
-
+//Resetear toda la tabla
 if(isset($_POST["deleteDonationsAll"]) ){
     // Prepare
     $stmt = $BD->prepare("DELETE FROM donaciones");

@@ -19,6 +19,29 @@
 //     });
 
 
+//PARA SUBIR IMAGEN CON SWEET ALERT
+
+// const { value: file } = await Swal.fire({
+//     title: 'Select image',
+//     input: 'file',
+//     inputAttributes: {
+//       'accept': 'image/*',
+//       'aria-label': 'Upload your profile picture'
+//     }
+//   })
+  
+//   if (file) {
+//     const reader = new FileReader()
+//     reader.onload = (e) => {
+//       Swal.fire({
+//         title: 'Your uploaded picture',
+//         imageUrl: e.target.result,
+//         imageAlt: 'The uploaded picture'
+//       })
+//     }
+//     reader.readAsDataURL(file)
+//   }
+
 
 // const ctx = document.getElementById('myChart').getContext('2');
 // var myLineChart = new Chart(ctx, {

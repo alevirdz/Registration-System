@@ -104,14 +104,45 @@ function login (){
         dataType: "json",
         success: function(resp){
             console.log(resp);        
-            if(resp == true){
+            if(resp == "true"){
                  console.log("entre")
                  window.location="../dashboard/content/Dashboard-panel.php";
+            }else if(resp == 'no_pwd_mail'){
+                Swal.fire({
+                    type: 'question',
+                    title: 'Usuario invalido',
+                    text: 'El usuario/contraseña no son correctos',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                    timer: 1500,
+                });
+            }else if(resp == 'data_invalid'){
+                Swal.fire({
+                    type: 'question',
+                    title: 'Intento',
+                    text: 'Estás intentando escribir un dato invalido en el sistema',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                    timer: 1500,
+                });
+            }else if(resp == 'empty_fields'){
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibi ningun dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                    timer: 1500,
+                });
             }
         }
 
 
     });
+}
+
+function logoutSesion(){
+    alert("cerramos?")
 }
 
 function registerdesdeAdmin(){
@@ -158,6 +189,14 @@ function registerdesdeAdmin(){
                             showConfirmButton: true,
                             confirmButtonText: 'Continuar',
                         })
+                    }else if(resp == "mail_use"){
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Un momento',
+                            text: 'El correo electrónico ya esta en uso, prueba con otro.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
                     }else if(resp == "empty_fields"){
                         Swal.fire({
                             type: 'question',
@@ -165,7 +204,7 @@ function registerdesdeAdmin(){
                             text: '¿Deseas intentarlo nuevamente?',
                             showConfirmButton: true,
                             confirmButtonText: 'Continuar',
-                        })
+                        });
                     }
                 },
                 error: function(resp){
@@ -353,7 +392,7 @@ function donations(){
 
 function showDonation(){
     $('#subtitle-donations').text("Revisa la información detallada");
-    $('#actionDonations').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="donations"><ion-icon name="heart-outline" size="small"></ion-icon>Nueva donación</button>')
+    $('#actionDonations').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="donations"><ion-icon name="heart-outline" size="small"></ion-icon><span id="text-option">Nueva donación</span></button>')
     $('#table-donations').replaceWith(`
     <div class="col col-lg-10">
         <h5 class="card-title mb-0">Lista de Donaciones</h5> 
@@ -803,7 +842,7 @@ function Saveprofile( id ){
         data: data,
         success: function(resp){
             console.log(resp)
-            if(resp == "userUpdate"){
+            if(resp == "true"){
                 var userUpdate =  $("#btn-profileUpdate");
                 userUpdate.css(btnSuccess);
                 userUpdate.text("Usuario Actualizado");
@@ -822,13 +861,19 @@ function Saveprofile( id ){
                     userUpdate.animate({
                         height: '100%', 
                         opacity: '1',
-                    }, 800,);
+                    }, 1000,);
                     userUpdate.text("Guardar");
-                }, 1000);
+                }, 1200);
                 setTimeout(function() {
                     actionMenu('profile')
                 }, 1400);
-            }else if(resp == "error_letters" || "error_email"){
+                Swal.fire({
+                    type: 'success',
+                    title: 'Actualizado',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                });
+            }else if(resp == "data_invalid"){
                     var userUpdate =  $("#btn-profileUpdate");
                     userUpdate.css(btnWarning);
                     userUpdate.text("Verificar los campos");
@@ -836,9 +881,30 @@ function Saveprofile( id ){
                         userUpdate.css(btnStatic);
                         userUpdate.text("Guardar");
                     }, 1000);
-                    $('#message').modal('show')
-                    $('#messageTitle').text('Verificar');
-                    $('#messageDescription').text('Uno o más campos no son correctos'); 
+                    // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+            }else if(resp == "empty_fields"){
+                var userUpdate =  $("#btn-profileUpdate");
+                userUpdate.css(btnDanger);
+                userUpdate.text("Los campos estan vacios");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar!");
+                }, 1000);
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibi ningun dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
+                actionMenu('profile');
             }
            
         },
@@ -885,7 +951,7 @@ function updateRemember( id ){
         url: "../../recepcion/form-profile.php",
         data: data,
         success: function(resp){
-            if(resp == "rememberUpdate"){
+            if(resp == "true"){
                 var userUpdate =  $("#btn-update-remember");
                 userUpdate.css(btnSuccess);
                 userUpdate.text("Guardando");
@@ -916,8 +982,8 @@ function updateRemember( id ){
                     title: 'Recordatorio Actualizado',
                     showConfirmButton: false,
                     showCloseButton: true
-                })
-            }else if(resp == "error_letters" || "error_email"){
+                });
+            }else if(resp == "data_invalid"){
                     var userUpdate =  $("#btn-update-remember");
                     userUpdate.css(btnWarning);
                     userUpdate.text("Verificar los campos");
@@ -925,11 +991,30 @@ function updateRemember( id ){
                         userUpdate.css(btnStatic);
                         userUpdate.text("Guardar");
                     }, 1000);
-                    $('#message').modal('show')
-                    $('#messageTitle').text('Verificar');
-                    $('#messageDescription').text('Uno o más campos no son correctos'); 
+                    // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+            }else if(resp == "empty_fields" ){
+                var userUpdate =  $("#btn-update-remember");
+                userUpdate.css(btnDanger);
+                userUpdate.text("Los campos estan vacios");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar!");
+                }, 1000);
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibi ningun dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
             }
-           
         },
         error: function(resp){
             alert("no se guardo");
@@ -1040,7 +1125,7 @@ function actionMenu( item ){
           break;
         case 'createUser':
             $.post("../SignUp.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
-            $('#item-configurations').addClass("active");});
+            $('#item-user-management').addClass("active");});
           break;
         case 'showUsers':
             $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
