@@ -115,51 +115,122 @@ function login (){
 }
 
 function registerdesdeAdmin(){
-    var tipo_admin = $('#t_admin').val()
-    var tipo_user = $('#t_user').val()
 
     $("input:radio:checked").each(function() {
         var select_tipo =  $(this).val();
-        alert(select_tipo);
+        
         if( select_tipo != 1){
             console.log("se trata de un usuario mortal")
+            const data = {
+                "nombre":       $('#nombre').val(), 
+                "correo":       $('#correo').val(), 
+                "contraseña":   $('#contraseña').val(), 
+                "contraseña_d": $('#contraseña_d').val(),
+                "rol_usuario": 2, 
+                "tipo_perfil": "Colaborador"
+            };
+            $.ajax({
+                type: "POST",
+                url:"../../recepcion/form-register.php",
+                data: data,
+                success: function(resp){
+                    if(resp == "true"){
+                        Swal.fire({
+                            type: 'success',
+                            title: 'El colaborador ha sido registrado',
+                            showConfirmButton: false,
+                            showCloseButton: true
+                        })
+                    }else if(resp == "data_invalid"){
+                         // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                         Swal.fire({
+                            type: 'warning',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Uno o más campos no están correctamente, verifícalos...',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "pwd_not_match"){
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Un momento',
+                            text: 'Parece que  las contraseñas no coinciden',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "empty_fields"){
+                        Swal.fire({
+                            type: 'question',
+                            title: '¡Vaya! No recibi ningun dato',
+                            text: '¿Deseas intentarlo nuevamente?',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }
+                },
+                error: function(resp){
+                    console.log("EROOR")
+                 }
+            });
         }else{
-            console.log("se trata del administrador")
+            const data = {
+                "nombre":       $('#nombre').val(), 
+                "correo":       $('#correo').val(), 
+                "contraseña":   $('#contraseña').val(), 
+                "contraseña_d": $('#contraseña_d').val(),
+                "rol_usuario": 1,
+                "tipo_perfil": "Administrador"
+            };
+            $.ajax({
+                type: "POST",
+                url:"../../recepcion/form-register.php",
+                data: data,
+                success: function(resp){
+                    if(resp == "true"){
+                        Swal.fire({
+                            type: 'success',
+                            title: 'El colaborador ha sido registrado',
+                            showConfirmButton: false,
+                            showCloseButton: true
+                        })
+                    }else if(resp == "data_invalid"){
+                         // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                         Swal.fire({
+                            type: 'warning',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Uno o más campos no están correctamente, verifícalos...',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "pwd_not_match"){
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Un momento',
+                            text: 'Parece que  las contraseñas no coinciden',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "empty_fields"){
+                        Swal.fire({
+                            type: 'question',
+                            title: '¡Vaya! No recibi ningun dato',
+                            text: '¿Deseas intentarlo nuevamente?',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }
+                },
+                error: function(resp){
+                    console.log("EROOR")
+                 }
+            });
         }
-   });
 
-    const data = {
-        "nombre":       $('#nombre').val(), 
-        "correo":       $('#correo').val(), 
-        "contraseña":   $('#contraseña').val(), 
-        "contraseña_d": $('#contraseña_d').val(), 
-    };
-    $.ajax({
-        type: "POST",
-        url:"../../recepcion/form-register.php",
-        data: data,
-        success: function(resp){
-            if(resp == "Registrado"){
-                var fila=`
-                    <div class="modal animated fadeIn" id="userRegister" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                        <h5 class="modal-title text-center">Registrado con éxito</h5>
-                        </div>       
-                    </div>
-                    </div>
-                    </div>
-                `;
-                $('#messageRegister').html(fila);
-                $("#userRegister").modal("show");
-                // window.location="../public/dashboard/panel.php";
-            }
-        },
-        error: function(resp){
-            console.log("EROOR")
-         }
     });
+
+
+
+
 }
 
 function register(){
