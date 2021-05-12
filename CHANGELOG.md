@@ -69,3 +69,31 @@ $consulta = $conexion->prepare("SELECT COUNT(name) FROM profiles WHERE email = :
 $consulta->execute([":mail" => $mail]);
 $procesa = $result->fetchColumn();
 echo "Hay :".$procesa;
+
+
+## Force WWW
+  RewriteCond %{HTTP_HOST} !^www\..+$ [NC]
+  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  # o también
+  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
+## Force SSL
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+## Si obtenemos error 401 al Forzar el SSL podemos probar con
+  RewriteCond %{HTTPS} !on
+  RewriteCond %{THE_REQUEST} ^(GET|HEAD)\ ([^\ ]+)
+  RewriteRule (.*) https://%{HTTP_HOST}%2 [L,R=301]
+
+
+  # SOLO LOS ALIAS DE DOMINIO QUE QUEREMOS
+RewriteCond %{HTTP_HOST} ^alias1\.com [OR]
+RewriteCond %{HTTP_HOST} ^www\.alias1\.com [OR]
+RewriteCond %{HTTP_HOST} ^alias2\.com [OR]
+RewriteCond %{HTTP_HOST} ^www\.alias2\.com
+RewriteRule ^(.*)$ https://www.dominio.com%{REQUEST_URI} [R=301,L]
+
+# Cualquier "cosa" que no sea nuestro dominio principal (www.dominio.com)
+RewriteCond %{HTTP_HOST} !^www\.dominio\.com [NC]
+RewriteRule ^(.*)$ https://www.dominio.com%{REQUEST_URI} [R=301,L]

@@ -1,11 +1,13 @@
 <?php 
 require '../recepcion/form-profile.php';
 require 'Alerts.php';
-$idUser;
-$nameUser;
-$mailUser;
-$rememberUser;
-$perfilUser;
+// $idUser;
+// $nameUser;
+// $mailUser;
+// $rememberUser;
+// $perfilUser;
+//Sino sucede nada por comentar esto entonces hacemos un require para el form de panel
+//y ponemos los script para que se llame automaticamente
 ?>
 <p class="none" id="id" value="<?php echo $idUser ?>"></p>
 <h1 class="h3 mb-3">Perfil</h1>

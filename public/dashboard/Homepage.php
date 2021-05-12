@@ -1,3 +1,7 @@
+<?php 
+include ('../recepcion/form-profile.php');
+include ('../recepcion/form-panel.php');
+?>
 <div class="row mb-2 mb-xl-3">
 	<div class="col-auto d-none d-sm-block">
 		<h1>¡Qué bueno que regresaste <?php echo $name ?>!</h1>
@@ -12,7 +16,7 @@
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">Donaciones</h5>
-										<h1 class="mt-1 mb-3">2.382</h1>
+										<h1 class="mt-1 mb-3">Balance oculto</h1>
 										<div class="mb-1">
 											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
 											<span class="text-muted">Since last week</span>
@@ -22,7 +26,7 @@
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">Inscritos</h5>
-										<h1 class="mt-1 mb-3">14.212</h1>
+										<h1 class="mt-1 mb-3"><?php echo $inscriptions;  ?></h1>
 										<div class="mb-1">
 											<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
 											<span class="text-muted">Since last week</span>
@@ -44,7 +48,8 @@
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">usuarios</h5>
-										<h1 class="mt-1 mb-3">64</h1>
+										<!-- <?php echo $usuarios; ?> -->
+										<h1 class="mt-1 mb-3">1</h1>
 										<div class="mb-1">
 											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
 											<span class="text-muted">Since last week</span>

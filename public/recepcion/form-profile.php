@@ -2,6 +2,7 @@
 // session_start();
 require '../../config/database.php';
 require '../Dashboard/Sesiones.php';
+require 'validations.php';
 $idUser;
 /*
 Este archivo contiene las siguientes opciones:

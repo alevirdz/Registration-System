@@ -16,6 +16,12 @@
               			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio</span>
             			</a>
 					</li>
+					
+					<li class="sidebar-item active" id="item-desktop">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="panel2">
+              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio2</span>
+            			</a>
+					</li>
 
 					<li class="sidebar-item" id="item-donation">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="donations">

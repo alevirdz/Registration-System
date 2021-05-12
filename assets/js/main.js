@@ -1112,13 +1112,12 @@ function smss(){
     });
 }
 
-
 function actionMenu( item ){
     console.log(item)
     switch (item) {
-        // case 'panel':
-        //     $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); });
-        //   break;
+        case 'panel2':
+            $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); });
+          break;
         case 'donations':
             $.post("../Donations.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
             $('#item-donation').addClass("active");});

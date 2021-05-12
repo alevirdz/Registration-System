@@ -24,6 +24,7 @@ if( isset($_POST['showRegister']) ){
         
 }
 
+
 //Inserta una nueva inscripcion de un usuario
 if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
 

@@ -1,0 +1,10 @@
+#Cambiamos la ruta para que apunte a Public
+#RewriteEngine on
+RewriteCond %{REQUEST_URI} !public/web
+RewriteRule (.*) public/web/$1 [L]
+
+
+#ErrorDocument 404 /https://example.com/
+#ErrorDocument 403 /pagina.html
+#ErrorDocument 500 /pagina.html
+
