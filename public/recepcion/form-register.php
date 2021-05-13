@@ -98,4 +98,31 @@ if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST
 }
 
 
+//Consulta en la base de datos
+if( isset($_POST['showUsers']) ){
+    // Preparacion BD Consulta automatica
+    $stmt = $BD->prepare("SELECT * FROM usuarios");
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+     if($result ){
+        //returns data as JSON format
+        echo json_encode($result);
+     }else{
+       echo '<div class="alert alert-danger" role="alert">
+         No existe el usuario
+         </div>';
+     };
+        
+}
+
+//Eliminar inscripcion de un usuario
+if( isset($_POST['deleteUser'])  ){
+    // Prepare
+    $userId = trim($_POST['deleteUser']);
+    $stmt = $BD->prepare("DELETE FROM usuarios WHERE id=$userId ");
+    $stmt->execute();
+    echo "true";
+
+}
 

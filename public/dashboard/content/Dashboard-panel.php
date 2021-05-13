@@ -16,7 +16,7 @@ include '../../resources/layouts/links-header-admin.php';
 			<div class="container-fluid p-0">
 				<!-- contenido -->
 				<div id="content">
-				<!-- <?php include '../Homepage.php';?> -->
+				<?php #include '../Homepage.php'; ?>
 			</div>
 		</main> 
 		<!-- Footer de creditos -->

@@ -58,17 +58,16 @@ https://es.stackoverflow.com/questions/186706/c%C3%B3mo-puedo-crear-un-registro-
 -Se agregaron expresiones regulares para las validaciones de contraseñas con un minimo y maximo.
 -Se agregaron expresiones regulares para las validaciones de solo letras y numeros con algunos caracteres especiales permitidos.
 
+## [0.0.1] 2021-05-13
+-Se Creo una tabla para realizar una consulta en la base de datos y traer a los usuarios.
+-Se añadio clases y estilos
+-Se creo un boton que actua como swich para activar y desactivar a un usario (aun sin funcionamiento)
+-Se configuro el boton de eliminar usuario desde la base de datos
+
 
 Pendientes:
 Crear un form para consultas en Donaciones, inscripciones y contar cuantos usuarios hay en cada una.
 Crear un crud con funcion de eliminar usuario o desactivar, Base de datos una nueva columna Activo 1, desactivado 0
-
-
-example para contar
-$consulta = $conexion->prepare("SELECT COUNT(name) FROM profiles WHERE email = :mail");
-$consulta->execute([":mail" => $mail]);
-$procesa = $result->fetchColumn();
-echo "Hay :".$procesa;
 
 
 ## Force WWW

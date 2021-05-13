@@ -4,7 +4,9 @@ var btnSuccess = {"background": '#3ac47d', "transition": 'all 1.3s cubic-bezier(
 var btnWarning = {"background": 'rgb(208 148 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 var btnDanger = {"background": 'rgb(208 80 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 window.onload = validateForm();
-
+//Se carga la página inicial
+$.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
+$('#item-desktop').addClass("active");});
 
 function validateForm (){  
     $("#formG").validate({
@@ -68,7 +70,6 @@ function validateForm (){
 
     });
 }
-
 // https://es.stackoverflow.com/questions/23179/como-hacer-que-mi-input-text-tenga-separador-de-miles-y-decimales-en-jquery
 function monedaMX(){
     $("#donacion").on({
@@ -282,6 +283,105 @@ function registerdesdeAdmin(){
 
 
 
+}
+function showUser(){
+
+    $('#subtitle-inscriptions').text("Revisa la información detallada");
+    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
+    $('#userslist').replaceWith(`  
+    <div class="col col-lg-10">
+        <h5 class="card-title mb-0">Lista de usuarios</h5> 
+    </div>    
+    <table class="table table-responsive table-striped table-hover">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Fecha de creación</th>
+        <th scope="col">Tipo de usuario</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="table-users">
+        
+    </tbody>
+    </table>`);
+    // Send the request
+    $.post("../../recepcion/form-register.php", {showUsers: true}, function(resp) {
+        console.log(resp)
+        $('#table-register').empty()
+        $.each( resp, function( users, user ) {
+            var fila=`
+                <tr>
+                <th scope="row">${user.id}</th>
+                <td>${user.nombre}</td>
+                <td>${user.correo}</td>
+                <td>${user.fecha}</td>
+                <td>${user.perfil}</td>
+                <td>Activo</td>
+                <td>
+                <label class="switch">
+                <input type="checkbox" id="user_active" onclick="userActive(${user.id})" checked>
+                <span class="slider round"></span>
+                </label>
+                <a class="btn btn-danger" onclick="deleteProfile(${user.id})"><ion-icon name="trash-outline"></ion-icon></a>
+                </td>
+                </tr>     
+                `;
+            $('#table-users').append(fila);
+        });
+
+    }, 'json');
+
+}
+
+function userActive( id ){
+    
+    if( $('#user_active').prop('checked') ) {
+        console.log('Activando al user '+ id);
+    }else{
+        console.log("Desactivado al user "+id)
+    }
+}
+
+function deleteProfile( id ){
+    Swal.fire({
+        type: 'question',
+        title: "Deshacer permanentemente",
+        text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteUser": id,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-register.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#table-users').empty()
+                        showUser();
+                        
+                    }
+                },
+                error: function(resp){
+                console.log("Error")
+                }
+            });
+    
+        } else {
+            // console.log("*NO Quiere eliminar*");
+        }
+        })
 }
 
 function register(){
@@ -1115,47 +1215,48 @@ function smss(){
 function actionMenu( item ){
     console.log(item)
     switch (item) {
-        case 'panel2':
-            $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); });
+        case 'panel':
+            $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
+            $('#item-desktop').addClass("active");  $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar') });
           break;
         case 'donations':
             $.post("../Donations.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
-            $('#item-donation').addClass("active");});
+            $('#item-donation').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'inscriptions':
             $.post("../Inscriptions.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
-            $('#item-inscriptions').addClass("active");});
+            $('#item-inscriptions').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'profile':
             $.post("../Profile.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
-            $('#item-profile').addClass("active");});
+            $('#item-profile').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'configurations':
             $.post("../Configurations.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
-            $('#item-configurations').addClass("active");});
+            $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar') });
           break;
         case 'createUser':
             $.post("../SignUp.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
-            $('#item-user-management').addClass("active");});
+            $('#item-user-management').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'showUsers':
-            $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
-            $('#item-configurations').addClass("active");});
+            $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu(); showUser();
+            $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'direction':
             $.post("../Direction.php", function(contents){ $("#content").html(contents); cleanItemMenu();
-            $('#item-direction').addClass("active");});
+            $('#item-direction').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'maps':
             $.post("../Maps.php", function(contents){ $("#content").html(contents); cleanItemMenu();
-            $('#item-maps').addClass("active");});
+            $('#item-maps').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
           case 'sms':
             $.post("../mensajes.php", function(contents){ $("#content").html(contents); cleanItemMenu();
             $('#item-sms').addClass("active");});
           break;
         default:
-          console.log('No se ha encontrado la opcion seleccionada ' + item + '.');
+          console.log('No existe' + item + '.');
       }
 }
 
