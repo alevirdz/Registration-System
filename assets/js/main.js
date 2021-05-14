@@ -323,7 +323,7 @@ function showUser(){
                 <td>Activo</td>
                 <td>
                 <label class="switch">
-                <input type="checkbox" id="user_active" onclick="userActive(${user.id})" checked>
+                <input type="checkbox" id="terminos" value="${user.id}" checked/>
                 <span class="slider round"></span>
                 </label>
                 <a class="btn btn-danger" onclick="deleteProfile(${user.id})"><ion-icon name="trash-outline"></ion-icon></a>
@@ -332,14 +332,25 @@ function showUser(){
                 `;
             $('#table-users').append(fila);
         });
-
+        $('#terminos').click(function(){
+            if($(this).is(':checked')){
+                alert('Se ha Marcado la casilla!');
+            } else {
+                alert('Nuestra casilla de verificación no está marcada!');
+            }
+        });
     }, 'json');
 
 }
 
 function userActive( id ){
-    
-    if( $('#user_active').prop('checked') ) {
+    console.log(id)
+    // if(id.checked){
+    //     console.log("ACTIVADO usuario " + id)
+    // }else{
+    //     console.log("DESACTIVADO usuario "+id)
+    // }
+    if( $(id).prop('checked') ) {
         console.log('Activando al user '+ id);
     }else{
         console.log("Desactivado al user "+id)
