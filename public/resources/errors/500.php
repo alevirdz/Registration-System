@@ -1,0 +1,1 @@
+<h1>Ha ocurrido el error 500</h1>

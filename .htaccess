@@ -1,7 +1,8 @@
 #Cambiamos la ruta para que apunte a Public
 
 
-#ErrorDocument 404 /https://example.com/
-#ErrorDocument 403 /pagina.html
-#ErrorDocument 500 /pagina.html
+ErrorDocument 404 /Sistema-fondos/public/resources/errors/404.php
+#ErrorDocument 403 /public/resources/errors/403.php
+#ErrorDocument 500 /public/resources/errors/500.php
+
 
