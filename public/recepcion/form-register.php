@@ -126,3 +126,42 @@ if( isset($_POST['deleteUser'])  ){
 
 }
 
+//Desactivar usuario de un usuario
+if( isset($_POST['desactiveUser'])  ){
+    // Prepare
+    $userId = trim($_POST['desactiveUser']);
+    $checkedUserId  = checkedNumber($userId);
+    var_dump($checkedUserId);
+    if( $checkedUserId == true ){
+        $desactive = 'desactivado';
+        $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");
+        $stmt->bindParam(1, $desactive);
+        $stmt->execute();
+        echo "true";
+    
+    }else{
+      echo "data_invalid";
+    }
+
+
+}
+
+//Activar usuario de un usuario
+// if( isset($_POST['activeUser'])  ){
+//     // Prepare
+//     $userId = trim($_POST['activeUser']);
+//     $checkedUserId  = checkedNumber($userId);
+
+//     if( $checkedUserId == true ){
+//         $active = 'Activo';
+//         $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");
+//         $stmt->bindParam(1, $active);
+//         $stmt->execute();
+//         echo "true";
+    
+//     }else{
+//       echo "data_invalid";
+//     }
+
+
+// }

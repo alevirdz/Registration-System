@@ -21,7 +21,7 @@ require 'Alerts.php';
             <div class="card-body text-center">
                 <div class="img-profile">
                 <!-- https://picsum.photos/30/30 -->
-                <img  src="../../../assets/profile_img/CARLOS-PERFIL.png" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
+                <img  src="../../../assets/user/profile/CARLOS-PERFIL.png" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
                 <span style="font-size: 15px;vertical-align: middle; position:absolute; top:180px; left:150;" onclick="updatePhoto(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span>
                 </div>
 

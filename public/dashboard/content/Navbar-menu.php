@@ -118,7 +118,7 @@
               				</a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                				<img src="../../../assets/profile_img/CARLOS-PERFIL.png" class="avatar img-fluid rounded me-1" alt="Perfil usuario" /> <span class="text-dark">Opciones</span>
+                				<img src="../../../assets/user/profile/CARLOS-PERFIL.png" class="avatar img-fluid rounded me-1" alt="Perfil usuario" /> <span class="text-dark">Opciones</span>
               				</a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" onclick=actionMenu((this.id)) id="profile"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>

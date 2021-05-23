@@ -12,7 +12,7 @@
                             <input type="text" class="form-control" name="message" id="message" placeholder="Escriba aqui su mensaje" required>
                         </div>
                         <div class="d-grid gap-2">
-                            <a type="button" class="btn btn-dark" name="btn-donation" id="btn-sms" onclick="sms()">Enviar mensaje</a>
+                            <a type="button" class="btn btn-dark" name="btn-message" id="btn-message" onclick="smss()">Enviar mensaje</a>
                         </div>
                     </form>
 

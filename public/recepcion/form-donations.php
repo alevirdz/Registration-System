@@ -12,10 +12,17 @@ if( isset( $_POST['viewDonation']) ){
     $stmt = $BD->prepare("SELECT * FROM donaciones");
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-   
-     if($result >0 ){
+    
+    $paginateIn = 4;
+    $numPage = $stmt->rowCount();
+    $splitePage = $numPage/$paginateIn;
+    $round = ceil($splitePage);
+
+     if($result >0  ){
+
         //returns data as JSON format
         echo json_encode($result);
+
      }else{
        echo 'Error';
      };

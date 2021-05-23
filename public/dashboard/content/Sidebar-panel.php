@@ -2,7 +2,7 @@
 <nav id="sidebar" class="sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="Dashboard-panel.php" id="panel">
-					<img class="img-fluid rounded-circle" src="../../../assets/profile_img/CARLOS-PERFIL.png" alt="foto del usuario" width="50" height="50">
+					<img class="img-fluid rounded-circle" src="../../../assets/user/profile/CARLOS-PERFIL.png" alt="foto del usuario" width="50" height="50">
           			<span class="align-middle"> <?php echo $name ?></span>
         		</a>
 

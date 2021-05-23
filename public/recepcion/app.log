@@ -13,3 +13,63 @@ Mon, 10 May 2021 00:24:30 +0200 : Server Altiria response: OK dest:529993181367
 OK dest:525582395294
 OK dest:529992964782
 
+
+Fri, 21 May 2021 03:08:40 +0200 : NO domainId
+
+Fri, 21 May 2021 03:08:40 +0200 : NO senderId 
+
+Fri, 21 May 2021 03:08:40 +0200 : NO concat 
+
+Fri, 21 May 2021 03:08:40 +0200 : NO encoding
+
+Fri, 21 May 2021 03:08:41 +0200 : Server Altiria response: OK dest:2147483647
+
+
+Fri, 21 May 2021 03:08:45 +0200 : NO domainId
+
+Fri, 21 May 2021 03:08:45 +0200 : NO senderId 
+
+Fri, 21 May 2021 03:08:45 +0200 : NO concat 
+
+Fri, 21 May 2021 03:08:45 +0200 : NO encoding
+
+Fri, 21 May 2021 03:08:45 +0200 : Server Altiria response: OK dest:2147483647
+
+
+Fri, 21 May 2021 03:14:52 +0200 : Add destination 529993181367
+
+Fri, 21 May 2021 03:14:52 +0200 : Add destination 529994250574
+
+Fri, 21 May 2021 03:14:52 +0200 : Add destination 529994754474
+
+Fri, 21 May 2021 03:14:52 +0200 : NO domainId
+
+Fri, 21 May 2021 03:14:52 +0200 : NO senderId 
+
+Fri, 21 May 2021 03:14:52 +0200 : NO concat 
+
+Fri, 21 May 2021 03:14:52 +0200 : NO encoding
+
+Fri, 21 May 2021 03:14:52 +0200 : Server Altiria response: OK dest:529993181367
+OK dest:529994250574
+OK dest:529994754474
+
+
+Fri, 21 May 2021 03:36:07 +0200 : Add destination 529993181367
+
+Fri, 21 May 2021 03:36:07 +0200 : Add destination 529994250574
+
+Fri, 21 May 2021 03:36:07 +0200 : Add destination 529994754474
+
+Fri, 21 May 2021 03:36:07 +0200 : NO domainId
+
+Fri, 21 May 2021 03:36:07 +0200 : NO senderId 
+
+Fri, 21 May 2021 03:36:07 +0200 : NO concat 
+
+Fri, 21 May 2021 03:36:07 +0200 : NO encoding
+
+Fri, 21 May 2021 03:36:08 +0200 : Server Altiria response: OK dest:529993181367
+OK dest:529994250574
+OK dest:529994754474
+

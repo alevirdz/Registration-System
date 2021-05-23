@@ -107,7 +107,16 @@ function login (){
             console.log(resp)   
             if(resp == "true"){
                 window.location="../dashboard/content/Dashboard-panel.php";
-           }else if(resp == 'no_pwd_mail'){
+           }else if(resp == 'without_session'){
+            Swal.fire({
+                type: 'error',
+                title: 'No existe la cuenta',
+                text: 'Este usuario no existe',
+                showConfirmButton: false,
+                confirmButtonText: 'Continuar',
+                timer: 3100,
+            });
+            }else if(resp == 'no_pwd_mail'){
                Swal.fire({
                    type: 'question',
                    title: 'Usuario invalido',
@@ -308,11 +317,10 @@ function showUser(){
         
     </tbody>
     </table>`);
-    // Send the request
     $.post("../../recepcion/form-register.php", {showUsers: true}, function(resp) {
-        console.log(resp)
         $('#table-register').empty()
         $.each( resp, function( users, user ) {
+
             var fila=`
                 <tr>
                 <th scope="row">${user.id}</th>
@@ -320,41 +328,84 @@ function showUser(){
                 <td>${user.correo}</td>
                 <td>${user.fecha}</td>
                 <td>${user.perfil}</td>
-                <td>Activo</td>
                 <td>
                 <label class="switch">
-                <input type="checkbox" id="terminos" value="${user.id}" checked/>
-                <span class="slider round"></span>
-                </label>
+                    <input type="checkbox" id="user_${user.id}" value="${user.id}" onclick="activeUser(this)"  />
+                    <span class="slider round"></span>
+                </label></td>
+
+                <td>
                 <a class="btn btn-danger" onclick="deleteProfile(${user.id})"><ion-icon name="trash-outline"></ion-icon></a>
                 </td>
                 </tr>     
                 `;
             $('#table-users').append(fila);
+
+            
+
         });
-        $('#terminos').click(function(){
-            if($(this).is(':checked')){
-                alert('Se ha Marcado la casilla!');
-            } else {
-                alert('Nuestra casilla de verificación no está marcada!');
-            }
-        });
+
+
     }, 'json');
 
 }
 
-function userActive( id ){
-    console.log(id)
-    // if(id.checked){
-    //     console.log("ACTIVADO usuario " + id)
-    // }else{
-    //     console.log("DESACTIVADO usuario "+id)
-    // }
-    if( $(id).prop('checked') ) {
-        console.log('Activando al user '+ id);
-    }else{
-        console.log("Desactivado al user "+id)
-    }
+function activeUser( id ){
+        const captureUser = id.value;
+       
+        if(id.checked){
+            console.log(id.checked)
+            //each para saber cuales estan activos
+            // $("input:checkbox:checked").each(function() {
+            //     console.log('Actios los usuarios: '+$(this).val());
+            // });
+            
+            const data = {
+                "activeUser": captureUser,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../../recepcion/form-register.php",
+                    data: data,
+                    success: function(resp){
+                        console.log(resp)
+                        if(resp == "true"){
+                            $('#table-users').empty()
+                            showUser();
+                        }
+                    },
+                    error: function(resp){
+                    console.log("Error")
+                    }
+                });
+
+        }
+        else{
+            //each para saber cuales estan desactivados
+            // $("input:checkbox:not(:checked)").each(function() {
+            //     console.log('Desactivados los usuarios: '+$(this).val());
+            // });
+           const data = {
+            "desactiveUser": captureUser,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-register.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#table-users').empty()
+                        showUser();
+                        
+                    }
+                },
+                error: function(resp){
+                console.log("Error")
+                }
+            });
+        }
+    
 }
 
 function deleteProfile( id ){
@@ -537,7 +588,15 @@ function showDonation(){
     <tbody id="table-register">
         
     </tbody>
-    </table>`);
+    </table>
+    <nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+    </ul>
+    </nav>
+    `);
     // Send the request
     $.post("../../recepcion/form-donations.php", {viewDonation: true}, function(resp) {
         $('#table-register').empty()
@@ -552,7 +611,9 @@ function showDonation(){
                 <td>
                 <a  class="btn btn-danger" onclick="deleteDonation(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
                 </td>
-                </tr>     
+                </tr>
+                
+
                 `;
             $('#table-register').append(fila);
         });
@@ -1176,44 +1237,61 @@ $("#editremember").modal("show");
 function smss(){
     const data = {
         "message":    $('#message').val(), 
-        "smss": true, //Intencionalmente
+        "sms": true, //Intencionalmente
     };
+    // ../../recepcion/form-message.php
     $.ajax({
         type: "POST",
-        url: "../../recepcion/form-message.php",
+        url: "../../recepcion/form-whatsapp.php",
         data: data,
         success: function(resp){
-            if(resp == "inscrito"){
-                var btnDonate = $("#btn-donation");
-                btnDonate.css(btnSuccess);
-                btnDonate.text("Se ha registrado");
-                btnDonate.animate({
+            console.log(resp)
+            if(resp == "true"){
+                var btnMessage = $("#btn-message");
+                btnMessage.css(btnSuccess);
+                btnMessage.text("Enviado");
+                btnMessage.animate({
                     height: '10px', 
                     opacity: '0.4',
                 }, 500,);
                 setTimeout(function() {
-                    btnDonate.css(btnSuccess);
-                    btnDonate.text("Se ha registrado");
-                    btnDonate.animate({
+                    btnMessage.css(btnSuccess);
+                    btnMessage.text("Enviado");
+                    btnMessage.animate({
                         height: '100%', 
                         opacity: '0.8',
                     }, 800,);
-                    btnDonate.css(btnStatic);
-                    btnDonate.animate({
+                    btnMessage.css(btnStatic);
+                    btnMessage.animate({
                         height: '100%', 
                         opacity: '1',
                     }, 800,);
-                    btnDonate.text("¡Inscribirme!");
+                    btnMessage.text("Enviar mensaje");
                     $('#formG').trigger("reset");
                 }, 1000);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Whatsapp enviado con éxito',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                });
             }
-            else if(resp == "error_letters" || "error_email"){
-                var userUpdate =  $("#btn-donation");
-                    userUpdate.css(btnWarning);
-                    userUpdate.text("Sin registro");
+            else if(resp == "error_send"){
+                var sendMessage =  $("#btn-message");
+                sendMessage.css(btnWarning);
+                sendMessage.text("Mensaje vacio");
                     setTimeout(function() {
-                        userUpdate.css(btnStatic);
-                        userUpdate.text("¡Inscribirme!");
+                        sendMessage.css(btnStatic);
+                        sendMessage.text("Enviar mensaje");
+                    }, 1000);
+            }
+            else if(resp == "empty_fields"){
+                var sendMessage =  $("#btn-message");
+                sendMessage.css(btnWarning);
+                sendMessage.text("Sin registro");
+                    setTimeout(function() {
+                        sendMessage.css(btnStatic);
+                        sendMessage.text("Enviar mensaje");
                     }, 1000);
             }
         },
@@ -1224,7 +1302,6 @@ function smss(){
 }
 
 function actionMenu( item ){
-    console.log(item)
     switch (item) {
         case 'panel':
             $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
@@ -1252,7 +1329,7 @@ function actionMenu( item ){
           break;
         case 'showUsers':
             $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu(); showUser();
-            $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
+            $('#item-user-management').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'direction':
             $.post("../Direction.php", function(contents){ $("#content").html(contents); cleanItemMenu();
@@ -1282,6 +1359,7 @@ function cleanItemMenu (){
         'item-user-management',
         'item-direction',
         'item-maps',
+        'item-sms',
     ]
     jQuery.each( itemsMenu, function( i, item ) {
        $('#'+item).removeClass("active");

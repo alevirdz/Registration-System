@@ -25,6 +25,10 @@ function checkedAge($age){
     $isCorrect = false;
     return (1 === preg_match('/^[0-9]{2}$/', $age, $isCorrect ));
 }
+function checkedNumber($number){
+    $isCorrect = false;
+    return (1 === preg_match('/^[0-9]{1,}$/', $number, $isCorrect ));
+}
 function checkedPassword($pass){
     $isCorrect = false;
     // /debe contener al menos entre 6 a 10 caracteres
