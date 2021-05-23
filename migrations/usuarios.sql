@@ -15,7 +15,7 @@ CREATE TABLE `usuarios` (
 
 
 INSERT INTO `usuarios` (`id`, `nombre`, `correo`, `contrasena`, `fecha`, `recordatorio`, `perfil`, `rol`, `estado`) VALUES
-(1, 'Rodriguez', 'alevi@hotmail.com', '$2y$10$wzar9vityrxRRmqvydl29Opxs2q6Fk4Kucnyb4ELA6VucLZQlWg3G', '2021-05-04 22:41:36',  'Este es un espacio para agregar un mensaje personal, como una cita, un recordatorio o un mensaje positivo...', 'Administrador', 1, 'Activo');
+(1, 'Rodriguez', 'alevi@hotmail.com', '$2y$10$.CzJDNo4t.K8X72eyrx2YeArqPucqUPORvD6i8m3CsaLNJYpKD5R2', '2021-05-04 22:41:36',  'Este es un espacio para agregar un mensaje personal, como una cita, un recordatorio o un mensaje positivo...', 'Administrador', 1, 'Activo');
 
 
 ALTER TABLE `usuarios`
