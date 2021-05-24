@@ -10,45 +10,37 @@
 					<li class="sidebar-header">
 						Pages
 					</li>
-					
+					<?php if ($rolUser != "2") {?>
 					<li class="sidebar-item active" id="item-desktop">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="panel">
-              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio</span>
+              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio </span>
             			</a>
 					</li>
-
 					<li class="sidebar-item" id="item-donation">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="donations">
               			<i class="align-middle" data-feather="heart"></i> <span class="align-middle">Donaciones</span>
             			</a>
 					</li>
-
-
 					<li class="sidebar-item" id="item-inscriptions">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="inscriptions">
               			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones</span>
             			</a>
 					</li>
-
 					<li class="sidebar-item" id="item-profile">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="profile">
               			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
             			</a>
 					</li>
-
 					<li class="sidebar-item" id="item-configurations">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="configurations">
               			<i class="align-middle" data-feather="settings"></i> <span class="align-middle">Configuración</span>
             			</a>
 					</li>
-
 					<li class="sidebar-item" id="item-sms">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="sms">
               			<i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Mensajes</span>
             			</a>
 					</li>
-
-					
 					<li class="sidebar-item" id="item-user-management">
 						<a href="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed">
               			<i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestion de usuarios</span>
@@ -58,9 +50,6 @@
 							<li class="sidebar-item"><a class="sidebar-link" onclick=actionMenu((this.id)) id="showUsers">Ver registros de usuario</a></li>
 						</ul>
 					</li>
-
-					
-
 					<li class="sidebar-header">
 						Ubicaciones
 					</li>
@@ -76,6 +65,34 @@
               			<i class="align-middle" data-feather="map"></i> <span class="align-middle">Mapas</span>
             			</a>
 					</li>
+					<?php } else{ ?>
+					<li class="sidebar-item active" id="item-desktop">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="panel">
+              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio </span>
+            			</a>
+					</li>
+					<li class="sidebar-item" id="item-inscriptions">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="inscriptions">
+              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones</span>
+            			</a>
+					</li>
+					<li class="sidebar-item" id="item-donation">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="donations">
+              			<i class="align-middle" data-feather="heart"></i> <span class="align-middle">Donaciones</span>
+            			</a>
+					</li>
+					<li class="sidebar-item" id="item-profile">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="profile">
+              			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
+            			</a>
+					</li>
+					<?php }  ?>
+
+
+
+					
+
+
 				</ul>
 
 				<!-- <div class="sidebar-cta">

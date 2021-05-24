@@ -62,7 +62,7 @@ if(isset($_POST['correo']) && isset($_POST['contraseña']) ){
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             
             
-            if( $result['estado'] == 'desactivado'){
+            if( $result['estado'] == 'Desactivado'){
               echo "without_session";
             }else{
 

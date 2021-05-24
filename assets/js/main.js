@@ -5,8 +5,7 @@ var btnWarning = {"background": 'rgb(208 148 80)', "transition": 'all 1.3s cubic
 var btnDanger = {"background": 'rgb(208 80 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 window.onload = validateForm();
 //Se carga la página inicial
-$.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
-$('#item-desktop').addClass("active");});
+$.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();$('#item-desktop').addClass("active");});
 
 function validateForm (){  
     $("#formG").validate({
@@ -106,6 +105,7 @@ function login (){
         success: function(resp){ 
             if(resp == "true"){
                 window.location="../dashboard/content/Dashboard-panel.php";
+                
            }else if(resp == 'no_pwd_mail'){
                Swal.fire({
                    type: 'question',
@@ -300,6 +300,7 @@ function showUser(){
         <th scope="col">Fecha de creación</th>
         <th scope="col">Tipo de usuario</th>
         <th scope="col">Estado</th>
+        <th scope="col">Controles</th>
         <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -309,9 +310,13 @@ function showUser(){
     </table>`);
     // Send the request
     $.post("../../recepcion/form-register.php", {showUsers: true}, function(resp) {
-        console.log(resp)
         $('#table-register').empty()
         $.each( resp, function( users, user ) {
+            if( user.estado == 'Activo'){
+                active = 'checked';
+            }else{
+                active = '';
+            }
             var fila=`
                 <tr>
                 <th scope="row">${user.id}</th>
@@ -322,63 +327,65 @@ function showUser(){
                 <td>${user.estado}</td>
                 <td>
                 <label class="switch">
-                
-                <input type="checkbox" name="checkbox" id_user="${user.id}" id="terminos" value="${user.id}" onclick=userActive(${user.id}) />
+                <input type="checkbox" name="checkbox" class="active" id_user="${user.id}"  ${active} />
                 <span class="slider round"></span>
                 </label>
-                <a class="btn btn-danger" onclick="deleteProfile(${user.id})"><ion-icon name="trash-outline"></ion-icon></a>
+                
                 </td>
+                <td><a class="btn btn-danger" onclick="deleteProfile(${user.id})"><ion-icon name="trash-outline"></ion-icon></a></td>
                 </tr>     
                 `;
             $('#table-users').append(fila);
-            
-            if( user.estado == 'Activo'){
-                $("#terminos").attr( "checked", true );
-            }
         });
-        /*
-        <input type="checkbox" name="checked" id_user="${user.id}" id="terminos" value="${user.estado}" checked/>
-        $('#terminos').click(function(){
-            console.log("dio click")
+        
+        $('.active').click(function(){
             if($(this).is(':checked')){
-                console.log('Se ha Marcado la casilla!');
-                const idu = "usuario "+$('input[name="checked"]').val();
-                console.log(idu)
+                const idUserAct = $(this).attr("id_user");
+                const data = {
+                    "activar": idUserAct,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../../recepcion/form-register.php",
+                    data: data,
+                    success: function(resp){
+                        if(resp == "true"){
+                            $('#table-users').empty()
+                            showUser();
+                            
+                        }
+                    },
+                    error: function(resp){
+                    console.log("Error")
+                    }
+                });
                 
             } else {
-                console.log('Nuestra casilla de verificación no está marcada!');
+                const idUserAct = $(this).attr("id_user");
+                const data = {
+                    "desactivar": idUserAct,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../../recepcion/form-register.php",
+                    data: data,
+                    success: function(resp){
+                        if(resp == "true"){
+                            $('#table-users').empty()
+                            showUser();
+                            
+                        }
+                    },
+                    error: function(resp){
+                    console.log("Error")
+                    }
+                });
             }
-        }); */
+        }); 
 
         
     }, 'json');
 
-}
-
-function userActive( id ){
-    // if(id.checked){
-    //     console.log("ACTIVADO usuario " + id)
-    // }else{
-    //     console.log("DESACTIVADO usuario "+id)
-    // }
-    /* if( $(id).is(':checked') ) {
-        console.log('Activando al user '+ id);
-    }else{
-        console.log("Desactivado al user "+id)
-    } */
-    $('#terminos:checked').each(
-        function() {
-            alert("El checkbox con el usuario " + $(this).attr("id_user") + " está seleccionado");
-            /* console.log($(this).val()) */
-            /* const userAct = id;
-            console.log("id del usuario: "+userAct)
-            if( userAct == 'Activo'){
-                $("#terminos").attr( "checked", true );
-            }else{
-                $("#terminos").attr( "checked", false );
-            } */
-        }
-    );
 }
 
 function deleteProfile( id ){
@@ -675,6 +682,7 @@ function inscriptions(){
         url: "../../recepcion/form-inscriptions.php",
         data: data,
         success: function(resp){
+            console.log(resp);
             if(resp == "true"){
                 var btnDonate = $("#btn-donation");
                 btnDonate.css(btnSuccess);
@@ -1172,18 +1180,19 @@ function updateRemember( id ){
 
 
 function updatePhoto( id ){
+    console.log("Click en subir fotos")
     var fila=`
         <div class="modal fade" id="editremember" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="form-profile" id="formG" method="post" enctype="multipart/form-data">
+                <form class="form-profile" id="formG"  enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="recordatorio" class="form-label">Cambiar foto de perfil</label><br>
-                    <input name="foto-perfil" type="file" />
+                    <input type="file" class="form-control" id="file" name="file" required />
                 </div>
                 <div class="d-grid gap-2">
-                    
+                <input type="button" id="photoProfile" class="btn btn-danger submitBtn" onclick="photoUser()"value="SAVE"/>
                 </div>
                 </form>
             </div>
@@ -1195,8 +1204,48 @@ function updatePhoto( id ){
 $('#rememberEdit').html(fila);
 $("#editremember").modal("show");
 
-}
 
+}
+function photoUser(){
+    let formData = {
+        "photo": $('#nombre').val(), 
+    }
+    $.ajax({
+        type: 'POST',
+        url: '../../recepcion/form-profile.php',
+        data: new FormData(this),
+        contentType: false,
+        cache: false,
+        processData:false,
+        beforeSend: function(){
+            $('.submitBtn').attr("disabled","disabled");
+            $('#fupForm').css("opacity",".5");
+        },
+        success: function(msg){
+            $('.statusMsg').html('');
+            if(msg == 'ok'){
+                $('#fupForm')[0].reset();
+                $('.statusMsg').html('<span style="font-size:18px;color:#34A853">Form data submitted successfully.</span>');
+            }else{
+                $('.statusMsg').html('<span style="font-size:18px;color:#EA4335">Some problem occurred, please try again.</span>');
+            }
+            $('#fupForm').css("opacity","");
+            $(".submitBtn").removeAttr("disabled");
+        }
+    });
+    
+    //file type validation
+    $("#file").change(function() {
+        var file = this.files[0];
+        var imagefile = file.type;
+        var match= ["image/jpeg","image/png","image/jpg"];
+        if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
+            alert('Please select a valid image file (JPEG/JPG/PNG).');
+            $("#file").val('');
+            return false;
+        }
+    });
+}
 function smss(){
     const data = {
         "message":    $('#message').val(), 
@@ -1248,7 +1297,6 @@ function smss(){
 }
 
 function actionMenu( item ){
-    console.log(item)
     switch (item) {
         case 'panel':
             $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
@@ -1276,7 +1324,7 @@ function actionMenu( item ){
           break;
         case 'showUsers':
             $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu(); showUser();
-            $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
+            $('#item-user-management').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'direction':
             $.post("../Direction.php", function(contents){ $("#content").html(contents); cleanItemMenu();
@@ -1306,6 +1354,7 @@ function cleanItemMenu (){
         'item-user-management',
         'item-direction',
         'item-maps',
+        'item-sms',
     ]
     jQuery.each( itemsMenu, function( i, item ) {
        $('#'+item).removeClass("active");

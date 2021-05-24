@@ -27,7 +27,6 @@ if( isset($_POST['showRegister']) ){
 
 //Inserta una nueva inscripcion de un usuario
 if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
-
     //Verificacion
     if( !empty($_POST['createInscriptions']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['edad'])  && !empty($_POST['telefono']) && !empty($_POST['correo']) ){
        $userName     = trim($_POST['nombre']);

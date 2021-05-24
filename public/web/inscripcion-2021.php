@@ -53,3 +53,6 @@ include '../resources/layouts/header.php';
         </div>
     </div>
 </section>
+<?php 
+include '../resources/layouts/links-footer-index.php';
+?>

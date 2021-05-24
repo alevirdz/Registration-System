@@ -129,13 +129,31 @@ if( isset($_POST['deleteUser'])  ){
 }
 
 //Desactivar usuario de un usuario
-if( isset($_POST['desactiveUser'])  ){
+if( isset($_POST['activar'])  && !empty($_POST['activar']) ){
     // Prepare
-    $userId = trim($_POST['desactiveUser']);
+    $userId = trim($_POST['activar']);
     $checkedUserId  = checkedNumber($userId);
     var_dump($checkedUserId);
     if( $checkedUserId == true ){
-        $desactive = 'desactivado';
+        $active = 'Activo';
+        $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");
+        $stmt->bindParam(1, $active);
+        $stmt->execute();
+        echo "true";
+    
+    }else{
+      echo "data_invalid";
+    }
+
+
+}
+if( isset($_POST['desactivar'])  && !empty($_POST['desactivar']) ){
+    // Prepare
+    $userId = trim($_POST['desactivar']);
+    $checkedUserId  = checkedNumber($userId);
+    var_dump($checkedUserId);
+    if( $checkedUserId == true ){
+        $desactive = 'Desactivado';
         $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");
         $stmt->bindParam(1, $desactive);
         $stmt->execute();
@@ -147,23 +165,3 @@ if( isset($_POST['desactiveUser'])  ){
 
 
 }
-
-//Activar usuario de un usuario
-// if( isset($_POST['activeUser'])  ){
-//     // Prepare
-//     $userId = trim($_POST['activeUser']);
-//     $checkedUserId  = checkedNumber($userId);
-
-//     if( $checkedUserId == true ){
-//         $active = 'Activo';
-//         $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");
-//         $stmt->bindParam(1, $active);
-//         $stmt->execute();
-//         echo "true";
-    
-//     }else{
-//       echo "data_invalid";
-//     }
-
-
-// }

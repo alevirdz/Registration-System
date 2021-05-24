@@ -1,7 +1,7 @@
 <?php
 
 $server = 'localhost';
-$database = 'AplicationSys';
+$database = 'fondos_recaudacion';
 $username = 'root';
 $password = '';
 
