@@ -4,7 +4,7 @@ CREATE TABLE `inscripciones` (
   `nombre` varchar(250) NOT NULL,
   `apellidos` varchar(250) NOT NULL,
   `edad` int(250) NOT NULL,
-  `telefono` int(250) NOT NULL,
+  `telefono` varchar(250) NOT NULL,
   `correo` varchar(250) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

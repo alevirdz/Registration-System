@@ -103,20 +103,10 @@ function login (){
         data: data,
         cache: false,
         // dataType: "json",
-        success: function(resp){
-            console.log(resp)   
+        success: function(resp){ 
             if(resp == "true"){
                 window.location="../dashboard/content/Dashboard-panel.php";
-           }else if(resp == 'without_session'){
-            Swal.fire({
-                type: 'error',
-                title: 'No existe la cuenta',
-                text: 'Este usuario no existe',
-                showConfirmButton: false,
-                confirmButtonText: 'Continuar',
-                timer: 3100,
-            });
-            }else if(resp == 'no_pwd_mail'){
+           }else if(resp == 'no_pwd_mail'){
                Swal.fire({
                    type: 'question',
                    title: 'Usuario invalido',
@@ -171,7 +161,7 @@ function registerdesdeAdmin(){
 
     $("input:radio:checked").each(function() {
         var select_tipo =  $(this).val();
-        
+            console.log(select_tipo);
         if( select_tipo != 1){
             console.log("se trata de un usuario mortal")
             const data = {
@@ -317,10 +307,11 @@ function showUser(){
         
     </tbody>
     </table>`);
+    // Send the request
     $.post("../../recepcion/form-register.php", {showUsers: true}, function(resp) {
+        console.log(resp)
         $('#table-register').empty()
         $.each( resp, function( users, user ) {
-
             var fila=`
                 <tr>
                 <th scope="row">${user.id}</th>
@@ -328,84 +319,66 @@ function showUser(){
                 <td>${user.correo}</td>
                 <td>${user.fecha}</td>
                 <td>${user.perfil}</td>
+                <td>${user.estado}</td>
                 <td>
                 <label class="switch">
-                    <input type="checkbox" id="user_${user.id}" value="${user.id}" onclick="activeUser(this)"  />
-                    <span class="slider round"></span>
-                </label></td>
-
-                <td>
+                
+                <input type="checkbox" name="checkbox" id_user="${user.id}" id="terminos" value="${user.id}" onclick=userActive(${user.id}) />
+                <span class="slider round"></span>
+                </label>
                 <a class="btn btn-danger" onclick="deleteProfile(${user.id})"><ion-icon name="trash-outline"></ion-icon></a>
                 </td>
                 </tr>     
                 `;
             $('#table-users').append(fila);
-
             
-
+            if( user.estado == 'Activo'){
+                $("#terminos").attr( "checked", true );
+            }
         });
+        /*
+        <input type="checkbox" name="checked" id_user="${user.id}" id="terminos" value="${user.estado}" checked/>
+        $('#terminos').click(function(){
+            console.log("dio click")
+            if($(this).is(':checked')){
+                console.log('Se ha Marcado la casilla!');
+                const idu = "usuario "+$('input[name="checked"]').val();
+                console.log(idu)
+                
+            } else {
+                console.log('Nuestra casilla de verificación no está marcada!');
+            }
+        }); */
 
-
+        
     }, 'json');
 
 }
 
-function activeUser( id ){
-        const captureUser = id.value;
-       
-        if(id.checked){
-            console.log(id.checked)
-            //each para saber cuales estan activos
-            // $("input:checkbox:checked").each(function() {
-            //     console.log('Actios los usuarios: '+$(this).val());
-            // });
-            
-            const data = {
-                "activeUser": captureUser,
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "../../recepcion/form-register.php",
-                    data: data,
-                    success: function(resp){
-                        console.log(resp)
-                        if(resp == "true"){
-                            $('#table-users').empty()
-                            showUser();
-                        }
-                    },
-                    error: function(resp){
-                    console.log("Error")
-                    }
-                });
-
+function userActive( id ){
+    // if(id.checked){
+    //     console.log("ACTIVADO usuario " + id)
+    // }else{
+    //     console.log("DESACTIVADO usuario "+id)
+    // }
+    /* if( $(id).is(':checked') ) {
+        console.log('Activando al user '+ id);
+    }else{
+        console.log("Desactivado al user "+id)
+    } */
+    $('#terminos:checked').each(
+        function() {
+            alert("El checkbox con el usuario " + $(this).attr("id_user") + " está seleccionado");
+            /* console.log($(this).val()) */
+            /* const userAct = id;
+            console.log("id del usuario: "+userAct)
+            if( userAct == 'Activo'){
+                $("#terminos").attr( "checked", true );
+            }else{
+                $("#terminos").attr( "checked", false );
+            } */
         }
-        else{
-            //each para saber cuales estan desactivados
-            // $("input:checkbox:not(:checked)").each(function() {
-            //     console.log('Desactivados los usuarios: '+$(this).val());
-            // });
-           const data = {
-            "desactiveUser": captureUser,
-            };
-            $.ajax({
-                type: "POST",
-                url: "../../recepcion/form-register.php",
-                data: data,
-                success: function(resp){
-                    console.log(resp)
-                    if(resp == "true"){
-                        $('#table-users').empty()
-                        showUser();
-                        
-                    }
-                },
-                error: function(resp){
-                console.log("Error")
-                }
-            });
-        }
-    
+    );
 }
 
 function deleteProfile( id ){
@@ -588,15 +561,7 @@ function showDonation(){
     <tbody id="table-register">
         
     </tbody>
-    </table>
-    <nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-    </ul>
-    </nav>
-    `);
+    </table>`);
     // Send the request
     $.post("../../recepcion/form-donations.php", {viewDonation: true}, function(resp) {
         $('#table-register').empty()
@@ -611,9 +576,7 @@ function showDonation(){
                 <td>
                 <a  class="btn btn-danger" onclick="deleteDonation(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
                 </td>
-                </tr>
-                
-
+                </tr>     
                 `;
             $('#table-register').append(fila);
         });
@@ -1237,61 +1200,44 @@ $("#editremember").modal("show");
 function smss(){
     const data = {
         "message":    $('#message').val(), 
-        "sms": true, //Intencionalmente
+        "smss": true, //Intencionalmente
     };
-    // ../../recepcion/form-message.php
     $.ajax({
         type: "POST",
-        url: "../../recepcion/form-whatsapp.php",
+        url: "../../recepcion/form-message.php",
         data: data,
         success: function(resp){
-            console.log(resp)
-            if(resp == "true"){
-                var btnMessage = $("#btn-message");
-                btnMessage.css(btnSuccess);
-                btnMessage.text("Enviado");
-                btnMessage.animate({
+            if(resp == "inscrito"){
+                var btnDonate = $("#btn-donation");
+                btnDonate.css(btnSuccess);
+                btnDonate.text("Se ha registrado");
+                btnDonate.animate({
                     height: '10px', 
                     opacity: '0.4',
                 }, 500,);
                 setTimeout(function() {
-                    btnMessage.css(btnSuccess);
-                    btnMessage.text("Enviado");
-                    btnMessage.animate({
+                    btnDonate.css(btnSuccess);
+                    btnDonate.text("Se ha registrado");
+                    btnDonate.animate({
                         height: '100%', 
                         opacity: '0.8',
                     }, 800,);
-                    btnMessage.css(btnStatic);
-                    btnMessage.animate({
+                    btnDonate.css(btnStatic);
+                    btnDonate.animate({
                         height: '100%', 
                         opacity: '1',
                     }, 800,);
-                    btnMessage.text("Enviar mensaje");
+                    btnDonate.text("¡Inscribirme!");
                     $('#formG').trigger("reset");
                 }, 1000);
-                Swal.fire({
-                    type: 'success',
-                    title: 'Whatsapp enviado con éxito',
-                    showConfirmButton: false,
-                    showCloseButton: true
-                });
             }
-            else if(resp == "error_send"){
-                var sendMessage =  $("#btn-message");
-                sendMessage.css(btnWarning);
-                sendMessage.text("Mensaje vacio");
+            else if(resp == "error_letters" || "error_email"){
+                var userUpdate =  $("#btn-donation");
+                    userUpdate.css(btnWarning);
+                    userUpdate.text("Sin registro");
                     setTimeout(function() {
-                        sendMessage.css(btnStatic);
-                        sendMessage.text("Enviar mensaje");
-                    }, 1000);
-            }
-            else if(resp == "empty_fields"){
-                var sendMessage =  $("#btn-message");
-                sendMessage.css(btnWarning);
-                sendMessage.text("Sin registro");
-                    setTimeout(function() {
-                        sendMessage.css(btnStatic);
-                        sendMessage.text("Enviar mensaje");
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("¡Inscribirme!");
                     }, 1000);
             }
         },
@@ -1302,6 +1248,7 @@ function smss(){
 }
 
 function actionMenu( item ){
+    console.log(item)
     switch (item) {
         case 'panel':
             $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
@@ -1329,7 +1276,7 @@ function actionMenu( item ){
           break;
         case 'showUsers':
             $.post("../View-user.php", function(contents){ $("#content").html(contents);  cleanItemMenu(); showUser();
-            $('#item-user-management').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
+            $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'direction':
             $.post("../Direction.php", function(contents){ $("#content").html(contents); cleanItemMenu();
@@ -1359,7 +1306,6 @@ function cleanItemMenu (){
         'item-user-management',
         'item-direction',
         'item-maps',
-        'item-sms',
     ]
     jQuery.each( itemsMenu, function( i, item ) {
        $('#'+item).removeClass("active");

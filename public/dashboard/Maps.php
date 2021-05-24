@@ -1,5 +1,5 @@
 
-<div class="col-12 col-lg-6">
+<div class="col-md-12 col-lg-6">
     <div class="card">
         <div class="card-header">
         <h5 class="card-title">Mapa ubicación del centro</h5>
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="col-12 col-lg-6">
+<div class="col-md-12 col-lg-6">
     <div class="card">
         <div class="card-header">
         <h5 class="card-title">Mapa ubicación del centro</h5>

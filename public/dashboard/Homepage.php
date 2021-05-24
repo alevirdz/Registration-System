@@ -4,7 +4,7 @@ include ('../recepcion/form-panel.php');
 ?>
 <div class="row mb-2 mb-xl-3">
 	<div class="col-auto d-none d-sm-block">
-		<h1>¡Qué bueno que regresaste <?php echo $name ?>!</h1>
+		<h1>¡Qué bueno que regresaste <?php echo $nameUser ?>!</h1>
 		<h3><strong>Analisis</strong> Panel</h3>
 	</div>
 </div>
@@ -16,7 +16,7 @@ include ('../recepcion/form-panel.php');
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">Donaciones</h5>
-										<h1 class="mt-1 mb-3">Balance oculto</h1>
+										<h1 class="mt-1 mb-3"><?php echo '$'. $totalDonation ?></h1>
 										<div class="mb-1">
 											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
 											<span class="text-muted">Since last week</span>
@@ -48,8 +48,7 @@ include ('../recepcion/form-panel.php');
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">usuarios</h5>
-										<!-- <?php echo $usuarios; ?> -->
-										<h1 class="mt-1 mb-3">1</h1>
+										<h1 class="mt-1 mb-3"><?php echo $usuarios; ?></h1>
 										<div class="mb-1">
 											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
 											<span class="text-muted">Since last week</span>
@@ -81,79 +80,33 @@ include ('../recepcion/form-panel.php');
 					<div class="card flex-fill">
 						<div class="card-header">
 
-							<h5 class="card-title mb-0">Latest Projects</h5>
+							<h5 class="card-title mb-0">Lista de usuarios</h5>
 						</div>
 						<table class="table table-hover my-0">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th class="d-none d-xl-table-cell">Start Date</th>
-									<th class="d-none d-xl-table-cell">End Date</th>
-									<th>Status</th>
-									<th class="d-none d-md-table-cell">Assignee</th>
+									<th>Nombres</th>
+									<th class="d-none d-xl-table-cell">Fecha de creación</th>
+									<th class="d-none d-xl-table-cell">Perfil</th>
+									<th>Estado</th>
+									<th class="d-none d-md-table-cell">Correo</th>
 								</tr>
 							</thead>
 							<tbody>
+							<?php foreach( $tableUser as $data ){ ?>
 								<tr>
-									<td>Project Apollo</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-success">Done</span></td>
-									<td class="d-none d-md-table-cell">Vanessa Tucker</td>
+									<td><?php echo $data->nombre;?></td>
+									<td class="d-none d-xl-table-cell"><?php echo $data->fecha;?></td>
+									<td class="d-none d-xl-table-cell"><?php echo $data->perfil;?></td>
+									<td><span class="badge bg-success"><?php echo $data->estado;?></span></td>
+									<td class="d-none d-md-table-cell"><?php echo $data->correo;?></td>
 								</tr>
-								<tr>
-									<td>Project Fireball</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-danger">Cancelled</span></td>
-									<td class="d-none d-md-table-cell">William Harris</td>
-								</tr>
-								<tr>
-									<td>Project Hades</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-success">Done</span></td>
-									<td class="d-none d-md-table-cell">Sharon Lessman</td>
-								</tr>
-								<tr>
-									<td>Project Nitro</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-warning">In progress</span></td>
-									<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-								</tr>
-								<tr>
-									<td>Project Phoenix</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-success">Done</span></td>
-									<td class="d-none d-md-table-cell">William Harris</td>
-								</tr>
-								<tr>
-									<td>Project X</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-success">Done</span></td>
-									<td class="d-none d-md-table-cell">Sharon Lessman</td>
-								</tr>
-								<tr>
-									<td>Project Romeo</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-success">Done</span></td>
-									<td class="d-none d-md-table-cell">Christina Mason</td>
-								</tr>
-								<tr>
-									<td>Project Wombat</td>
-									<td class="d-none d-xl-table-cell">01/01/2021</td>
-									<td class="d-none d-xl-table-cell">31/06/2021</td>
-									<td><span class="badge bg-warning">In progress</span></td>
-									<td class="d-none d-md-table-cell">William Harris</td>
-								</tr>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
 				</div>
+
 				<div class="col-12 col-lg-4 col-xxl-3 d-flex">
 					<div class="card flex-fill w-100">
 						<div class="card-header">
@@ -168,3 +121,64 @@ include ('../recepcion/form-panel.php');
 					</div>
 				</div>
 			</div>
+
+<script>
+
+
+var ctx = document.getElementById('chartjs-dashboard-line').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+   data:{
+   labels: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+        datasets: [{
+            label: 'Percentage',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+},
+    options: {
+        scales: {
+            
+            yAxes: [{
+            ticks: {
+            
+                   min: 0,
+                   max: 100,
+                   callback: function(value){return value+ "%"}
+                },  
+								scaleLabel: {
+                   display: true,
+                   labelString: "Percentage"
+                }
+            }]
+        }
+    }
+});
+
+/* var chart = new Chart(ctx, {
+    type: 'doughnut',
+    data:{
+	datasets: [{
+		data: [60,18,10, 8, 4],
+		backgroundColor: ['#42a5f5', 'red', 'green','blue','violet'],
+		label: 'Comparacion de navegadores'}],
+		labels: ['Google Chrome','Safari','Edge','Firefox','Opera']},
+    options: {responsive: true}
+}); */
+</script>
