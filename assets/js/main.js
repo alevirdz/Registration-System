@@ -1180,21 +1180,26 @@ function updateRemember( id ){
 
 
 function updatePhoto( id ){
-    console.log("Click en subir fotos")
     var fila=`
         <div class="modal fade" id="editremember" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <form class="form-profile" id="formG"  enctype="multipart/form-data">
-                <div class="mb-3">
-                    <label for="recordatorio" class="form-label">Cambiar foto de perfil</label><br>
-                    <input type="file" class="form-control" id="file" name="file" required />
+            <form method="post" action="#" enctype="multipart/form-data">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="">
+                <div class="card-body">
+                    <h5 class="card-title">Sube una foto</h5>
+                    <p class="card-text">Sube una imagen...</p>
+                    <div class="form-group">
+                        <label for="image">Nueva imagen</label>
+                        <input type="file" class="form-control-file" name="image" id="userImage">
+                        <input type="text" class="form-control d-none" name="userProfile" id="userProfile" value="${id}">
+                    </div>
+                    <input type="button" class="btn btn-primary" id="submit" value="Guardar">
                 </div>
-                <div class="d-grid gap-2">
-                <input type="button" id="photoProfile" class="btn btn-danger submitBtn" onclick="photoUser()"value="SAVE"/>
-                </div>
-                </form>
+            </div>
+        </form>
             </div>
         </div>
         </div>
@@ -1204,48 +1209,112 @@ function updatePhoto( id ){
 $('#rememberEdit').html(fila);
 $("#editremember").modal("show");
 
-
+$("#submit").on('click', function() {
+    var formData = new FormData();
+    var files = $('#userImage')[0].files[0];
+    var idUser = $("#userProfile").val();
+    formData.append('file',files);
+    formData.append('idUser',idUser);
+    $.ajax({
+        url: "../../recepcion/form-profile.php",
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            if (response != 0) {
+                $(".card-img-top").attr("src", response);
+            } else {
+                alert('Formato de imagen incorrecto.');
+            }
+        }
+    });
+    return false;
+});
 }
 function photoUser(){
-    let formData = {
-        "photo": $('#nombre').val(), 
-    }
+    // Una arma poderosa
+    // $('input[type=file]').val().replace(/C:\\fakepath\\/i, '')
+    const data = {
+        "fileImg": $('input[type=file]').val().split('\\').pop().replace(/ /g, "")
+    };
+    console.log(data)
     $.ajax({
-        type: 'POST',
-        url: '../../recepcion/form-profile.php',
-        data: new FormData(this),
-        contentType: false,
-        cache: false,
-        processData:false,
-        beforeSend: function(){
-            $('.submitBtn').attr("disabled","disabled");
-            $('#fupForm').css("opacity",".5");
-        },
-        success: function(msg){
-            $('.statusMsg').html('');
-            if(msg == 'ok'){
-                $('#fupForm')[0].reset();
-                $('.statusMsg').html('<span style="font-size:18px;color:#34A853">Form data submitted successfully.</span>');
-            }else{
-                $('.statusMsg').html('<span style="font-size:18px;color:#EA4335">Some problem occurred, please try again.</span>');
+        type: "POST",
+        url: "../../recepcion/form-profile.php",
+        data: data,
+        success: function(resp){
+            if(resp == "true"){
+                var userUpdate =  $("#btn-update-remember");
+                userUpdate.css(btnSuccess);
+                userUpdate.text("Guardando");
+                userUpdate.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    userUpdate.css(btnSuccess);
+                    userUpdate.text("Guardando");
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    userUpdate.css(btnStatic);
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 800,);
+                    userUpdate.text("Guardar");
+                }, 1000);
+                setTimeout(function() {
+                    actionMenu('profile')
+                    $("#editremember").modal("hide");
+                }, 1400);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Recordatorio Actualizado',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                });
+            }else if(resp == "data_invalid"){
+                    var userUpdate =  $("#btn-update-remember");
+                    userUpdate.css(btnWarning);
+                    userUpdate.text("Verificar los campos");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("Guardar");
+                    }, 1000);
+                    // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+            }else if(resp == "empty_fields" ){
+                var userUpdate =  $("#btn-update-remember");
+                userUpdate.css(btnDanger);
+                userUpdate.text("Los campos estan vacios");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar!");
+                }, 1000);
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibi ningun dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
             }
-            $('#fupForm').css("opacity","");
-            $(".submitBtn").removeAttr("disabled");
-        }
-    });
-    
-    //file type validation
-    $("#file").change(function() {
-        var file = this.files[0];
-        var imagefile = file.type;
-        var match= ["image/jpeg","image/png","image/jpg"];
-        if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2]))){
-            alert('Please select a valid image file (JPEG/JPG/PNG).');
-            $("#file").val('');
-            return false;
+        },
+        error: function(resp){
+            alert("no se guardo");
         }
     });
 }
+
 function smss(){
     const data = {
         "message":    $('#message').val(), 

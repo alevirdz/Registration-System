@@ -1,8 +1,5 @@
 <?php 
 
-//$idUser;
-// $rolUser;
-
 // Preparacion BD Consulta automatica Inscripciones
 $stmt = $BD->prepare("SELECT * FROM inscripciones;" );
 $stmt->execute();

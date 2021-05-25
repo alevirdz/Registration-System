@@ -11,7 +11,7 @@ Consultas, Actualiza el usuario, Actualizar recordatorio
 
 //consulta la informacion del usuario
 if( isset($idUser) ){
- $stmt = $BD->prepare("SELECT nombre, correo, recordatorio, perfil, rol FROM usuarios WHERE id = :id");
+ $stmt = $BD->prepare("SELECT nombre, correo, recordatorio, perfil, rol, foto FROM usuarios WHERE id = :id");
  $stmt->bindParam (':id', $idUser);
  $stmt->execute();
  $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -23,6 +23,7 @@ if( isset($idUser) ){
     $rememberUser = $result['recordatorio'];
     $perfilUser = $result['perfil'];
     $rolUser = $result['rol'];
+    $imageUser = $result['foto'];
   }else{
     echo '<div class="alert alert-danger" role="alert">
       No existe el usuario
@@ -84,47 +85,34 @@ if( isset($_POST['upDataRemember']) && isset($_POST['recordatorio']) ){
   }
 }
 
-//Subir archivo
-// https://cursania.com/post/cargar-imagenes-con-php-y-ajax
-// $ruta_carpeta = "imagenes/";
-// $nombre_archivo = "imagen_".date("dHis") .".". pathinfo($_FILES["imagen"]["name"],PATHINFO_EXTENSION);
-// $ruta_guardar_archivo = $ruta_carpeta . $nombre_archivo;
 
-// if(move_uploaded_file($_FILES["imagen"]["tmp_name"],$ruta_guardar_archivo)){
-//     echo "imagen cargada";
-// }else{
-//     echo "no se pudo cargar";
-// }
+if( isset($_FILES["file"]) && isset($_POST["idUser"]) && !empty($_FILES["file"]) && !empty($_POST["idUser"]) ){
+  var_dump( $_POST["idUser"] );
+  var_dump( $_FILES["file"] );
+  $userId = $_POST["idUser"];
+  $file_name = $_FILES["file"]["name"];
+  $file_tmpname = $_FILES["file"]["tmp_name"];
+  $file_type = $_FILES["file"]["type"];
+  $path_profile_save = "../../assets/user/profile/";
 
-
-
-
-
-
-if(!empty($_POST['name']) || !empty($_POST['email']) || !empty($_FILES['file']['name'])){
-  $uploadedFile = '';
-  if(!empty($_FILES["file"]["type"])){
-      $fileName = time().'_'.$_FILES['file']['name'];
-      $valid_extensions = array("jpeg", "jpg", "png");
-      $temporary = explode(".", $_FILES["file"]["name"]);
-      $file_extension = end($temporary);
-      if((($_FILES["hard_file"]["type"] == "image/png") || ($_FILES["file"]["type"] == "image/jpg") || ($_FILES["file"]["type"] == "image/jpeg")) && in_array($file_extension, $valid_extensions)){
-          $sourcePath = $_FILES['file']['tmp_name'];
-          $targetPath = "uploads/".$fileName;
-          if(move_uploaded_file($sourcePath,$targetPath)){
-              $uploadedFile = $fileName;
-          }
+  if ( ($file_type == "image/png") || ($file_type == "image/jpeg") || ($file_type == "image/jpg") || ($file_type  == "image/svg") ){
+      $file_name_md5 = md5($file_name);
+       // Prepare
+       $path_profile_user = "../../../assets/user/profile/".$file_name;
+       $stmt = $BD->prepare("UPDATE usuarios SET foto=? WHERE id=$userId ");
+       $stmt->bindParam(1, $path_profile_user);
+       // Excecute
+       $stmt->execute();
+       echo 'true';
+      //guardamos la imagen en la carpeta
+      if ( move_uploaded_file( $file_tmpname, $path_profile_save . $file_name ) ) {
+          //more code here...
+          echo "images/".$_FILES['file']['name'];
+      } else {
+          echo 0;
       }
+
+  } else {
+    echo 0;
   }
-  
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  
-  //include database configuration file
-  include_once 'dbConfig.php';
-  
-  //insert form data in the database
-  $insert = $db->query("INSERT form_data (name,email,file_name) VALUES ('".$name."','".$email."','".$uploadedFile."')");
-  
-  echo $insert?'ok':'err';
 }
