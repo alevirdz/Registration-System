@@ -135,7 +135,6 @@ if( isset($_POST['activar'])  && !empty($_POST['activar']) ){
     // Prepare
     $userId = trim($_POST['activar']);
     $checkedUserId  = checkedNumber($userId);
-    var_dump($checkedUserId);
     if( $checkedUserId == true ){
         $active = 'Activo';
         $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");
@@ -153,7 +152,6 @@ if( isset($_POST['desactivar'])  && !empty($_POST['desactivar']) ){
     // Prepare
     $userId = trim($_POST['desactivar']);
     $checkedUserId  = checkedNumber($userId);
-    var_dump($checkedUserId);
     if( $checkedUserId == true ){
         $desactive = 'Desactivado';
         $stmt = $BD->prepare("UPDATE usuarios SET estado=?  WHERE id=$userId");

@@ -2,6 +2,7 @@
 require '../../config/database.php';
 
 if( isset($_POST['sms'])  && isset($_POST['message']) ){
+	var_dump($_POST['sms']);
 	if( !empty($_POST['message']) ){
 
 		$messageWhatsapp =  $_POST['message'];

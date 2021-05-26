@@ -349,7 +349,7 @@ function showUser(){
                     url: "../../recepcion/form-register.php",
                     data: data,
                     success: function(resp){
-                        if(resp == "true"){
+                        if(resp === 'true'){
                             $('#table-users').empty()
                             showUser();
                             
@@ -750,9 +750,7 @@ function inscriptions(){
         }
     });
 }
-// calendar-clear-outline <
-//codigo que saque de la tabla para que un usario comun no tenga acceso
-// a class="btn btn btn-danger d-block align-icons align-self-center" id="inscriptionDeleteAll" onclick="inscriptionDeleteAll()"><ion-icon name="flame-outline" size="small"></ion-icon>Restaurar</a>
+
 function showInscriptions(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
@@ -1285,7 +1283,7 @@ function smss(){
     };
     $.ajax({
         type: "POST",
-        url: "../../recepcion/form-message.php",
+        url: "../../recepcion/form-whatsapp.php",
         data: data,
         success: function(resp){
             if(resp == "inscrito"){
