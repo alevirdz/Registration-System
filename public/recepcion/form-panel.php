@@ -1,4 +1,12 @@
 <?php 
+$idUser;
+$stmt = $BD->prepare("SELECT nombre, correo, recordatorio, perfil, rol, foto FROM usuarios WHERE id = :id");
+$stmt->bindParam (':id', $idUser);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$nameUser = $result['nombre'];
+$imageUser = $result['foto'];
+
 
 // Preparacion BD Consulta automatica Inscripciones
 $stmt = $BD->prepare("SELECT * FROM inscripciones;" );
@@ -17,7 +25,7 @@ $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 $begintotal = 0;
 foreach( $result as $data ){
-    $begintotal +=$data->donacion;
+    $begintotal += (double)$data->donacion;
   }
 $totalDonation = $begintotal;
 // Preparacion BD Consulta automatica Usuarios Sistema

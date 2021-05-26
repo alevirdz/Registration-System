@@ -19,8 +19,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Donaciones</h5>
 										<h1 class="mt-1 mb-3"><?php echo '$'. $totalDonation ?></h1>
 										<div class="mb-1">
-											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -29,8 +28,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Inscritos</h5>
 										<h1 class="mt-1 mb-3"><?php echo $inscriptions;  ?></h1>
 										<div class="mb-1">
-											<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -41,8 +39,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Productos</h5>
 										<h1 class="mt-1 mb-3">$21.300</h1>
 										<div class="mb-1">
-											<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -51,8 +48,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Usuarios</h5>
 										<h1 class="mt-1 mb-3"><?php echo $usuarios; ?></h1>
 										<div class="mb-1">
-											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -64,7 +60,7 @@ include ('../recepcion/form-panel.php');
 					<div class="card flex-fill w-100">
 						<div class="card-header">
 
-							<h5 class="card-title mb-0">Escripciones grafica</h5>
+							<h5 class="card-title mb-0">Inscripciones grafica</h5>
 						</div>
 						<div class="card-body py-3">
 							<div class="chart chart-sm">
@@ -97,7 +93,7 @@ include ('../recepcion/form-panel.php');
 									<td><?php echo $data->nombre;?></td>
 									<td class="d-none d-xl-table-cell"><?php echo $data->fecha;?></td>
 									<td class="d-none d-xl-table-cell"><?php echo $data->perfil;?></td>
-									<td><span class="badge bg-success"><?php echo $data->estado;?></span></td>
+									<td><span class="badge <?php echo $data->estado == 'Desactivado' ? 'bg-danger' : 'bg-success'  ?> "><?php echo $data->estado; ?></span></td>
 									<td class="d-none d-md-table-cell"><?php echo $data->correo;?></td>
 								</tr>
 								<?php } ?>
@@ -130,8 +126,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Donaciones</h5>
 										<h1 class="mt-1 mb-3">Balance oculto</h1>
 										<div class="mb-1">
-											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -140,8 +135,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Inscritos</h5>
 										<h1 class="mt-1 mb-3"><?php echo $inscriptions;  ?></h1>
 										<div class="mb-1">
-											<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -152,8 +146,7 @@ include ('../recepcion/form-panel.php');
 										<h5 class="card-title mb-4">Usuarios</h5>
 										<h1 class="mt-1 mb-3"><?php echo $usuarios; ?></h1>
 										<div class="mb-1">
-											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-											<span class="text-muted">Since last week</span>
+											<span class="text-muted">Desde la última semana</span>
 										</div>
 									</div>
 								</div>
@@ -165,7 +158,7 @@ include ('../recepcion/form-panel.php');
 					<div class="card flex-fill w-100">
 						<div class="card-header">
 
-							<h5 class="card-title mb-0">Escripciones grafica</h5>
+							<h5 class="card-title mb-0">Inscripciones gráfica</h5>
 						</div>
 						<div class="card-body py-3">
 							<div class="chart chart-sm">

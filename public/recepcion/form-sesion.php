@@ -15,7 +15,7 @@ if(isset($_POST['correo']) && isset($_POST['contraseña']) ){
         if( $checkedEmail && $checkedPwd === true ){
 
             // Preparacion BD
-            $stmt = $BD->prepare("SELECT nombre, correo, contrasena, id, rol, estado FROM usuarios WHERE correo = :correo");
+            $stmt = $BD->prepare("SELECT nombre, correo, contrasena, id, rol, estado, foto FROM usuarios WHERE correo = :correo");
             $stmt->bindParam (':correo', $userEmail);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -31,9 +31,7 @@ if(isset($_POST['correo']) && isset($_POST['contraseña']) ){
                   $mailUser = $_SESSION['user_mail'] = $result['correo'];
                   $idUser   = $_SESSION['user_id']   = $result['id'];
                   $rolUser  = $_SESSION['tipo_rol']  = $result['rol'];
-                  //aqui esta el error
-                  $imageUser  = $_SESSION['image_user']  = $result['foto'];
-                  
+                  $imageUser  = $_SESSION['user_image']  = $result['foto'];
                   // $user = array('nameUser'=>$nameUser , 'idUser'=>$idUser);
                   // echo json_encode($user);
                   echo "true";

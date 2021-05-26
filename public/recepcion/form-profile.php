@@ -87,30 +87,31 @@ if( isset($_POST['upDataRemember']) && isset($_POST['recordatorio']) ){
 
 
 if( isset($_FILES["file"]) && isset($_POST["idUser"]) && !empty($_FILES["file"]) && !empty($_POST["idUser"]) ){
-  var_dump( $_POST["idUser"] );
-  var_dump( $_FILES["file"] );
   $userId = $_POST["idUser"];
   $file_name = $_FILES["file"]["name"];
   $file_tmpname = $_FILES["file"]["tmp_name"];
   $file_type = $_FILES["file"]["type"];
   $path_profile_save = "../../assets/user/profile/";
-
-  if ( ($file_type == "image/png") || ($file_type == "image/jpeg") || ($file_type == "image/jpg") || ($file_type  == "image/svg") ){
-      $file_name_md5 = md5($file_name);
+  if ( ($file_type == "image/png") || ($file_type == "image/jpeg") || ($file_type == "image/jpg") || ($file_type  == "image/svg") || ($file_type  == "image/svg+xml") ){
+      $file_name_md5 = md5($file_name); 
        // Prepare
        $path_profile_user = "../../../assets/user/profile/".$file_name;
        $stmt = $BD->prepare("UPDATE usuarios SET foto=? WHERE id=$userId ");
        $stmt->bindParam(1, $path_profile_user);
-       // Excecute
        $stmt->execute();
-       echo 'true';
+       if(!file_exists($path_profile_save . $file_name)) {
+          move_uploaded_file ($file_tmpname, $path_profile_save . $file_name );
+          echo $path_profile_user;
+       }else{
+        echo "ya existe este archivo";
+       }
       //guardamos la imagen en la carpeta
-      if ( move_uploaded_file( $file_tmpname, $path_profile_save . $file_name ) ) {
-          //more code here...
-          echo "images/".$_FILES['file']['name'];
-      } else {
-          echo 0;
-      }
+      // if ( move_uploaded_file( $file_tmpname, $path_profile_save . $file_name ) ) {
+      //     //consultamos la bd
+      //     echo "consultamos y mostramos la imagen";
+      // } else {
+      //     echo 0;
+      // }
 
   } else {
     echo 0;

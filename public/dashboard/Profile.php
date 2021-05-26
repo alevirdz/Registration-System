@@ -1,13 +1,6 @@
 <?php 
 require '../recepcion/form-profile.php';
 require 'Alerts.php';
-// $idUser;
-// $nameUser;
-// $mailUser;
-// $rememberUser;
-// $perfilUser;
-//Sino sucede nada por comentar esto entonces hacemos un require para el form de panel
-//y ponemos los script para que se llame automaticamente
 ?>
 <p class="none" id="id" value="<?php echo $idUser ?>"></p>
 <h1 class="h3 mb-3">Perfil</h1>
@@ -20,13 +13,11 @@ require 'Alerts.php';
             </div>
             <div class="card-body text-center">
                 <div class="img-profile">
-                <!-- https://picsum.photos/30/30 -->
-                <img  src="../../../assets/user/profile/CARLOS-PERFIL.png" alt="Christina Mason" class="img-fluid rounded-circle mb-2" width="128" height="128" />
+                <img  src="<?php echo $imageUser == '' ? '../../../assets/user/profile/default_1.svg' : $imageUser;  ?>" alt="Foto de perfil" class=" rounded-circle mb-2" id="userImg" width="128" height="128" />
                 <span style="font-size: 15px;vertical-align: middle; position:absolute; top:180px; left:150;" onclick="updatePhoto(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span>
                 </div>
 
                 <h5 class="card-title mb-0" id="name"><?php echo $nameUser ?></h5>
-                <!-- <a class="btn btn-primary btn-sm">Developer</a> -->
                 <div class="text-muted mb-2"><?php echo $perfilUser ?></div>
             </div>
             <hr class="my-0" />
@@ -48,7 +39,6 @@ require 'Alerts.php';
             </div>
             <div class="card-body h-100">
             <form class="form-donation" id="formG">
-                        <!-- <h2 class="text-center">Actualizar información</h2> -->
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombre</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $nameUser ?>" disabled required>

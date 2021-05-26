@@ -1,9 +1,13 @@
-
+<?php
+include ('../../../config/database.php'); 
+include ('../../recepcion/form-panel.php'); 
+// include ('../../recepcion/form-profile.php'); 
+?>
 <nav id="sidebar" class="sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="Dashboard-panel.php" id="panel">
-					<img class="img-fluid rounded-circle" src="../../../assets/user/profile/CARLOS-PERFIL.png" alt="foto del usuario" width="50" height="50">
-          			<span class="align-middle"> <?php echo $name ?></span>
+					<img class="rounded-circle" src="<?php echo $imageUser == '' ? '../../../assets/user/profile/default_1.svg' : $imageUser;  ?>" alt="foto del usuario" id="userImgSB" width="50" height="50">
+          			<span class="align-middle"> <?php echo $nameUser ?></span>
         		</a>
 
 				<ul class="sidebar-nav">

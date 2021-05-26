@@ -80,8 +80,9 @@ if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST
                }else{
                    $defaultRemember = 'Este es un espacio para agregar un mensaje personal, como una cita, un recordatorio o un mensaje positivo...';
                    $status = "Activo";
+                   $photo = "../../../assets/user/profile/default_1.svg";
                    // Prepare
-                   $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena, recordatorio, perfil, rol, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                   $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena, recordatorio, perfil, rol, estado, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                    $hashedPwd = password_hash( $userPwd, PASSWORD_BCRYPT);
                    $stmt->bindParam(1, $username);
                    $stmt->bindParam(2, $userEmail);
@@ -90,6 +91,7 @@ if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST
                    $stmt->bindParam(5, $typeProfile);
                    $stmt->bindParam(6, $rolUser);
                    $stmt->bindParam(7, $status);
+                   $stmt->bindParam(8, $photo);
                    // Excecute
                    $stmt->execute();
                    echo 'true';
