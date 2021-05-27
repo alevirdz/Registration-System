@@ -22,9 +22,19 @@ function validateForm (){
                 required:true,
                 email: true
             },
+            edad:{
+                required:true,
+                maxlength:2,
+                digits: true,
+            },
+            telefono:{
+                required:true,
+                minlength:12,
+                maxlength:12,
+                digits: true,
+            },
             donacion:{
                 required: true,
-               
             },
             contraseña:{
                 required:true,
@@ -39,11 +49,11 @@ function validateForm (){
         messages : {
             nombre:{
                 required: "Este campo es requerido",
-                letters: "Solo letras",
+                letters: "Sólo se permiten letras",
             },
             apellidos:{
                 required: "Este campo es requerido",
-                letters: "Solo letras",
+                letters: "Sólo se permiten letras",
             },
             correo: {
                 required: "Este campo es requerido",
@@ -51,6 +61,10 @@ function validateForm (){
             },
             donacion: {
                 required: "Este campo es requerido",
+            },
+            telefono: {
+                required: "Este campo es requerido",
+                letters: "Sólo se permiten números de 12 caracteres.",
             },
             contraseña: {
               required: "Este campo es requerido",
@@ -127,12 +141,20 @@ function login (){
            }else if(resp == 'empty_fields'){
                Swal.fire({
                    type: 'question',
-                   title: '¡Vaya! No recibi ningun dato',
+                   title: '¡Vaya! No recibí ningún dato',
                    text: '¿Deseas intentarlo nuevamente?',
                    showConfirmButton: true,
                    confirmButtonText: 'Continuar',
                });
-           }
+           }else if(resp == 'without_session'){
+            Swal.fire({
+                type: 'error',
+                title: '¡Vaya! no existe este usuario',
+                text: 'Comunicate con el administrador',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
+        }
         }
     });
 }
@@ -212,7 +234,7 @@ function registerdesdeAdmin(){
                     }else if(resp == "empty_fields"){
                         Swal.fire({
                             type: 'question',
-                            title: '¡Vaya! No recibi ningun dato',
+                            title: '¡Vaya! No recibí ningún dato',
                             text: '¿Deseas intentarlo nuevamente?',
                             showConfirmButton: true,
                             confirmButtonText: 'Continuar',
@@ -220,7 +242,13 @@ function registerdesdeAdmin(){
                     }
                 },
                 error: function(resp){
-                    console.log("EROOR")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                  }
             });
         }else{
@@ -264,7 +292,7 @@ function registerdesdeAdmin(){
                     }else if(resp == "empty_fields"){
                         Swal.fire({
                             type: 'question',
-                            title: '¡Vaya! No recibi ningun dato',
+                            title: '¡Vaya! No recibí ningún dato',
                             text: '¿Deseas intentarlo nuevamente?',
                             showConfirmButton: true,
                             confirmButtonText: 'Continuar',
@@ -272,7 +300,13 @@ function registerdesdeAdmin(){
                     }
                 },
                 error: function(resp){
-                    console.log("EROOR")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                  }
             });
         }
@@ -356,7 +390,13 @@ function showUser(){
                         }
                     },
                     error: function(resp){
-                    console.log("Error")
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Se perdió la conexión, contacta al proveedor.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        });
                     }
                 });
                 
@@ -377,7 +417,13 @@ function showUser(){
                         }
                     },
                     error: function(resp){
-                    console.log("Error")
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Se perdió la conexión, contacta al proveedor.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        });
                     }
                 });
             }
@@ -416,7 +462,13 @@ function deleteProfile( id ){
                     }
                 },
                 error: function(resp){
-                console.log("Error")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                 }
             });
     
@@ -425,9 +477,8 @@ function deleteProfile( id ){
         }
         })
 }
-
+//link al registro desde el front
 function register(){
-    alert("SI DIO EL CLICK")
     const data = {
         "nombre":       $('#nombre').val(), 
         "correo":       $('#correo').val(), 
@@ -457,7 +508,13 @@ function register(){
             }
         },
         error: function(resp){
-            console.log("EROOR")
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
          }
     });
 }
@@ -531,7 +588,7 @@ function donations(){
                     }, 1000);
                     Swal.fire({
                         type: 'question',
-                        title: '¡Vaya! No recibi ningun dato',
+                        title: '¡Vaya! No recibí ningún dato',
                         text: '¿Deseas intentarlo nuevamente?',
                         showConfirmButton: true,
                         confirmButtonText: 'Continuar',
@@ -539,7 +596,13 @@ function donations(){
             }
         },
         error: function(resp){
-           console.log("EROOR")
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
         }
     });
 }
@@ -619,7 +682,13 @@ function deleteDonation( id ){
                     }
                 },
                 error: function(resp){
-                console.log("Error")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                 }
             });
     
@@ -658,7 +727,13 @@ function deleteDonationAll( ){
                     }
                 },
                 error: function(resp){
-                console.log("Error")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                 }
             });
 
@@ -668,7 +743,7 @@ function deleteDonationAll( ){
         });
 }
 
-function inscriptions(){
+function inscriptions(ext){
     const data = {
         "nombre":    $('#nombre').val(), 
         "apellidos": $('#apellidos').val(),
@@ -677,12 +752,14 @@ function inscriptions(){
         "correo":    $('#correo').val(),
         "createInscriptions": true,
     };
+    if(ext == 1){url = "../recepcion/form-inscriptions.php";}
+    else{url = "../../recepcion/form-inscriptions.php";}
+    
     $.ajax({
         type: "POST",
-        url: "../../recepcion/form-inscriptions.php",
+        url: url,
         data: data,
         success: function(resp){
-            console.log(resp);
             if(resp == "true"){
                 var btnDonate = $("#btn-donation");
                 btnDonate.css(btnSuccess);
@@ -738,7 +815,7 @@ function inscriptions(){
                     }, 1000);
                     Swal.fire({
                         type: 'question',
-                        title: '¡Vaya! No recibi ningun dato',
+                        title: '¡Vaya! No recibí ningún dato',
                         text: '¿Deseas intentarlo nuevamente?',
                         showConfirmButton: true,
                         confirmButtonText: 'Continuar',
@@ -746,7 +823,13 @@ function inscriptions(){
             }
         },
         error: function(resp){
-           console.log("EROOR")
+           Swal.fire({
+            type: 'error',
+            title: 'Houston, tenemos un problema...',
+            text: 'Se perdió la conexión, contacta al proveedor.',
+            showConfirmButton: true,
+            confirmButtonText: 'Continuar',
+        })
         }
     });
 }
@@ -897,7 +980,13 @@ function updateInscriptions( id ){
             }
         },
         error: function(resp){
-           console.log("Error")
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
         }
     });
 }
@@ -929,7 +1018,13 @@ function deleteInscriptions( id ){
                     }
                 },
                 error: function(resp){
-                console.log("Error")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                 }
             });
     
@@ -966,7 +1061,13 @@ function inscriptionDeleteAll( ){
                     }
                 },
                 error: function(resp){
-                console.log("Error")
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
                 }
             });
 
@@ -1052,7 +1153,7 @@ function Saveprofile( id ){
                 }, 1000);
                 Swal.fire({
                     type: 'question',
-                    title: '¡Vaya! No recibi ningun dato',
+                    title: '¡Vaya! No recibí ningún dato',
                     text: '¿Deseas intentarlo nuevamente?',
                     showConfirmButton: true,
                     confirmButtonText: 'Continuar',
@@ -1062,7 +1163,13 @@ function Saveprofile( id ){
            
         },
         error: function(resp){
-            alert("no se guardo");
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
         }
     });
 }
@@ -1164,7 +1271,7 @@ function updateRemember( id ){
                 }, 1000);
                 Swal.fire({
                     type: 'question',
-                    title: '¡Vaya! No recibi ningun dato',
+                    title: '¡Vaya! No recibí ningún dato',
                     text: '¿Deseas intentarlo nuevamente?',
                     showConfirmButton: true,
                     confirmButtonText: 'Continuar',
@@ -1172,7 +1279,13 @@ function updateRemember( id ){
             }
         },
         error: function(resp){
-            alert("no se guardo");
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
         }
     });
     // console.log('id '+id +" Descubriste una nueva funcion que no se ha programado")
@@ -1321,7 +1434,13 @@ function smss(){
             }
         },
         error: function(resp){
-           console.log("EROOR")
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
         }
     });
 }

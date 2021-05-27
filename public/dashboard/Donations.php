@@ -39,7 +39,7 @@ require './Sesiones.php';
                         <h2 class="text-center">A Donar</h2>
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" required>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Apellidos</label>

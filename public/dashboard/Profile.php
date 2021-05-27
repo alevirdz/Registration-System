@@ -56,5 +56,6 @@ require 'Alerts.php';
             </div>
         </div>
     </div>
+    
 </div>
 <div id="rememberEdit"></div>

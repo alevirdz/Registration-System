@@ -13,9 +13,31 @@ body{
     -webkit-box-shadow: 2px 5px 9px 5px rgba(0,0,0,0.17); 
     box-shadow: 2px 5px 9px 5px rgba(0,0,0,0.17); 
   }
-
+  .btn-purple-light{
+    color: #fff;
+    background-color: #8d55f0b8;
+    border-color: #cab6ee;
+  }
 span.msg-error{ color: red; font-size: 0.8em; }
 .background-header{
   background: #673bb6;
-  height: 15vh;
+  height: 25vh;
+}
+.styles{
+  width: 50%; 
+  margin: 0 auto; 
+  border-top-color: #a179ea; 
+  border-top-width: 5px; 
+  border-radius: .50rem; 
+  box-shadow: 2px 5px 9px 5px rgb(0 0 0 / 5%);
+}
+@media only screen and (max-width : 768px) {
+  .styles{
+    width: 100%; 
+    margin: 0 auto; 
+    border-top-color: #a179ea; 
+    border-top-width: 5px; 
+    border-radius: .50rem; 
+    box-shadow: 2px 5px 9px 5px rgb(0 0 0 / 5%);
+  }
 }

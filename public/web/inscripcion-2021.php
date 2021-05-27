@@ -1,6 +1,6 @@
 <?php 
 include '../resources/layouts/links-header-index.php'; 
-include '../resources/layouts/header.php'; 
+
 ?>
 <style>
     body{
@@ -15,7 +15,7 @@ include '../resources/layouts/header.php';
 
 <section style="margin-top:-5rem;">
     <div class="container">
-        <div class="card" style="width: 50%; margin: 0 auto; border-top-color: #a179ea; border-top-width: 5px; border-radius: .50rem; box-shadow: 2px 5px 9px 5px rgb(0 0 0 / 5%);">
+        <div class="card styles">
             <div class="card-body">
                 <div class="row">
 
@@ -43,7 +43,7 @@ include '../resources/layouts/header.php';
                             <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico">
                         </div>
                         <div class="d-grid gap-2">
-                            <a type="button" class="btn btn-dark" name="btn-donation" id="btn-donation" onclick="inscriptions()">Enviar</a>
+                            <a type="button" class="btn btn-purple-light" name="btn-purple-light" id="btn-inscription" onclick="inscriptions(1)">Enviar</a>
                         </div>
                     </form>
                 </div>

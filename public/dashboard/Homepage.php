@@ -158,7 +158,7 @@ include ('../recepcion/form-panel.php');
 					<div class="card flex-fill w-100">
 						<div class="card-header">
 
-							<h5 class="card-title mb-0">Inscripciones gráfica</h5>
+							<h5 class="card-title mb-0">Inscripciones grfica</h5>
 						</div>
 						<div class="card-body py-3">
 							<div class="chart chart-sm">
@@ -201,33 +201,24 @@ var myChart = new Chart(ctx, {
             borderWidth: 1
         }]
 },
-    options: {
+options: {
         scales: {
-            
-            yAxes: [{
-            ticks: {
-            
-                   min: 0,
-                   max: 100,
-                   callback: function(value){return value+ "%"}
-                },  
-								scaleLabel: {
-                   display: true,
-                   labelString: "Percentage"
-                }
-            }]
+            x: {
+                type: 'time',
+                min: new Date('2020-05-26').valueOf(),
+                max: new Date('2020-05-27').valueOf()
+            },
+            y: {
+                type: 'linear',
+                min: 0,
+                max: 100
+            }
         }
     }
 });
 
-/* var chart = new Chart(ctx, {
-    type: 'doughnut',
-    data:{
-	datasets: [{
-		data: [60,18,10, 8, 4],
-		backgroundColor: ['#42a5f5', 'red', 'green','blue','violet'],
-		label: 'Comparacion de navegadores'}],
-		labels: ['Google Chrome','Safari','Edge','Firefox','Opera']},
-    options: {responsive: true}
-}); */
+
+
+
+
 </script>

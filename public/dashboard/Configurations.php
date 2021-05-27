@@ -1,35 +1,24 @@
-<section class="py-3" style="background:rgb(250 251 252);">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <h1 class="font-weight-bold">Bienvenido Configuraciones</h1>
-                            <p class="lead text-muted">Revisa la informacion</p>
-                        </div>
-                    </div>
-                </div>
+<section class="py-3">
+    <div class="container">
+        <div class="card">
+        <div class="card-body">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1 class="font-weight-bold">Bienvenido Configuraciones</h1>
+                <p class="lead text-muted" id="subtitle-configuration">Revisa la informacion</p>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
 </section>
+
 <section>
     <div class="container">
         <div class="row">
             <h3>Cambiar color del dashboard</h3>
 
-            <form class="form-login" id="formulario" action="../recepcion/form-panel.php" method="POST">
-                <h2 class="text-center">Colores</h2>
-                <div class="mb-3">
-                    <!-- <label for="user" class="form-label">Black</label>
-                    <a type="button" class="btn btn-primary" id="bg-black" value="bg-black">Negro</a> -->
-                    <input type="text" placeholder="Escribe tu nombre" name="nombre" required autofocus title="Ingresa tu nombre porfavor">
-        <input type="number" placeholder="Ingresa tu edad" name="edad" required title="Ingresa tu edad porfavor">
-        <br><br>
-                </div>
-                <div class="d-grid gap-2">
-                <input type="submit" id="btnEnviar" name="btnEnviar" value="Enviar formulario">
-                </div>
-            </form>
 
-
-
-            -
             <div class="col">
                 
                 <div class="card">
