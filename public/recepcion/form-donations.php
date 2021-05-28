@@ -12,16 +12,25 @@ if( isset( $_POST['viewDonation']) ){
     $stmt = $BD->prepare("SELECT * FROM donaciones");
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-    
+    //pagination donation
+    //https://www.youtube.com/watch?v=tRUg2fSLRJo
+    $paginaPrimary = 1;
     $paginateIn = 4;
     $numPage = $stmt->rowCount();
+    var_dump($numPage);
     $splitePage = $numPage/$paginateIn;
+    var_dump($splitePage);
     $round = ceil($splitePage);
-
+    var_dump($round);
+    $stmt = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaPrimary, $paginateIn");
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+    //traemos solo 4 resultados
+    echo "traemos solo 4 resultados: ".json_encode($results);
      if($result >0  ){
 
         //returns data as JSON format
-        echo json_encode($result);
+        // echo json_encode($result);
 
      }else{
        echo 'Error';
