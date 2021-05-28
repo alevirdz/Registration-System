@@ -2,8 +2,6 @@
 CREATE TABLE `donaciones` (
   `id` int(250) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `apellidos` varchar(255) NOT NULL,
-  `correo` varchar(255) NOT NULL,
   `donacion` varchar(255) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -522,8 +522,6 @@ function register(){
 function donations(){
     const data = {
         "nombre":    $('#nombre').val(), 
-        "apellidos": $('#apellidos').val(), 
-        "correo":    $('#correo').val(), 
         "donacion":  $('#donacion').val(),
         "insertDonations": true,
     };
@@ -622,7 +620,6 @@ function showDonation(){
         <tr>
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
         <th scope="col">Donacion</th>
         <th scope="col">Fecha</th>
         <th scope="col">Acciones</th>
@@ -640,7 +637,6 @@ function showDonation(){
                 <tr>
                 <th scope="row">${valor.id}</th>
                 <td>${valor.nombre}</td>
-                <td>${valor.apellidos}</td>
                 <td>$${valor.donacion}</td>
                 <td>${valor.fecha}</td>
                 <td>

@@ -42,14 +42,6 @@ require './Sesiones.php';
                             <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
                         </div>
                         <div class="mb-3">
-                            <label for="user" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="user" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="user" class="form-label">Presupuesto de la donación</label>
                             <input class="form-control" name="donacion" id="donacion" placeholder="$0.00" required>
                         </div>

@@ -30,27 +30,22 @@ if( isset( $_POST['viewDonation']) ){
 }
 
 // Inserta en la base de datos
-if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['correo'])  && isset($_POST['donacion']) ){
+if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST['donacion']) ){
      //Verificacion
-     if( !empty($_POST['insertDonations']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['correo']) && !empty($_POST['donacion']) ){
+     if( !empty($_POST['insertDonations']) && !empty($_POST['nombre']) && !empty($_POST['donacion']) ){
 
         $userName    = trim($_POST['nombre']);
-        $userSurname  = trim($_POST['apellidos']);
-        $userEmail    = trim($_POST['correo']);
         $userDonation = trim($_POST['donacion']);
         $cleanDonation = preg_replace('/[$#!¡?¿"%&=\-*\/@+ (\) a-z A-Z ]/', '', $userDonation);
         $checkedMoneda  = checkedMoneda($cleanDonation);
         $checkedName    = checkedText($userName);
-        $checkedSurname = checkedText($userSurname);
-        $checkedEmail   = checkedEmail($userEmail);
+
         //Las validaciones devuelven falso porque solo pido la donacion
-            if($checkedName && $checkedSurname && $checkedEmail === true){
+            if($checkedName === true){
             // Prepare
-            $stmt = $BD->prepare("INSERT INTO donaciones (nombre, apellidos, correo, donacion) VALUES (?, ?, ?, ?)");
+            $stmt = $BD->prepare("INSERT INTO donaciones (nombre, donacion) VALUES (?, ?)");
             $stmt->bindParam(1, $userName);
-            $stmt->bindParam(2, $userSurname);
-            $stmt->bindParam(3, $userEmail);
-            $stmt->bindParam(4, $cleanDonation);
+            $stmt->bindParam(2, $cleanDonation);
             // Excecute
             $stmt->execute();
             echo "true";
