@@ -628,11 +628,37 @@ function showDonation(){
     <tbody id="table-register">
         
     </tbody>
-    </table>`);
+    </table>
+    <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+            </li>
+                <div class="d-flex" id="table-item">
+                </div>
+            <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+    `
+    );
     // Send the request
     $.post("../../recepcion/form-donations.php", {viewDonation: true}, function(resp) {
         $('#table-register').empty()
+        console.log(resp)
         $.each( resp, function( clave, valor ) {
+            for (var i = 0; i < valor.num_pages; i++) {
+                numPagination = i+1;
+                console.log(numPagination);
+                var navNumber=`
+                <li class="page-item"><a class="page-link" onclick=itemPaginationD(${numPagination}) >${numPagination}</a></li>
+                `;
+                $('#table-item').append(navNumber);
+             }
+
+        });
+        $.each( resp[1], function( clave, valor ) {
             var fila=`
                 <tr>
                 <th scope="row">${valor.id}</th>
@@ -648,7 +674,16 @@ function showDonation(){
         });
         
     }, 'json');
+    
 }
+function itemPaginationD (item){
+    console.log(item);
+    $.post("../../recepcion/form-donations.php", {itemP: item}, function(resp) {
+
+    }, 'json');
+}
+
+
 
 function deleteDonation( id ){
     Swal.fire({
