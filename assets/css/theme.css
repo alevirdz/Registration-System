@@ -1,5 +1,29 @@
 /* Usar algunos colores 
 https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&utm_medium=reactlist&utm_campaign=architectangular */
+/*MODO NOCHE*/
+/* h1,h2,h3,h4,h5,span,p{
+  color: #ffffff;
+}
+.main {
+  background:rgb(27, 29, 30) !important;
+}
+.navbar-bg{
+  background:rgb(0 0 0) !important;
+}
+#sidebar{
+  background-color: rgb(36 36 36);
+}
+.card{
+  background-color: rgb(37 40 41);
+}
+.card-header{
+  background-color: rgb(37 40 41);
+}
+.card-title {
+  color: #ffffff;
+} */
+/*FIN MODO NOCHE*/
+
 
 span.msg-error{ color: red; font-size: 0.8em; }
 

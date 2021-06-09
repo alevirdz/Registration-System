@@ -12,7 +12,7 @@ if( isset( $_POST['viewDonation']) ){
     $stmt = $BD->prepare("SELECT * FROM donaciones");//Cuenta cuantas filas hay en la base de datos
     $stmt->execute(); //ejecuta
     //https://www.youtube.com/watch?v=tRUg2fSLRJo
-    $paginaPrimary = 0; //inicia contando el item desde el cero, tambien sera una variable dinamica para cambiar con los datones
+    $paginaPrimary = 0; //inicia contando el item desde el cero, tambien sera una variable dinamica para cambiar con los datones 
     $paginateIn = 4; //Solo mostrare 4 resultados
     // $paginaPrimary = ($page - 1) * $paginateIn;
     $numPage = $stmt->rowCount(); //cuento el numero de filas (rows)
@@ -38,11 +38,15 @@ if( isset( $_POST['viewDonation']) ){
         
 }
 if( isset($_POST['itemP']) ){
-    var_dump($_POST['itemP']);
-    $numPageSelect = $_POST['itemP'];
-    $paginateIn = 4;
-    $paginaPrimary = ($numPageSelect - 1) * $paginateIn;
-    var_dump($paginaPrimary);
+    var_dump($_POST['itemP']); //Se selecciona el numero de la pagina a mostrar del paginador
+    $numPageSelect = $_POST['itemP']; //Se guarda en una variable
+    $paginateIn = 4; //Paginamos en 4
+    $paginaPrimary = ($numPageSelect - 1) * $paginateIn; // Si se selecciona la pagina 3 -1 = 2 * 4 = 8, Por lo tanto el limite es 8, 4
+    var_dump($paginaPrimary); //Hoja dos, tres etc,
+    $stmt = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaPrimary, $paginateIn");
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_OBJ);
+    var_dump($results); //Pintar los nuevos datos en la tabla
 }
 
 // Inserta en la base de datos

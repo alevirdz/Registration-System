@@ -9,7 +9,7 @@ include '../../resources/layouts/links-header-admin.php';
 	<?php include 'Sidebar-panel.php';?>
 
 	<!-- Menu arriba -->
-	<div class="main">
+	<div class="main" >
 		<?php include 'Navbar-menu.php';?>
 		<!-- Panel de contenido -->
 		<main class="content">
