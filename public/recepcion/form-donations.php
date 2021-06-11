@@ -8,47 +8,42 @@ Consultas, Insertar, Eliminar, Resetear
 function controlOfPaginator(){
     return $paginateIn = 5; //Cantidad de paginas a mostrar
 }
-function countTotalRows(){
+function countTotalRows($paginateIn){
     require '../../config/database.php';
-    $stmt = $BD->prepare("SELECT * FROM donaciones");//Consulta
-    $stmt->execute(); //ejecuta
-    return $numPage = $stmt->rowCount(); //cuenta el numero de filas (rows)
-}
-function operationPager($numPage, $paginateIn){
-       $splitePage = $numPage/$paginateIn; //divicion de numero de filas por el numero de paginacion
-       $round = ceil($splitePage); //convercion de los decimales a numeros enteros
-       return array('num_pages'=> $round); //creo un array de los numeros de paginador
+    $stmt       = $BD->prepare("SELECT COUNT(*) FROM donaciones"); //Primera Consulta
+    $stmt       ->execute();
+    $numPage    = $stmt->fetchColumn(); //cuenta el numero de filas (rows)
+    $splitePage = $numPage/$paginateIn; //divicion de numero de filas por el numero de paginacion
+    $round      = ceil($splitePage); //convercion de los decimales a numeros enteros
+    return array('num_pages'=> $round); //creo un array de los numeros de paginador
 }
 function operationTable($paginaIni, $paginateIn){
-    require '../../config/database.php'; //Lo necesita
-    //Segunda consulta
-    $stmt = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaIni, $paginateIn");
-    $stmt->execute();
+    require '../../config/database.php';
+    $stmt    = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaIni, $paginateIn"); //Segunda Consulta Limitada
+    $stmt    ->execute();
     $results = $stmt->fetchAll(PDO::FETCH_OBJ);
     return array($results); 
 }
 function arrayJson($table, $pager){
-    $all= array_merge($table, $pager);//Transformamos los dos array en uno solo
+    $all = array_merge($table, $pager); //Transformamos los dos array en uno solo
     return json_encode($all); 
 }
-//Consulta en la base de datos
+//Control de paginación
 //https://www.youtube.com/watch?v=tRUg2fSLRJo
-if( isset( $_POST['generateTable']) ){
-    $paginateIn = controlOfPaginator();
-    $numPage = countTotalRows();
-    $pager = operationPager($numPage, $paginateIn);
-    $paginaIni = 0;
-    $table = operationTable($paginaIni, $paginateIn );
-    echo $jsonResult = arrayJson($table, $pager);
+if( isset( $_POST['generateTable'] ) && !empty( $_POST['generateTable'] ) ){
+    $paginateIn      = controlOfPaginator(); //Controla la cantidad de datos a mostrar
+    $numPage         = countTotalRows($paginateIn); //Saca el total de resultados
+    $paginaIni       = 0; //El primer resultado inicia en 0
+    $table           = operationTable($paginaIni, $paginateIn ); //se arma la consulta
+    echo $jsonResult = arrayJson($table, $numPage); //resultado final
 }
-if( isset($_POST['selectedPage']) ){
-    $paginateIn = controlOfPaginator(); //Controla la cantidad de datos a mostrar
-    $numPageSelect = $_POST['selectedPage']; //Se guarda en una variable
-    $numPage = countTotalRows(); //Saca el total de resultados
-    $pager = operationPager($numPage, $paginateIn); //numero total de paginas redondeado
-    $paginaPrimary = ($numPageSelect - 1) * $paginateIn; //operacion matematica
-    $table = operationTable($paginaPrimary, $paginateIn ); //se arma la consulta
-    echo $jsonResult = arrayJson($table, $pager); //resultado final
+if( isset( $_POST['selectedPage'] ) && !empty( $_POST['selectedPage'] ) ){
+    $paginateIn      = controlOfPaginator(); //Controla la cantidad de datos a mostrar
+    $numPageSelect   = $_POST['selectedPage']; //Se guarda en una variable
+    $numPage         = countTotalRows($paginateIn); //Saca el total de resultados
+    $paginaPrimary   = ($numPageSelect - 1) * $paginateIn; //operacion matematica
+    $table           = operationTable($paginaPrimary, $paginateIn ); //se arma la consulta
+    echo $jsonResult = arrayJson($table, $numPage); //resultado final
 }
 
 
@@ -57,9 +52,9 @@ if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST
      //Verificacion
      if( !empty($_POST['insertDonations']) && !empty($_POST['nombre']) && !empty($_POST['donacion']) ){
 
-        $userName    = trim($_POST['nombre']);
-        $userDonation = trim($_POST['donacion']);
-        $cleanDonation = preg_replace('/[$#!¡?¿"%&=\-*\/@+ (\) a-z A-Z ]/', '', $userDonation);
+        $userName       = trim($_POST['nombre']);
+        $userDonation   = trim($_POST['donacion']);
+        $cleanDonation  = preg_replace('/[$#!¡?¿"%&=\-*\/@+ (\) a-z A-Z ]/', '', $userDonation);
         $checkedMoneda  = checkedMoneda($cleanDonation);
         $checkedName    = checkedText($userName);
 
@@ -85,7 +80,7 @@ if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST
 if( isset($_POST['deleteDonations']) && !empty($_POST['deleteDonations'])  ){
     // Prepare
     $userId = trim($_POST['deleteDonations']);
-    $stmt = $BD->prepare("DELETE FROM donaciones WHERE id=$userId ");
+    $stmt   = $BD->prepare("DELETE FROM donaciones WHERE id=$userId ");
     $stmt->execute();
     echo "true";
 

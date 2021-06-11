@@ -26,7 +26,10 @@ https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&u
 
 
 span.msg-error{ color: red; font-size: 0.8em; }
-
+a.page-link.active{
+  color: white;
+  background: #0c7bdd;
+}
 .align-icons{
   align-items: center;
 }

@@ -73,7 +73,7 @@ require './Sesiones.php';
 
 <!-- Modal -->
 <div class="modal fade" id="modalInscriptions" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog" id="activeCenter">
+  <div class="modal-dialog modal-dialog-centered" id="activeCenter">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="genericoTitle">Editar Registro</h5>

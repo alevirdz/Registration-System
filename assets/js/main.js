@@ -148,8 +148,8 @@ function login (){
                });
            }else if(resp == 'without_session'){
             Swal.fire({
-                type: 'error',
-                title: '¡Vaya! no existe este usuario',
+                type: 'warning',
+                title: '¡Vaya! la cuenta está desactivada',
                 text: 'Comunicate con el administrador',
                 showConfirmButton: true,
                 confirmButtonText: 'Continuar',
@@ -650,11 +650,10 @@ function showDonation(){
             for (var i = 0; i < nPagination; i++) {
                 numPagination = i+1;
                 var navNumber=`
-                <li class="page-item"><a class="page-link" onclick=itemPaginationD(${numPagination}) >${numPagination}</a></li>
+                <li class="page-item"><a class="page-link" id="${numPagination}" onclick=itemPaginationD(${numPagination}) >${numPagination}</a></li>
                 `;
                 $('#table-item').append(navNumber);
              }
-
         });
         $.each( resp[0], function( keyItem, dataResult ) {
             var fila=`
@@ -675,10 +674,10 @@ function showDonation(){
     
 }
 function itemPaginationD (item){
-    console.log(item);
+    console.log("diste click en : "+item)
+    $('#'+item).addClass('active');
     $.post("../../recepcion/form-donations.php", {selectedPage: item}, function(resp) {
         $('#table-register').empty()
-        console.log(resp);
         $.each( resp[0], function( keyItem, dataResult ) {
             var fila=`
                 <tr>
