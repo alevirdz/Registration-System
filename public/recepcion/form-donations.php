@@ -5,49 +5,52 @@ require 'validations.php';
 Este archivo contiene las siguientes opciones:
 Consultas, Insertar, Eliminar, Resetear
 */
-
-//Consulta en la base de datos
-if( isset( $_POST['viewDonation']) ){
-    // Preparacion
-    $stmt = $BD->prepare("SELECT * FROM donaciones");//Cuenta cuantas filas hay en la base de datos
+function controlOfPaginator(){
+    return $paginateIn = 5; //Cantidad de paginas a mostrar
+}
+function countTotalRows(){
+    require '../../config/database.php';
+    $stmt = $BD->prepare("SELECT * FROM donaciones");//Consulta
     $stmt->execute(); //ejecuta
-    //https://www.youtube.com/watch?v=tRUg2fSLRJo
-    $paginaPrimary = 0; //inicia contando el item desde el cero, tambien sera una variable dinamica para cambiar con los datones 
-    $paginateIn = 4; //Solo mostrare 4 resultados
-    // $paginaPrimary = ($page - 1) * $paginateIn;
-    $numPage = $stmt->rowCount(); //cuento el numero de filas (rows)
-    $splitePage = $numPage/$paginateIn; //divido el numero de filas por el numero de paginacion
-    $round = ceil($splitePage); //convierto los decimales a numeros enteros
-    $pg = array('num_pages'=> $round); //creo un array de los numeros de paginas
-    $stmt = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaPrimary, $paginateIn");
+    return $numPage = $stmt->rowCount(); //cuenta el numero de filas (rows)
+}
+function operationPager($numPage, $paginateIn){
+       $splitePage = $numPage/$paginateIn; //divicion de numero de filas por el numero de paginacion
+       $round = ceil($splitePage); //convercion de los decimales a numeros enteros
+       return array('num_pages'=> $round); //creo un array de los numeros de paginador
+}
+function operationTable($paginaIni, $paginateIn){
+    require '../../config/database.php'; //Lo necesita
+    //Segunda consulta
+    $stmt = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaIni, $paginateIn");
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_OBJ);
-    //traemos solo 4 resultados
-    // echo json_encode($results);
-    $all = array ($pg, $results); //unos los dos resultados en un mismo array
-    echo json_encode($all); 
-    
-     if($all >0  ){
-        // echo "que hacemos"; //quitar esto para ver resultados en la tabla del usuario
-        //returns data as JSON format
-        // echo json_encode($result);
+    return array($results); 
+}
+function arrayJson($table, $pager){
+    $all= array_merge($table, $pager);//Transformamos los dos array en uno solo
+    return json_encode($all); 
+}
+//Consulta en la base de datos
+//https://www.youtube.com/watch?v=tRUg2fSLRJo
+if( isset( $_POST['generateTable']) ){
+    $paginateIn = controlOfPaginator();
+    $numPage = countTotalRows();
+    $pager = operationPager($numPage, $paginateIn);
+    $paginaIni = 0;
+    $table = operationTable($paginaIni, $paginateIn );
+    echo $jsonResult = arrayJson($table, $pager);
+}
+if( isset($_POST['selectedPage']) ){
+    $paginateIn = controlOfPaginator(); //Controla la cantidad de datos a mostrar
+    $numPageSelect = $_POST['selectedPage']; //Se guarda en una variable
+    $numPage = countTotalRows(); //Saca el total de resultados
+    $pager = operationPager($numPage, $paginateIn); //numero total de paginas redondeado
+    $paginaPrimary = ($numPageSelect - 1) * $paginateIn; //operacion matematica
+    $table = operationTable($paginaPrimary, $paginateIn ); //se arma la consulta
+    echo $jsonResult = arrayJson($table, $pager); //resultado final
+}
 
-     }else{
-       echo 'Error';
-     };
-        
-}
-if( isset($_POST['itemP']) ){
-    var_dump($_POST['itemP']); //Se selecciona el numero de la pagina a mostrar del paginador
-    $numPageSelect = $_POST['itemP']; //Se guarda en una variable
-    $paginateIn = 4; //Paginamos en 4
-    $paginaPrimary = ($numPageSelect - 1) * $paginateIn; // Si se selecciona la pagina 3 -1 = 2 * 4 = 8, Por lo tanto el limite es 8, 4
-    var_dump($paginaPrimary); //Hoja dos, tres etc,
-    $stmt = $BD->prepare("SELECT * FROM donaciones LIMIT $paginaPrimary, $paginateIn");
-    $stmt->execute();
-    $results = $stmt->fetchAll(PDO::FETCH_OBJ);
-    var_dump($results); //Pintar los nuevos datos en la tabla
-}
 
 // Inserta en la base de datos
 if( isset ($_POST['insertDonations']) && isset($_POST['nombre']) && isset($_POST['donacion']) ){

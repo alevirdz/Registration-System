@@ -644,13 +644,11 @@ function showDonation(){
     `
     );
     // Send the request
-    $.post("../../recepcion/form-donations.php", {viewDonation: true}, function(resp) {
+    $.post("../../recepcion/form-donations.php", {generateTable: true}, function(resp) {
         $('#table-register').empty()
-        console.log(resp)
-        $.each( resp, function( clave, valor ) {
-            for (var i = 0; i < valor.num_pages; i++) {
+        $.each( resp, function( keyItem, nPagination ) {
+            for (var i = 0; i < nPagination; i++) {
                 numPagination = i+1;
-                console.log(numPagination);
                 var navNumber=`
                 <li class="page-item"><a class="page-link" onclick=itemPaginationD(${numPagination}) >${numPagination}</a></li>
                 `;
@@ -658,15 +656,15 @@ function showDonation(){
              }
 
         });
-        $.each( resp[1], function( clave, valor ) {
+        $.each( resp[0], function( keyItem, dataResult ) {
             var fila=`
                 <tr>
-                <th scope="row">${valor.id}</th>
-                <td>${valor.nombre}</td>
-                <td>$${valor.donacion}</td>
-                <td>${valor.fecha}</td>
+                <th scope="row">${dataResult.id}</th>
+                <td>${dataResult.nombre}</td>
+                <td>$${dataResult.donacion}</td>
+                <td>${dataResult.fecha}</td>
                 <td>
-                <a  class="btn btn-danger" onclick="deleteDonation(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
+                <a  class="btn btn-danger" onclick="deleteDonation(${dataResult.id})"><ion-icon name="trash-outline"></ion-icon></a>
                 </td>
                 </tr>     
                 `;
@@ -678,8 +676,23 @@ function showDonation(){
 }
 function itemPaginationD (item){
     console.log(item);
-    $.post("../../recepcion/form-donations.php", {itemP: item}, function(resp) {
-
+    $.post("../../recepcion/form-donations.php", {selectedPage: item}, function(resp) {
+        $('#table-register').empty()
+        console.log(resp);
+        $.each( resp[0], function( keyItem, dataResult ) {
+            var fila=`
+                <tr>
+                <th scope="row">${dataResult.id}</th>
+                <td>${dataResult.nombre}</td>
+                <td>$${dataResult.donacion}</td>
+                <td>${dataResult.fecha}</td>
+                <td>
+                <a  class="btn btn-danger" onclick="deleteDonation(${dataResult.id})"><ion-icon name="trash-outline"></ion-icon></a>
+                </td>
+                </tr>     
+                `;
+            $('#table-register').append(fila);
+        });
     }, 'json');
 }
 
