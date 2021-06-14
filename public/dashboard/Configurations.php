@@ -70,7 +70,31 @@
                 </div>
             </div>
 
+            <div class="col">
+                
+                <div class="card">
+                    <div class="card-body">
+                        Modo noche
+                    </div>
+                </div>
+            </div>
 
+            <div class="col">
+                
+                <div class="card">
+                    <div class="card-body">
+                        Agregar redes sociales
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                
+                <div class="card">
+                    <div class="card-body">
+                        Layout izquierdo?
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

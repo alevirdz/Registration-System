@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../../../assets/css/app.css"/>
     <link rel="stylesheet" href="../../../assets/css/theme.css"/>
     <link rel="stylesheet" href="../../../assets/css/sweetalert2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/se/dt-1.10.25/datatables.min.css"/>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <!-- Title -->
     <title>Panel Administrativo</title>

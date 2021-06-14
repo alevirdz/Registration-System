@@ -645,7 +645,9 @@ function showDonation(){
     );
     // Send the request
     $.post("../../recepcion/form-donations.php", {generateTable: true}, function(resp) {
+        console.log(resp)
         $('#table-register').empty()
+        //armo la paginacion
         $.each( resp, function( keyItem, nPagination ) {
             for (var i = 0; i < nPagination; i++) {
                 numPagination = i+1;
@@ -669,14 +671,15 @@ function showDonation(){
                 `;
             $('#table-register').append(fila);
         });
-        
     }, 'json');
     
 }
 function itemPaginationD (item){
     console.log("diste click en : "+item)
     $('#'+item).addClass('active');
+    
     $.post("../../recepcion/form-donations.php", {selectedPage: item}, function(resp) {
+        console.log(resp)
         $('#table-register').empty()
         $.each( resp[0], function( keyItem, dataResult ) {
             var fila=`
@@ -875,6 +878,68 @@ function inscriptions(ext){
         })
         }
     });
+}
+function showInscriptions_(){
+/*     $('#section-inscription').addClass("d-none");
+    $('#section-inscription-table').removeClass("d-none"); */
+    $('#inscription').replaceWith(`  
+    <div class="col col-lg-10">
+        <h5 class="card-title mb-0">Lista de inscripciones</h5> 
+    </div>
+    <div class="col col-lg-2">
+        
+    </div>      
+    <table class="table table-responsive table-striped table-hover">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Edad</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Acciones :(</th>
+        </tr>
+    </thead>
+    <tfoot id="table-register">
+        
+    </tfoot>
+    </table>`);
+
+    var expp = $.post("../../recepcion/form-inscriptions.php", {showRegister: true}, function(resp) {
+        console.log(resp)
+        var table_inscrip = $('#inscription').DataTable({
+            "ajax": {expp},
+            "columns": [
+                {'data': "id"}
+            ]
+        });
+        console.log(table_inscrip)
+    });
+
+    /* $.ajax({
+        type: "POST",
+        url: '../../recepcion/form-inscriptions.php',
+        data: { 'showRegister' : true },
+        success: function(resp){
+            console.log(resp)
+        }
+    }) */
+    
+/*     var a = $('#inscription').dataTable( {
+        "ajax": {
+          "type": "POST",
+          "url": "../../recepcion/form-inscriptions.php",
+          'data' : { 'showRegister' : true },
+          "success": function ( resp ) {
+            console.log(JSON.parse(resp.nombre))
+          }
+        },
+        "columns": [
+            {'data': "id"}
+        ]
+      } );
+      console.log(a) */
 }
 
 function showInscriptions(){
