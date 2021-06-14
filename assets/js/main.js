@@ -950,10 +950,10 @@ function showInscriptions_(){
             console.log(o)
             // var o = JSON.parse(data);//A la variable le asigno el json decodificado
             $('#inscription').dataTable( {
-                data : o,
-                dataSrc: '',
-                columns: [  //or different depending on the structure of the object
-                    {"data" : "o.JSON[0].id"},
+                "data" : o,
+                "dataSrc": '',
+                "columns": [  //or different depending on the structure of the object
+                    {"data" : "id"},
                     {"data" : "o.JSON[0].id"}           
                 ]
             });
