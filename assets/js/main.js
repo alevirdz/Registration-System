@@ -901,45 +901,92 @@ function showInscriptions_(){
         <th scope="col">Acciones :(</th>
         </tr>
     </thead>
-    <tfoot id="table-register">
+    <tbody id="table-register">
         
-    </tfoot>
+    </tbody>
     </table>`);
 
-    var expp = $.post("../../recepcion/form-inscriptions.php", {showRegister: true}, function(resp) {
-        console.log(resp)
-        var table_inscrip = $('#inscription').DataTable({
-            "ajax": {expp},
-            "columns": [
-                {'data': "id"}
-            ]
-        });
-        console.log(table_inscrip)
+    // var expp = $.post("../../recepcion/form-inscriptions.php", {showRegister: true}, function(resp) {
+    //     console.log(JSON.parse(resp));
+    //     var  json = JSON.parse(resp);
+    //     var table_inscrip = $('#inscription').DataTable({
+    //         "data": {json},
+    //         "dataType": 'json',
+    //         "dataSrc": '',
+    //         "columns": [
+    //             {"data": 'id'}
+    //         ]
+    //     });  
+    // });
+
+    // $.ajax({
+    //     url: "../../recepcion/form-inscriptions.php",
+    //     data: { 'showRegister' : true },
+    //     type: "POST",
+    //     dataType: 'json',
+    //     success : function(data) {
+    //         console.log(data)
+    //         var o = data;
+    //         // var o = JSON.parse(data);//A la variable le asigno el json decodificado
+    //         $('#inscription').dataTable( {
+    //             data : o,
+    //             dataSrc: '',
+    //             columns: [
+    //                 {data : "id"},
+    //                 {data : "nombre"},
+    //                 {data : "nombre"}            
+    //             ],
+    //         });
+    //     }       
+    // });
+
+    $.ajax({
+        url: "../../recepcion/form-inscriptions.php",
+        data: { 'showRegister' : true },
+        type: "POST",
+        dataType: 'json',
+        success : function(data) {
+            var o = data;
+            console.log(o)
+            // var o = JSON.parse(data);//A la variable le asigno el json decodificado
+            $('#inscription').dataTable( {
+                "data" : o,
+                "dataSrc": '',
+                "columns": [  //or different depending on the structure of the object
+                    {"data" : "id"},
+                    {"data" : "o.JSON[0].id"}           
+                ]
+            });
+        }       
     });
 
-    /* $.ajax({
-        type: "POST",
-        url: '../../recepcion/form-inscriptions.php',
-        data: { 'showRegister' : true },
-        success: function(resp){
-            console.log(resp)
-        }
-    }) */
+    // var data = $.ajax({
+    //     type: "POST",
+    //     url: '../../recepcion/form-inscriptions.php',
+    //     data: { 'showRegister' : true },
+    //     dataSrc: '',
+    //     success: function(resp){
+    //         console.log(resp)
+    //     }
+    // }) 
     
-/*     var a = $('#inscription').dataTable( {
-        "ajax": {
-          "type": "POST",
-          "url": "../../recepcion/form-inscriptions.php",
-          'data' : { 'showRegister' : true },
-          "success": function ( resp ) {
-            console.log(JSON.parse(resp.nombre))
-          }
-        },
-        "columns": [
-            {'data': "id"}
-        ]
-      } );
-      console.log(a) */
+// var a = $('#inscription').dataTable( {
+//         'ajax': {
+//           'url': '../../recepcion/form-inscriptions.php',
+//           'data': { 'showRegister' : true },
+//           'type': 'POST',
+//           "dataType": 'json',
+//           'dataSrc': '',
+//           'success': function(resp){
+//               console.log(JSON.parse(resp))
+//           }
+//         },
+//         'columns': [
+//             {'data': 'id'}
+//         ]
+//       } );
+//   console.log(a)
+
 }
 
 function showInscriptions(){
