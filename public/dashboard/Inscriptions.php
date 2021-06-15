@@ -30,7 +30,7 @@ require './Sesiones.php';
 </section>
 
 
-<section class="py-3">
+<section class="py-3" id="section-inscription">
     <div class="container">
         <div class="card">
             <div class="card-body table-responsive">
@@ -87,3 +87,42 @@ require './Sesiones.php';
     </div>
   </div>
 </div>
+
+
+
+<!-- //Creo que lo borrare
+<section class="py-3 d-none" id="section-inscription-table">
+    <div class="container">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <div class="" id="mostrar-tabla">
+                        <div class="col col-lg-10">
+                            <h5 class="card-title mb-0">Lista de inscripciones</h5> 
+                        </div>
+                        <div class="col col-lg-2">
+                            
+                        </div>      
+                        <table class="table table-responsive table-striped table-hover" id="example">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Edad</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-register">
+                            
+                        </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    </div> 
+            </div>
+        </div>
+    </div>
+</section> -->

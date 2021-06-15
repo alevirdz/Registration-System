@@ -26,6 +26,21 @@ require 'Alerts.php';
                 <div class="text-muted mb-2" id="remember"><?php echo $rememberUser ?></div>
             </div>
             <hr class="my-0" />
+            <hr class="my-0" />
+            <div class="card-body">
+                <h5 class="h6 card-title">Redes Sociales <span style="font-size: 15px;vertical-align: middle;" onclick="editRemember(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span></h5>
+                <div class="link-social">
+                <ul>
+                    <li><ion-icon name="logo-facebook"></ion-icon>Facebook</li>
+                    <li><ion-icon name="logo-whatsapp"></ion-icon>Whatsapp</li>
+                    <li><ion-icon name="logo-instagram"></ion-icon>Instagram</li>
+                    <li><ion-icon name="planet-outline"></ion-icon>Web</li>
+                    <li><ion-icon name="mail-outline"></ion-icon>Correo</li>
+                </ul>
+                <h5 class="text-muted mb-2"><i>Obten acceso más rápido desde un solo lugar.</i></h5>
+                </div>
+            </div>
+            <hr class="my-0" />
 
         </div>
     </div>
@@ -55,7 +70,35 @@ require 'Alerts.php';
                     </form>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">
+
+                <h5 class="card-title mb-0">Restablecer contraseña</h5>
+            </div>
+            <div class="card-body h-100">
+            <form class="form-donation" id="formG">
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Contraseña actual</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $nameUser ?>" disabled required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Nueva contraseña</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $nameUser ?>" disabled required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Confirmación de contraseña</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="<?php echo $nameUser ?>" disabled required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a type="button" class="btn btn-dark" name="btn-donation" id="btn-profile" onclick="Updateprofile()">Actualizar mis datos</a>
+                            <a type="button" class="btn btn-dark d-none" name="btn-donation" id="btn-profileUpdate" onclick="Saveprofile(<?php echo $idUser ?>)">Guardar</a>
+                        </div>
+                    </form>
+            </div>
+        </div>
     </div>
+
+    
     
 </div>
 <div id="rememberEdit"></div>
