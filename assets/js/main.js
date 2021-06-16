@@ -180,7 +180,6 @@ function logoutSesion(){
 }
 
 function registerdesdeAdmin(){
-
     $("input:radio:checked").each(function() {
         var select_tipo =  $(this).val();
             console.log(select_tipo);
@@ -317,8 +316,8 @@ function registerdesdeAdmin(){
 
 
 }
-function showUser(){
 
+function showUser(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
     $('#userslist').replaceWith(`  
@@ -477,7 +476,8 @@ function deleteProfile( id ){
         }
         })
 }
-//link al registro desde el front
+
+/*link al registro desde el front*/
 function register(){
     const data = {
         "nombre":       $('#nombre').val(), 
@@ -879,6 +879,17 @@ function inscriptions(ext){
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+//pruebas de inscripciones
 function showInscriptions(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
@@ -891,7 +902,7 @@ function showInscriptions(){
     </div>      
     <table class="table table-responsive table-striped table-hover" id="datable">
     <thead>
-        <tr>
+        <tr class="table-color">
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
@@ -905,29 +916,6 @@ function showInscriptions(){
     </tbody>
     </table>`);
 
-
-
-    /* $.ajax({
-    url: "../../recepcion/form-inscriptions.php",
-         data: { 'showRegister' : true },
-         type: "POST",
-         dataType: 'json',
-         success : function(data) {
-             console.log(data)
-             var o = data;
-             // var o = JSON.parse(data);//A la variable le asigno el json decodificado
-             $('#inscription').dataTable( {
-                 data : data,
-                 dataSrc: '',
-                 columns: [
-                     {data : "id"},
-                     {data : "nombre"},
-                     {data : "nombre"}            
-                 ],
-             });
-         }       
-     });  */
-
      $.ajax({
         url: "../../recepcion/form-inscriptions.php",
         data: { 'showRegister' : true },
@@ -937,6 +925,10 @@ function showInscriptions(){
             var table = $('#datable').dataTable({
                 "deferRender": true,
                 "processing": true,
+                "destroy":true,
+                "paging":   true,
+                "responsive": true,
+                "pagingType": "full_numbers",
                 "language": {
                     "emptyTable":			"No hay datos disponibles en la tabla.",
                     "info":		   			"Del _START_ al _END_ de _TOTAL_ ",
@@ -973,117 +965,65 @@ function showInscriptions(){
                     {"data" : 'edad'},
                     {"data" : 'telefono'},
                     {"data" : 'correo'},
-                    {"defaultContent" : `<button type='button' class='editar btn btn-warning'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger'><ion-icon name='trash-outline'></ion-icon></button>`}
+                    {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editInscriptions()'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteInscriptions()'><ion-icon name='trash-outline'></ion-icon></button>`}
                 ],
                 
             });
+            /* table.dataTable().ajax.reload(); */
             /* getDataEdit("#datable tbody", table); */
-            // $('tr td:last-child').click(function(){
-            //     console.log($(this).parent().find('td:first').text());
-            //   });
+            /* $('tr td:last-child').click(function(){
+                 console.log($(this).parent().find('td:first').text());
+            }); */
+           
         }    
     });
-    /* var getDataEdit = function (tbody, table){
-        console.log("se ha dado click")
-        $(tbody).on("click", "button.editar", function(){
-            // var data = table.row( $(this).parents("tr") ).data();
-            console.log(data);
-        })
-    } */
+
 }
 
-function showInscriptions_(){
-    $('#subtitle-inscriptions').text("Revisa la información detallada");
-    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
-    $('#inscription').replaceWith(`  
-    <div class="col col-lg-10">
-        <h5 class="card-title mb-0">Lista de inscripciones</h5> 
-    </div>
-    <div class="col col-lg-2">
-        
-    </div>      
-    <table class="table table-responsive table-striped table-hover">
-    <thead>
-        <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Edad</th>
-        <th scope="col">Telefono</th>
-        <th scope="col">Correo</th>
-        <th scope="col">Acciones</th>
-        </tr>
-    </thead>
-    <tbody id="table-register">
-        
-    </tbody>
-    </table>`);
-    // Send the request
-    $.post("../../recepcion/form-inscriptions.php", {showRegister: true}, function(resp) {
-        $('#table-register').empty()
-        $.each( resp, function( clave, valor ) {
+
+function editInscriptions(){
+    $('tr td:last-child').click(function(){
+        const id = $(this).parent().find('td:first').text();
+            // Send the request
+            $.post("../../recepcion/form-inscriptions.php", {'editInscription': id}, function(resp) {
+            $("#modalInscriptions").modal('show');
+            
             var fila=`
-                <tr>
-                <th scope="row">${valor.id}</th>
-                <td>${valor.nombre}</td>
-                <td>${valor.apellidos}</td>
-                <td>${valor.edad}</td>
-                <td>${valor.telefono}</td>
-                <td>${valor.correo}</td>
-                <td>
-                <a class="btn btn-warning" onclick="editInscriptions(${valor.id})"><ion-icon name="pencil-outline"></ion-icon></a>
-                <a class="btn btn-danger" onclick="deleteInscriptions(${valor.id})"><ion-icon name="trash-outline"></ion-icon></a>
-                </td>
-                </tr>     
-                `;
-            $('#table-register').append(fila);
-        });
-        
-    }, 'json');
+            <form class="form-donation" id="formG">
+            <h2 class="text-center">Inscripcion</h2>
+            <div class="mb-3">
+                <label for="user" class="form-label">Nombres</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="${resp.nombre}" required>
+            </div>
+            <div class="mb-3">
+                <label for="user" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos" value="${resp.apellidos}" required>
+            </div>
+            <div class="mb-3">
+                <label for="user" class="form-label">Edad</label>
+                <input type="number" class="form-control" name="edad" id="edad" placeholder="Edad" value="${resp.edad}" required>
+            </div>
+            <div class="mb-3">
+                <label for="user" class="form-label">Telefono</label>
+                <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="${resp.telefono}" required>
+            </div>
+            <div class="mb-3">
+                <label for="user" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico" value="${resp.correo}" >
+            </div>
+            <div class="d-grid gap-2">
+                <a type="button" class="btn btn-dark" name="btn-update-register" id="btn-update-register" onclick="updateInscriptions(${id})"><ion-icon name="checkmark-outline"></ion-icon>Actualizar</a>
+            </div>
+            </form>
+        `;
+
+            $('#contentEdit').html(fila);
+            
+        }, 'json');
+
+    });
 }
 
-function editInscriptions( id ){
-    // Send the request
-    $.post("../../recepcion/form-inscriptions.php", {'editInscription': id}, function(resp) {
-        $("#modalInscriptions").modal('show');
-        
-        var fila=`
-        <form class="form-donation" id="formG">
-        <h2 class="text-center">Inscripcion</h2>
-        <div class="mb-3">
-            <label for="user" class="form-label">Nombres</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="${resp.nombre}" required>
-        </div>
-        <div class="mb-3">
-            <label for="user" class="form-label">Apellidos</label>
-            <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos" value="${resp.apellidos}" required>
-        </div>
-        <div class="mb-3">
-            <label for="user" class="form-label">Edad</label>
-            <input type="number" class="form-control" name="edad" id="edad" placeholder="Edad" value="${resp.edad}" required>
-        </div>
-        <div class="mb-3">
-            <label for="user" class="form-label">Telefono</label>
-            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="${resp.telefono}" required>
-        </div>
-        <div class="mb-3">
-            <label for="user" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico" value="${resp.correo}" >
-        </div>
-        <div class="d-grid gap-2">
-            <a type="button" class="btn btn-dark" name="btn-update-register" id="btn-update-register" onclick="updateInscriptions(${id})"><ion-icon name="checkmark-outline"></ion-icon>Actualizar</a>
-        </div>
-        </form>
-    `;
-
-    $('#contentEdit').html(fila);
-    
-}, 'json');
-
-
-
-
-}
 
 function updateInscriptions( id ){
     console.log(id);
@@ -1101,7 +1041,7 @@ function updateInscriptions( id ){
         data: data,
         success: function(resp){
             if(resp == "userUpdate"){
-                $('#table-register').empty()
+                /* $('#datable').DataTable().clear(); */
                 showInscriptions();
                 var btnUpdateRegister = $("#btn-update-register");
                 btnUpdateRegister.css(btnSuccess);
@@ -1149,47 +1089,50 @@ function updateInscriptions( id ){
     });
 }
 
-function deleteInscriptions( id ){
-    Swal.fire({
-        type: 'info',
-        title: "Deshacer",
-        text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonText: "Sí, continuar",
-        cancelButtonText: "Regresar",
-        })
-        .then(resultado => {
-        if (resultado.value) {
-            const data = {
-                "deleteInscriptions": id,
-            };
-            $.ajax({
-                type: "POST",
-                url: "../../recepcion/form-inscriptions.php",
-                data: data,
-                success: function(resp){
-                    console.log(resp)
-                    if(resp == "true"){
-                        $('#table-register').empty()
-                        showInscriptions();
+function deleteInscriptions(){
+    $('tr td:last-child').click(function(){
+        const id = $(this).parent().find('td:first').text();
+        Swal.fire({
+            type: 'info',
+            title: "Deshacer",
+            text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: "Sí, continuar",
+            cancelButtonText: "Regresar",
+            })
+            .then(resultado => {
+            if (resultado.value) {
+                const data = {
+                    "deleteInscriptions": id,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../../recepcion/form-inscriptions.php",
+                    data: data,
+                    success: function(resp){
+                        console.log(resp)
+                        if(resp == "true"){
+                            /* $('#table-register').empty() */
+                            showInscriptions();
+                        }
+                    },
+                    error: function(resp){
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Se perdió la conexión, contacta al proveedor.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        });
                     }
-                },
-                error: function(resp){
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Houston, tenemos un problema...',
-                        text: 'Se perdió la conexión, contacta al proveedor.',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Continuar',
-                    });
-                }
+                });
+        
+            } else {
+                // console.log("*NO Quiere eliminar*");
+            }
             });
-    
-        } else {
-            // console.log("*NO Quiere eliminar*");
-        }
-        });
+    })
 }
 
 function inscriptionDeleteAll( ){

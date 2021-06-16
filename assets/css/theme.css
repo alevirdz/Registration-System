@@ -26,6 +26,33 @@ https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&u
 
 
 span.msg-error{ color: red; font-size: 0.8em; }
+/*Colores dataTable*/
+a.paginate_button.item.active{
+  color: white !important;
+  background: #0c7bdd;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    color: #666 !important;
+    border: 1px solid #fff !important;
+    background-color: #0c7bdd !important;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #585858), color-stop(100%, #111));
+    background: -webkit-linear-gradient(top, #585858 0%, #111 100%);
+    background: -moz-linear-gradient(top, #585858 0%, #111 100%);
+    background: -ms-linear-gradient(top, #585858 0%, #111 100%);
+    background: -o-linear-gradient(top, #585858 0%, #111 100%);
+    background: linear-gradient(to bottom, #e8e4e4 0%, #e8e4e4 100% ) !important;
+}
+tr.table-color {
+  background-color:#353049;
+}
+th.sorting{
+  color: #fff;
+}
+.table>:not(:last-child)>:last-child>*, .table tbody, .table td, .table tfoot, .table th, .table thead, .table tr {
+  border-color: #e4e4e4;
+}
+
+/* podemos borrar */
 a.page-link.active{
   color: white;
   background: #0c7bdd;
