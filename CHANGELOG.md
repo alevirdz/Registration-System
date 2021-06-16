@@ -9,9 +9,9 @@ All notable changes to this project will be documented in this file.
 
 
 
--falta crear roles de usuario
+-falta crear roles de usuario [listo]
 -crear la configuracion para cambiar colores
--donaciones obtener la tabla para poder verla o descargarla pero solo el administrador tendra acceso
+-donaciones obtener la tabla para poder verla o descargarla pero solo el administrador tendra acceso [listo]
 -buscar una API o crear una para que de mensaje de frases de motivacion
 
 
@@ -64,10 +64,13 @@ https://es.stackoverflow.com/questions/186706/c%C3%B3mo-puedo-crear-un-registro-
 -Se creo un boton que actua como swich para activar y desactivar a un usario (aun sin funcionamiento)
 -Se configuro el boton de eliminar usuario desde la base de datos
 
+## [0.0.1] 2021-06-15
+-Se añadio una libreria dataTables de jquery para mostrar los datos.
+-Se reajusto el codigo, anteriormente se habia creado un paginador con bootstrap.
 
 Pendientes:
-Crear un form para consultas en Donaciones, inscripciones y contar cuantos usuarios hay en cada una.
-Crear un crud con funcion de eliminar usuario o desactivar, Base de datos una nueva columna Activo 1, desactivado 0
+Crear un form para consultas en Donaciones, inscripciones y contar cuantos usuarios hay en cada una. [listo]
+Crear un crud con funcion de eliminar usuario o desactivar, Base de datos una nueva columna Activo 1, desactivado 0 [listo]
 
 
 ## Force WWW

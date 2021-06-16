@@ -879,9 +879,9 @@ function inscriptions(ext){
         }
     });
 }
-function showInscriptions_(){
-/*     $('#section-inscription').addClass("d-none");
-    $('#section-inscription-table').removeClass("d-none"); */
+function showInscriptions(){
+    $('#subtitle-inscriptions').text("Revisa la información detallada");
+    $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
     $('#inscription').replaceWith(`  
     <div class="col col-lg-10">
         <h5 class="card-title mb-0">Lista de inscripciones</h5> 
@@ -889,7 +889,7 @@ function showInscriptions_(){
     <div class="col col-lg-2">
         
     </div>      
-    <table class="table table-responsive table-striped table-hover">
+    <table class="table table-responsive table-striped table-hover" id="datable">
     <thead>
         <tr>
         <th scope="col">#</th>
@@ -898,28 +898,16 @@ function showInscriptions_(){
         <th scope="col">Edad</th>
         <th scope="col">Telefono</th>
         <th scope="col">Correo</th>
-        <th scope="col">Acciones :(</th>
+        <th scope="col">Acciones</th>
         </tr>
     </thead>
     <tbody id="table-register">
-        
     </tbody>
     </table>`);
 
-   /*  var expp = $.post("../../recepcion/form-inscriptions.php", {showRegister: true}, function(resp) {
-         console.log(JSON.parse(resp));
-         var  json = JSON.parse(resp);
-         var table_inscrip = $('#inscription').DataTable({
-             "data": {json},
-             "dataType": 'json',
-             "dataSrc": '',
-             "columns": [
-                 {"data": 'id'}
-             ]
-         });  
-     }); */
 
-    $.ajax({
+
+    /* $.ajax({
     url: "../../recepcion/form-inscriptions.php",
          data: { 'showRegister' : true },
          type: "POST",
@@ -938,57 +926,73 @@ function showInscriptions_(){
                  ],
              });
          }       
-     }); 
+     });  */
 
-/*     $.ajax({
+     $.ajax({
         url: "../../recepcion/form-inscriptions.php",
         data: { 'showRegister' : true },
         type: "POST",
-        dataType: 'json',
         success : function(data) {
-            var o = data;
-            console.log(o)
-            // var o = JSON.parse(data);//A la variable le asigno el json decodificado
-            $('#inscription').dataTable( {
-                "data" : o,
+            var dataInfo = JSON.parse(data)
+            var table = $('#datable').dataTable({
+                "deferRender": true,
+                "processing": true,
+                "language": {
+                    "emptyTable":			"No hay datos disponibles en la tabla.",
+                    "info":		   			"Del _START_ al _END_ de _TOTAL_ ",
+                    "infoEmpty":			"Mostrando 0 registros de un total de 0.",
+                    "infoFiltered":			"(filtrados de un total de _MAX_ registros)",
+                    "infoPostFix":			"(actualizados)",
+                    "lengthMenu":			"Mostrar _MENU_ registros",
+                    "loadingRecords":		"Cargando...",
+                    "processing":			"Procesando...",
+                    "search":				"Buscar:",
+                    "searchPlaceholder":	"Buscar",
+                    "zeroRecords":			"No se han encontrado coincidencias.",
+                    "paginate": {
+                        "first":			"Primera",
+                        "last":				"Última",
+                        "next":				"Siguiente",
+                        "previous":			"Anterior"
+                    },
+                    "aria": {
+                        "sortAscending":	"Ordenación ascendente",
+                        "sortDescending":	"Ordenación descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
+                    }
+                },
+                "data" : dataInfo.ALL,
                 "dataSrc": '',
-                "columns": [  //or different depending on the structure of the object
-                    {"data" : "id"},
-                    {"data" : "o.JSON[0].id"}           
-                ]
+                "columns": [
+                    {"data" : 'id'},
+                    {"data" : 'nombre'},
+                    {"data" : 'apellidos'},
+                    {"data" : 'edad'},
+                    {"data" : 'telefono'},
+                    {"data" : 'correo'},
+                    {"defaultContent" : `<button type='button' class='editar btn btn-warning'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger'><ion-icon name='trash-outline'></ion-icon></button>`}
+                ],
+                
             });
-        }       
-    }); */
-
-    // var data = $.ajax({
-    //     type: "POST",
-    //     url: '../../recepcion/form-inscriptions.php',
-    //     data: { 'showRegister' : true },
-    //     dataSrc: '',
-    //     success: function(resp){
-    //         console.log(resp)
-    //     }
-    // }) 
-    
-/* var a = $('#inscription').dataTable({
-         'ajax': {
-           'url': '../../recepcion/form-inscriptions.php',
-           'data': { 'showRegister' : true },
-           'type': 'POST',
-           'dataSrc': '',
-           'success': function(resp){
-               console.log(JSON.parse(resp))
-           }
-         },
-         'columns': [
-             {'data': 'id'}
-         ]
-       } );
-   console.log(a) */
-
+            /* getDataEdit("#datable tbody", table); */
+            // $('tr td:last-child').click(function(){
+            //     console.log($(this).parent().find('td:first').text());
+            //   });
+        }    
+    });
+    /* var getDataEdit = function (tbody, table){
+        console.log("se ha dado click")
+        $(tbody).on("click", "button.editar", function(){
+            // var data = table.row( $(this).parents("tr") ).data();
+            console.log(data);
+        })
+    } */
 }
 
-function showInscriptions(){
+function showInscriptions_(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
     $('#inscription').replaceWith(`  

@@ -13,7 +13,7 @@ require './Sesiones.php';
                         </div>
                         <?php if ($rolUser == 1): ?>
                             <div class="col-sm-6 col-lg-5 d-flex" id="options_inscriptions">
-                                <a class="btn btn btn-primary white align-self-center d-flex align-icons" id="actionInscriptions" onclick="showInscriptions_()"><ion-icon name="list-outline" size="small"></ion-icon><span id="text-option">Ver Inscripciones</span></a>
+                                <a class="btn btn btn-primary white align-self-center d-flex align-icons" id="actionInscriptions" onclick="showInscriptions()"><ion-icon name="list-outline" size="small"></ion-icon><span id="text-option">Ver Inscripciones</span></a>
                                 <a href="../Excel_Inscriptions.php" class="btn btn btn-success white d-flex align-icons align-self-center"><ion-icon name="document-text-outline" size="small"></ion-icon><span id="text-option">Descargar Excel</span></a>
                                 <a class="btn btn btn-danger  white align-self-center d-flex align-icons" id="inscriptionDeleteAll" onclick="inscriptionDeleteAll()"><ion-icon name="flame-outline" size="small"></ion-icon><span id="text-option">Restaurar tabla</span></a>
                             </div>
