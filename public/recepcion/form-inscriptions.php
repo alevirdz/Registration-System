@@ -18,14 +18,6 @@ if( isset($_POST['showRegister']) ){
       $userData['ALL'][] = $row;
     }
     echo json_encode($userData);
-    //  if($stmt -> rowCount() > 0){
-    //     //returns data as JSON format
-    //     echo json_encode($result);
-    //  }else{
-    //    echo '<div class="alert alert-danger" role="alert">
-    //      No existe el usuario
-    //      </div>';
-    //  };
         
 }
 

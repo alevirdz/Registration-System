@@ -615,9 +615,9 @@ function showDonation(){
     <div class="col col-lg-2">
         
     </div>
-    <table class="table table-responsive table-striped table-hover">
+    <table class="table table-responsive table-striped table-hover" id="datable">
     <thead>
-        <tr>
+        <tr class="table-color">
         <th scope="col">#</th>
         <th scope="col">Nombre</th>
         <th scope="col">Donacion</th>
@@ -626,124 +626,118 @@ function showDonation(){
         </tr>
     </thead>
     <tbody id="table-register">
-        
     </tbody>
-    </table>
-    <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item disabled">
-            <span class="page-link">Previous</span>
-            </li>
-                <div class="d-flex" id="table-item">
-                </div>
-            <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-    `
+    </table>`
     );
     // Send the request
-    $.post("../../recepcion/form-donations.php", {generateTable: true}, function(resp) {
-        console.log(resp)
-        $('#table-register').empty()
-        //armo la paginacion
-        $.each( resp, function( keyItem, nPagination ) {
-            for (var i = 0; i < nPagination; i++) {
-                numPagination = i+1;
-                var navNumber=`
-                <li class="page-item"><a class="page-link" id="${numPagination}" onclick=itemPaginationD(${numPagination}) >${numPagination}</a></li>
-                `;
-                $('#table-item').append(navNumber);
-             }
-        });
-        $.each( resp[0], function( keyItem, dataResult ) {
-            var fila=`
-                <tr>
-                <th scope="row">${dataResult.id}</th>
-                <td>${dataResult.nombre}</td>
-                <td>$${dataResult.donacion}</td>
-                <td>${dataResult.fecha}</td>
-                <td>
-                <a  class="btn btn-danger" onclick="deleteDonation(${dataResult.id})"><ion-icon name="trash-outline"></ion-icon></a>
-                </td>
-                </tr>     
-                `;
-            $('#table-register').append(fila);
-        });
-    }, 'json');
-    
-}
-function itemPaginationD (item){
-    console.log("diste click en : "+item)
-    $('#'+item).addClass('active');
-    
-    $.post("../../recepcion/form-donations.php", {selectedPage: item}, function(resp) {
-        console.log(resp)
-        $('#table-register').empty()
-        $.each( resp[0], function( keyItem, dataResult ) {
-            var fila=`
-                <tr>
-                <th scope="row">${dataResult.id}</th>
-                <td>${dataResult.nombre}</td>
-                <td>$${dataResult.donacion}</td>
-                <td>${dataResult.fecha}</td>
-                <td>
-                <a  class="btn btn-danger" onclick="deleteDonation(${dataResult.id})"><ion-icon name="trash-outline"></ion-icon></a>
-                </td>
-                </tr>     
-                `;
-            $('#table-register').append(fila);
-        });
-    }, 'json');
-}
-
-
-
-function deleteDonation( id ){
-    Swal.fire({
-        type: 'info',
-        title: "Deshacer",
-        text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
-        showCancelButton: true,
-        showConfirmButton: true,
-        confirmButtonText: "Sí, continuar",
-        cancelButtonText: "Regresar",
-        })
-        .then(resultado => {
-        if (resultado.value) {
-            const data = {
-                "deleteDonations": id,
-            };
-            $.ajax({
-                type: "POST",
-                url: "../../recepcion/form-donations.php",
-                data: data,
-                success: function(resp){
-                    console.log(resp)
-                    if(resp == "true"){
-                        $('#table-register').empty()
-                        showDonation();
-                        
+    $.ajax({
+        url: "../../recepcion/form-donations.php",
+        data: { 'generateTable_' : true },
+        type: "POST",
+        success : function(data) {
+            var dataInfo = JSON.parse(data)
+            var table = $('#datable').dataTable({
+                "deferRender": true,
+                "processing": true,
+                "destroy":true,
+                "paging":   true,
+                "responsive": true,
+                "pagingType": "full_numbers",
+                "language": {
+                    "emptyTable":			"No hay datos disponibles en la tabla.",
+                    "info":		   			"Del _START_ al _END_ de _TOTAL_ ",
+                    "infoEmpty":			"Mostrando 0 registros de un total de 0.",
+                    "infoFiltered":			"(filtrados de un total de _MAX_ registros)",
+                    "infoPostFix":			"(actualizados)",
+                    "lengthMenu":			"Mostrar _MENU_ registros",
+                    "loadingRecords":		"Cargando...",
+                    "processing":			"Procesando...",
+                    "search":				"Buscar:",
+                    "searchPlaceholder":	"Buscar",
+                    "zeroRecords":			"No se han encontrado coincidencias.",
+                    "paginate": {
+                        "first":			"Primera",
+                        "last":				"Última",
+                        "next":				"Siguiente",
+                        "previous":			"Anterior"
+                    },
+                    "aria": {
+                        "sortAscending":	"Ordenación ascendente",
+                        "sortDescending":	"Ordenación descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
                     }
                 },
-                error: function(resp){
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Houston, tenemos un problema...',
-                        text: 'Se perdió la conexión, contacta al proveedor.',
-                        showConfirmButton: true,
-                        confirmButtonText: 'Continuar',
-                    });
-                }
+                "data" : dataInfo.ALL,
+                "dataSrc": '',
+                "columns": [
+                    {"data" : 'id'},
+                    {"data" : 'nombre'},
+                    {"data" : 'donacion'},
+                    {"data" : 'fecha'},
+                    {"defaultContent" : `<button type='button' class='eliminar btn btn-danger' onclick='deleteDonation()'><ion-icon name='trash-outline'></ion-icon></button>`}
+                ],
+                
             });
+            /* table.dataTable().ajax.reload(); */
+            /* getDataEdit("#datable tbody", table); */
+            /* $('tr td:last-child').click(function(){
+                 console.log($(this).parent().find('td:first').text());
+            }); */
+           
+        }    
+    });
     
-        } else {
-            // console.log("*NO Quiere eliminar*");
-        }
-        });
 }
+function deleteDonation(){
+    $('tr td:last-child').click(function(){
+        const id = $(this).parent().find('td:first').text();
+        Swal.fire({
+            type: 'info',
+            title: "Deshacer",
+            text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: "Sí, continuar",
+            cancelButtonText: "Regresar",
+            })
+            .then(resultado => {
+            if (resultado.value) {
+                const data = {
+                    "deleteDonations": id,
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "../../recepcion/form-donations.php",
+                    data: data,
+                    success: function(resp){
+                        console.log(resp)
+                        if(resp == "true"){
+                            $('#table-register').empty()
+                            showDonation();
+                            
+                        }
+                    },
+                    error: function(resp){
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Se perdió la conexión, contacta al proveedor.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        });
+                    }
+                });
+        
+            } else {
+                // console.log("*NO Quiere eliminar*");
+            }
+            });
 
+    });
+}
 function deleteDonationAll( ){
     Swal.fire({
         type: 'warning',
@@ -879,17 +873,6 @@ function inscriptions(ext){
         }
     });
 }
-
-
-
-
-
-
-
-
-
-
-//pruebas de inscripciones
 function showInscriptions(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
@@ -979,10 +962,9 @@ function showInscriptions(){
     });
 
 }
-
-
 function editInscriptions(){
     $('tr td:last-child').click(function(){
+        console.log("CLICK")
         const id = $(this).parent().find('td:first').text();
             // Send the request
             $.post("../../recepcion/form-inscriptions.php", {'editInscription': id}, function(resp) {
@@ -1023,8 +1005,6 @@ function editInscriptions(){
 
     });
 }
-
-
 function updateInscriptions( id ){
     console.log(id);
     const data = {
@@ -1088,9 +1068,9 @@ function updateInscriptions( id ){
         }
     });
 }
-
 function deleteInscriptions(){
     $('tr td:last-child').click(function(){
+        console.log("CLICK")
         const id = $(this).parent().find('td:first').text();
         Swal.fire({
             type: 'info',
@@ -1134,7 +1114,6 @@ function deleteInscriptions(){
             });
     })
 }
-
 function inscriptionDeleteAll( ){
     Swal.fire({
         type: 'warning',

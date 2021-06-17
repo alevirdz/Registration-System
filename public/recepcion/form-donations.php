@@ -5,6 +5,23 @@ require 'validations.php';
 Este archivo contiene las siguientes opciones:
 Consultas, Insertar, Eliminar, Resetear
 */
+
+//Consulta en la base de datos
+if( isset($_POST['generateTable_']) ){
+    // Preparacion BD Consulta automatica
+    $stmt = $BD->prepare("SELECT * FROM donaciones");
+    $stmt->execute();
+    // $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    $userData = array();
+    while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+      $userData['ALL'][] = $row;
+    }
+    echo json_encode($userData);
+        
+}
+
+
 function controlOfPaginator(){
     return $paginateIn = 5; //Cantidad de paginas a mostrar
 }
