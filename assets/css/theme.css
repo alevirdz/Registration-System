@@ -51,11 +51,9 @@ th.sorting{
 .table>:not(:last-child)>:last-child>*, .table tbody, .table td, .table tfoot, .table th, .table thead, .table tr {
   border-color: #e4e4e4;
 }
-
-/* podemos borrar */
-a.page-link.active{
-  color: white;
-  background: #0c7bdd;
+/*Profile*/
+ul.list-social{
+list-style: none;
 }
 .align-icons{
   align-items: center;

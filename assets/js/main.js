@@ -112,13 +112,14 @@ function login (){
     };
     $.ajax({
         type: "POST",
-        url:"../../public/recepcion/form-sesion.php",
+        url:"recepcion/form-sesion.php",
         data: data,
         cache: false,
         // dataType: "json",
         success: function(resp){ 
             if(resp == "true"){
-                window.location="../dashboard/content/Dashboard-panel.php";
+                /* window.location="Panel"; */
+                window.location="dashboard/content/Dashboard-panel.php";
                 
            }else if(resp == 'no_pwd_mail'){
                Swal.fire({
@@ -948,7 +949,7 @@ function showInscriptions(){
                     {"data" : 'edad'},
                     {"data" : 'telefono'},
                     {"data" : 'correo'},
-                    {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editInscriptions()'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteInscriptions()'><ion-icon name='trash-outline'></ion-icon></button>`}
+                    {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editInscriptions()'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteInscriptions__()'><ion-icon name='trash-outline'></ion-icon></button>`}
                 ],
                 
             });
@@ -1070,7 +1071,7 @@ function updateInscriptions( id ){
 }
 function deleteInscriptions(){
     $('tr td:last-child').click(function(){
-        console.log("CLICK")
+        console.log("CLICK delete")
         const id = $(this).parent().find('td:first').text();
         Swal.fire({
             type: 'info',
@@ -1253,7 +1254,135 @@ function Saveprofile( id ){
         }
     });
 }
-
+function Updatepassword(){
+    $("#passwordCurrent").prop('disabled', false);
+    $("#passwordNew").prop('disabled', false);
+    $("#passwordConfirmNew").prop('disabled', false);
+    $("#btn-password").css("display", "none");
+    $("#btn-passwordUpdate").removeClass("d-none");
+}
+function Savepassword( id ){
+    const data = {
+        "passwordCurrent": $('#passwordCurrent').val(), 
+        "passwordNew": $('#passwordNew').val(),
+        "pwdConfirmNew": $('#passwordConfirmNew').val(),
+        "user": id,
+    };
+    $.ajax({
+        type: "POST",
+        url: "../../recepcion/form-reset-pass.php",
+        data: data,
+        success: function(resp){
+            console.log(resp)
+            if(resp == "true"){
+                var userUpdate =  $("#btn-profileUpdate");
+                userUpdate.css(btnSuccess);
+                userUpdate.text("Usuario Actualizado");
+                userUpdate.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    userUpdate.css(btnSuccess);
+                    userUpdate.text("Usuario Actualizado");
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    userUpdate.css(btnStatic);
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 1000,);
+                    userUpdate.text("Guardar");
+                }, 1200);
+                setTimeout(function() {
+                    actionMenu('profile')
+                }, 1400);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Actualizado',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                });
+            }else if(resp == "pwd_not_equal"){
+                    var userUpdate =  $("#btn-profileUpdate");
+                    userUpdate.css(btnWarning);
+                    userUpdate.text("Verificar los campos");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("Guardar");
+                    }, 1000);
+                    // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'La nueva contraseña no coincide, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+            }else if(resp == "pwdCurrent_not_valid"){
+                var userUpdate =  $("#btn-profileUpdate");
+                userUpdate.css(btnWarning);
+                userUpdate.text("Verificar los campos");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar");
+                }, 1000);
+                // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Houston, tenemos un problema...',
+                    text: 'La contraseña actual no es validá, verifícala...',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
+        }else if(resp == "fields_invalids"){
+            var userUpdate =  $("#btn-profileUpdate");
+            userUpdate.css(btnWarning);
+            userUpdate.text("Verificar los campos");
+            setTimeout(function() {
+                userUpdate.css(btnStatic);
+                userUpdate.text("Guardar");
+            }, 1000);
+            // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+            Swal.fire({
+                type: 'warning',
+                title: 'Houston, tenemos un problema...',
+                text: 'Uno o más campos no son correctos, verifícalos...',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
+        }else if(resp == "empty_fields"){
+                var userUpdate =  $("#btn-profileUpdate");
+                userUpdate.css(btnDanger);
+                userUpdate.text("Los campos estan vacios");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar!");
+                }, 1000);
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibí ningún dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
+                actionMenu('profile');
+            }
+           
+        },
+        error: function(resp){
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
+        }
+    });
+}
 function editRemember( id ){
     // console.log('id '+id +" Descubriste una nueva funcion que no se ha programado")
     var fila=`
@@ -1370,7 +1499,148 @@ function updateRemember( id ){
     });
     // console.log('id '+id +" Descubriste una nueva funcion que no se ha programado")
 }
+function socialMedia( id ){
+    var valueFacebook = $('#link-facebook').attr('href');
+    var APIWhatsapp = $('#link-whatsapp').attr('href');
+    var valueInstagram = $('#link-instagram').attr('href');
+    var valueWeb = $('#link-web').attr('href');
+    var Mailto = $('#link-email').attr('href');
+    const valueWhatsapp = APIWhatsapp.substring(36);
+    const valueEmail = Mailto.substring(7);
 
+    var fila=`
+        <div class="modal fade" id="socialmedia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-donation" id="formG">
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" name="remember" id="url_facebook" placeholder="www.facebook.com" value="${valueFacebook}"required>
+                </div>
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Whatsapp</label>
+                    <input type="text" class="form-control" name="remember" id="url_whatsapp" placeholder="número con prefijo" value="${valueWhatsapp}"required>
+                </div>
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Instagram</label>
+                    <input type="text" class="form-control" name="remember" id="url_instagram" placeholder="www.instagram.com" value="${valueInstagram}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Web</label>
+                    <input type="text" class="form-control" name="remember" id="url_web" placeholder="www.paginaweb.com" value="${valueWeb}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="recordatorio" class="form-label">Correo electrónico</label>
+                    <input type="text" class="form-control" name="remember" id="url_correo" placeholder="correo@hotmail.com" value="${valueEmail}" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <a type="button" class="btn btn-dark" name="btn-update-social" id="btn-update-social-media" onclick="saveSocialMedia(${id})"><ion-icon name="checkmark-outline"></ion-icon>Guardar</a>
+                </div>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+    `;
+
+$('#socialUpdate').html(fila);
+$("#socialmedia").modal("show");
+
+}
+function saveSocialMedia( id ){
+    const data = {
+        "facebook": $('#url_facebook').val(), 
+        "whatsapp": $('#url_whatsapp').val(), 
+        "instagram": $('#url_instagram').val(), 
+        "web": $('#url_web').val(), 
+        "correo": $('#url_correo').val(), 
+        "useridSocialmedia": id,
+    };
+    $.ajax({
+        type: "POST",
+        url: "../../recepcion/form-profile.php",
+        data: data,
+        success: function(resp){
+            if(resp == "true"){
+                var userUpdate =  $("#btn-update-remember");
+                userUpdate.css(btnSuccess);
+                userUpdate.text("Guardando");
+                userUpdate.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    userUpdate.css(btnSuccess);
+                    userUpdate.text("Guardando");
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    userUpdate.css(btnStatic);
+                    userUpdate.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 800,);
+                    userUpdate.text("Guardar");
+                }, 1000);
+                setTimeout(function() {
+                    actionMenu('profile')
+                    $("#editremember").modal("hide");
+                }, 1200);
+                setTimeout(function() {
+                    Swal.fire({
+                        type: 'success',
+                        title: 'Recordatorio Actualizado',
+                        showConfirmButton: false,
+                        showCloseButton: true
+                    });
+                }, 1500);
+            }else if(resp == "data_invalid"){
+                    var userUpdate =  $("#btn-update-remember");
+                    userUpdate.css(btnWarning);
+                    userUpdate.text("Verificar los campos");
+                    setTimeout(function() {
+                        userUpdate.css(btnStatic);
+                        userUpdate.text("Guardar");
+                    }, 1000);
+                    // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+            }else if(resp == "empty_fields" ){
+                var userUpdate =  $("#btn-update-remember");
+                userUpdate.css(btnDanger);
+                userUpdate.text("Los campos estan vacios");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar!");
+                }, 1000);
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibí ningún dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
+            }
+        },
+        error: function(resp){
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
+        }
+    });
+    // console.log('id '+id +" Descubriste una nueva funcion que no se ha programado")
+}
 function updatePhoto( id ){
     var fila=`
         <div class="modal fade" id="editremember" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
