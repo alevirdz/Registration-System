@@ -27,7 +27,12 @@ include ('../../recepcion/form-panel.php');
 					</li>
 					<li class="sidebar-item" id="item-inscriptions">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="inscriptions">
-              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones</span>
+              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones de Eventos</span>
+            			</a>
+					</li>
+					<li class="sidebar-item" id="item-inscriptions">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="newperson">
+              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Personas nuevas</span>
             			</a>
 					</li>
 					<li class="sidebar-item" id="item-profile">

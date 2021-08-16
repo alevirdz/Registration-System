@@ -36,10 +36,10 @@ require './Sesiones.php';
 
                <div class="content" id="table-donations">
                     <form class="form-donation" id="formG">
-                        <h2 class="text-center">A Donar</h2>
+                        <h2 class="text-center">Ingrese la donación</h2>
                         <div class="mb-3">
                             <label for="user" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del donante" value="Anónimo" required>
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Presupuesto de la donación</label>

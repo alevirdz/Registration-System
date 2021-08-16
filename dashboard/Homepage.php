@@ -5,7 +5,7 @@ include ('../recepcion/form-panel.php');
 <div class="row mb-2 mb-xl-3">
 	<div class="col-auto d-none d-sm-block">
 		<h1>¡Qué bueno que regresaste <?php echo $nameUser ?>!</h1>
-		<h3><strong>Analisis</strong> Panel</h3>
+		<h3><strong>Análisis</strong> Panel</h3>
 	</div>
 </div>
 <div class="row">
@@ -17,7 +17,7 @@ include ('../recepcion/form-panel.php');
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">Donaciones</h5>
-										<h1 class="mt-1 mb-3"><?php echo '$'. $totalDonation ?></h1>
+										<h1 class="mt-1 mb-3"><?php echo '$ '. $totalDonation ?></h1>
 										<div class="mb-1">
 											<span class="text-muted">Desde la última semana</span>
 										</div>
@@ -37,7 +37,7 @@ include ('../recepcion/form-panel.php');
 								<div class="card">
 									<div class="card-body">
 										<h5 class="card-title mb-4">Productos</h5>
-										<h1 class="mt-1 mb-3">$21.300</h1>
+										<h1 class="mt-1 mb-3">-- --</h1>
 										<div class="mb-1">
 											<span class="text-muted">Desde la última semana</span>
 										</div>
@@ -60,7 +60,7 @@ include ('../recepcion/form-panel.php');
 					<div class="card flex-fill w-100">
 						<div class="card-header">
 
-							<h5 class="card-title mb-0">Inscripciones grafica</h5>
+							<h5 class="card-title mb-0">Inscripciones gráfica</h5>
 						</div>
 						<div class="card-body py-3">
 							<div class="chart chart-sm">
@@ -71,7 +71,8 @@ include ('../recepcion/form-panel.php');
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-12 col-lg-8 col-xxl-9 d-flex">
+				<!-- <div class="col-12 col-lg-8 col-xxl-9 d-flex"> -->
+				<div class="col-12 col-lg-12 col-xxl-12 d-flex">
 					<div class="card flex-fill">
 						<div class="card-header">
 
@@ -102,11 +103,11 @@ include ('../recepcion/form-panel.php');
 					</div>
 				</div>
 
-				<div class="col-12 col-lg-4 col-xxl-3 d-flex">
+<!-- 				<div class="col-12 col-lg-4 col-xxl-3 d-flex">
 					<div class="card flex-fill w-100">
 						<div class="card-header">
 
-							<h5 class="card-title mb-0">Monthly Sales</h5>
+							<h5 class="card-title mb-0">Espacio disponible</h5>
 						</div>
 						<div class="card-body d-flex w-100">
 							<div class="align-self-center chart chart-lg">
@@ -117,7 +118,7 @@ include ('../recepcion/form-panel.php');
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 <?php } else {?>
 	<div class="col-xl-6 col-xxl-5 d-flex">
 					<div class="w-100">

@@ -1,7 +1,7 @@
 <?php 
 
 require '../config/database.php';
-require '../../assets/lib/PHPExcel/Classes/PHPExcel.php';
+require '../assets/lib/PHPExcel/Classes/PHPExcel.php';
 
 
 //excel
@@ -28,15 +28,15 @@ require '../../assets/lib/PHPExcel/Classes/PHPExcel.php';
 
         //styles head
         $objPHPExcel->getActiveSheet()
-        ->getStyle('A1:F1')
+        ->getStyle('A1:D1')
         ->getFill()
         ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
         ->getStartColor()
-        ->setARGB('FF808080');
+        ->setARGB('DFBF91');
 
         //Dimencions width and height
         $rowsExcel = 1;
-        $columnsExcel = array("A","B","C","D","E","F");
+        $columnsExcel = array("A","B","C","D");
         $count = count($columnsExcel);
         for ($i = 0; $i < $count; ++$i){
         $objPHPExcel->getActiveSheet()->getRowDimension($rowsExcel)->setRowHeight(20);
@@ -48,17 +48,14 @@ require '../../assets/lib/PHPExcel/Classes/PHPExcel.php';
         $i=2;
         $objPHPExcel->getActiveSheet()->setCellValue('A1', 'ID');
         $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nombre');
-        $objPHPExcel->getActiveSheet()->setCellValue('C1', 'Apellidos');
-        $objPHPExcel->getActiveSheet()->setCellValue('D1', 'Correo');
-        $objPHPExcel->getActiveSheet()->setCellValue('E1', 'Donación');
-        $objPHPExcel->getActiveSheet()->setCellValue('F1', 'Fecha');
+        $objPHPExcel->getActiveSheet()->setCellValue('C1', 'Donación');
+        $objPHPExcel->getActiveSheet()->setCellValue('D1', 'Fecha');
         foreach ($data as $value) {
+        /* var_dump($value['donacion']); convertirlo a una manera mas legible */
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $value['id']);
         $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $value['nombre']);
-        $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $value['apellidos']);
-        $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $value['correo']);
-        $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $value['donacion']);
-        $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $value['fecha']);
+        $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $value['donacion']);
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $value['fecha']);
         $i++;
         }
         

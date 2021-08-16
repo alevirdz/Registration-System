@@ -8,29 +8,41 @@ Consultas, Insertar, Editar, Actualizar, Eliminar, Resetear
 
 //Consulta en la base de datos
 if( isset($_POST['showRegister']) ){
-    // Preparacion BD Consulta automatica
     $stmt = $BD->prepare("SELECT * FROM inscripciones");
     $stmt->execute();
-    // $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
     $userData = array();
-    while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+
+    while($row=$stmt->fetch(PDO::FETCH_ASSOC)) {
       $userData['ALL'][] = $row;
     }
     echo json_encode($userData);
         
 }
 
+if( isset($_POST['limit']) && isset($_POST['stop']) ){  
+    if( !empty($_POST['limit']) && !empty($_POST['stop']) ){
+        $stoping = trim($_POST['stop']);
+        var_dump($stoping);
+         $stmt = $BD->prepare("UPDATE configuraciones SET limite_inscripciones=?");
+         $stmt->bindParam(1, $stoping);
+         // Excecute
+         $stmt->execute();
+         echo 'Actualizado el limite de inscripciones';
+
+    }
+
+}
+
 
 //Inserta una nueva inscripcion de un usuario
 if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_POST['apellidos'])  && isset($_POST['edad'])  && isset($_POST['telefono']) && isset($_POST['correo']) ){
-    //Verificacion
     if( !empty($_POST['createInscriptions']) && !empty($_POST['nombre']) && !empty($_POST['apellidos'])  && !empty($_POST['edad'])  && !empty($_POST['telefono']) && !empty($_POST['correo']) ){
-       $userName     = trim($_POST['nombre']);
-       $userSurname  = trim($_POST['apellidos']);
-       $userAge      = trim($_POST['edad']);
-       $userPhone    = trim($_POST['telefono']);
-       $userEmail    = trim($_POST['correo']);
+       
+        $userName     = trim($_POST['nombre']);
+       $userSurname   = trim($_POST['apellidos']);
+       $userAge       = trim($_POST['edad']);
+       $userPhone     = trim($_POST['telefono']);
+       $userEmail     = trim($_POST['correo']);
 
        $checkedName    = checkedText($userName);
        $checkedSurname = checkedText($userSurname);
@@ -38,19 +50,30 @@ if( isset($_POST['createInscriptions']) && isset($_POST['nombre']) && isset($_PO
        $checkedPhone   = checkedPhone($userPhone);
        $checkedEmail   = checkedEmail($userEmail);
 
-       if($checkedName && $checkedSurname && $checkedAge && $checkedPhone && $checkedEmail === true){
-           // Prepare
-           $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo) VALUES (?, ?, ?, ?, ?)");
-           $stmt->bindParam(1, $userName);
-           $stmt->bindParam(2, $userSurname);
-           $stmt->bindParam(3, $userAge);
-           $stmt->bindParam(4, $userPhone);
-           $stmt->bindParam(5, $userEmail);
-           // Excecute
-           $stmt->execute();
-           echo 'true';
+       if($checkedName && $checkedSurname && $checkedAge && $checkedPhone && $checkedEmail){
 
-           /*  Si inscripciones es mayor o igual a 10 registros: entonces haz alcanzado el total de reigstros */
+            $stmt = $BD->prepare("SELECT limite_inscripciones FROM configuraciones"); //Verifica el limite
+            $stmt->execute();
+            $result = $stmt->fetch();
+            $recordLimit = $result[0]; 
+            
+            $stmt = $BD->prepare("SELECT COUNT(*) FROM inscripciones"); //cuenta el total de registros
+            $stmt->execute();
+            $count = $stmt->fetchColumn();
+
+            if ($count >= $recordLimit){ //Condicion
+                echo "reached_limit";
+            }else{
+            $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bindParam(1, $userName);
+            $stmt->bindParam(2, $userSurname);
+            $stmt->bindParam(3, $userAge);
+            $stmt->bindParam(4, $userPhone);
+            $stmt->bindParam(5, $userEmail);
+            $stmt->execute();
+            echo 'true';
+            } 
+
        }else{
            echo "false";
        }

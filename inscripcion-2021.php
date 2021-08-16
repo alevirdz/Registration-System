@@ -1,5 +1,5 @@
 <?php 
-include '../resources/layouts/links-header-index.php'; 
+include 'resources/layouts/links-header-index.php'; 
 
 ?>
 <style>
@@ -54,5 +54,5 @@ include '../resources/layouts/links-header-index.php';
     </div>
 </section>
 <?php 
-include '../resources/layouts/links-footer-index.php';
+include 'resources/layouts/links-footer-index.php';
 ?>

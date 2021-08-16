@@ -31,6 +31,7 @@ a.paginate_button.item.active{
   color: white !important;
   background: #0c7bdd;
 }
+/* Stilos de datables */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
     color: #666 !important;
     border: 1px solid #fff !important;
@@ -57,6 +58,12 @@ list-style: none;
 }
 .align-icons{
   align-items: center;
+}
+
+a#link-facebook, a#link-whatsapp, a#link-instagram,
+a#link-youtube, a#link-web, a#link-email{
+  color: #030303;
+  font-size: 1.1em;
 }
 .switch {
   position: relative !important;

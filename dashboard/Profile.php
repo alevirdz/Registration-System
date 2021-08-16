@@ -1,10 +1,24 @@
 <?php 
-require '../recepcion/form-profile.php';
+
+require '../recepcion/form-profile.php'; //Aqui esta el problema
 require 'Alerts.php';
+
 ?>
 <p class="none" id="id" value="<?php echo $idUser ?>"></p>
-<h1 class="h3 mb-3">Perfil</h1>
-
+<section class="container">
+    <div class="row">
+        <div class="card">
+        <div class="card-body">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1 class="font-weight-bold">Perfil del Usuario</h1>
+                <p class="lead text-muted" id="subtitle-configuration">Revisa tus datos</p>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+</section>
 <div class="row">
     <div class="col-md-4 col-xl-3">
         <div class="card mb-3">
@@ -32,13 +46,14 @@ require 'Alerts.php';
                 <div class="link-social">
                 <ul class="list-social">
                 
-                    <li><a href="<?php echo $Facebook ?>" target="_blank" id="link-facebook"><ion-icon name="logo-facebook"></ion-icon>Facebook</a></li>
-                    <li><a href="<?php echo $Whatsapp ?>" target="_blank" id="link-whatsapp"><ion-icon name="logo-whatsapp"></ion-icon>Whatsapp</a></li>
-                    <li><a href="<?php echo $Instagram ?>" target="_blank" id="link-instagram"><ion-icon name="logo-instagram"></ion-icon>Instagram</a></li>
-                    <li><a href="<?php echo $Web ?>" target="_blank" id="link-web"><ion-icon name="planet-outline"></ion-icon>Web</a></li>
-                    <li><a href="mailto:<?php echo $Email ?>" target="_blank" id="link-email"><ion-icon name="mail-outline"></ion-icon>Correo</a></li>
+                    <li><a href="<?php echo $Facebook ?>" target="_blank" id="link-facebook"><ion-icon name="logo-facebook"></ion-icon> Facebook</a></li>
+                    <li><a href="<?php echo $Whatsapp ?>" target="_blank" id="link-whatsapp"><ion-icon name="logo-whatsapp"></ion-icon> Whatsapp</a></li>
+                    <li><a href="<?php echo $Instagram ?>" target="_blank" id="link-instagram"><ion-icon name="logo-instagram"></ion-icon> Instagram</a></li>
+                    <li><a href="<?php echo $Youtube ?>" target="_blank" id="link-instagram"><ion-icon name="logo-youtube"></ion-icon> YouTube</a></li>
+                    <li><a href="<?php echo $Web ?>" target="_blank" id="link-web"><ion-icon name="planet-outline"></ion-icon> Web</a></li>
+                    <li><a href="mailto:<?php echo $Email ?>" target="_blank" id="link-email"><ion-icon name="mail-outline"></ion-icon> Correo</a></li>
                 </ul>
-                <h5 class="text-muted mb-2"><i>Obten acceso más rápido desde un solo lugar.</i></h5>
+                <h5 class="text-muted mb-2"><i>Obtén acceso más rápido desde un solo lugar.</i></h5>
                 </div>
             </div>
             <hr class="my-0" />
@@ -51,7 +66,7 @@ require 'Alerts.php';
         <div class="card">
             <div class="card-header">
 
-                <h5 class="card-title mb-0">Revisa tu información</h5>
+                <h5 class="card-title mb-0">Nombre de usuario</h5>
             </div>
             <div class="card-body h-100">
             <form class="form-donation" id="formG">
@@ -88,7 +103,7 @@ require 'Alerts.php';
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Confirmación de contraseña</label>
-                            <input type="password" class="form-control" name="passwordConfirmNew" id="passwordConfirmNew" placeholder="Confirme su nueva contraseña" disabled required>
+                            <input type="password" class="form-control" name="passwordConfirmNew" id="passwordConfirmNew" placeholder="Confirmación de contraseña" disabled required>
                         </div>
                         <div class="d-grid gap-2">
                             <a type="button" class="btn btn-dark" name="btn-password" id="btn-password" onclick="Updatepassword()">Cambiar contraseña</a>

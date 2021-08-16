@@ -23,7 +23,7 @@ if(isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseÃ
             $stmt->execute(array(':correo' => $userEmail));
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
-            //Si coincide
+            //Si coincide?
             if(!empty($row['correo'])){
                 echo '<div class="alert alert-warning" role="alert">
                 El nombre de usuario proporcionado ya estÃ¡ en uso.
@@ -39,7 +39,7 @@ if(isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseÃ
                 $stmt->bindParam(4, $defaultRemember);
                 // Excecute
                 $stmt->execute();
-                echo 'Registrado';
+                //echo 'Registrado'; comente esta linea
             }
         }
         

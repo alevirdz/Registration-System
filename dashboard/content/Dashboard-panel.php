@@ -1,6 +1,7 @@
 <?php 
 include '../Sesiones.php';
 include '../../resources/layouts/links-header-admin.php';
+
 ?>
 
 <?php #Wrapper padre ?>

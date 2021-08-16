@@ -1,7 +1,7 @@
 <?php 
 
 require '../config/database.php';
-require '../../assets/lib/PHPExcel/Classes/PHPExcel.php';
+require '../assets/lib/PHPExcel/Classes/PHPExcel.php';
 
 
 //excel
@@ -32,7 +32,7 @@ require '../../assets/lib/PHPExcel/Classes/PHPExcel.php';
         ->getFill()
         ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
         ->getStartColor()
-        ->setARGB('FF808080');
+        ->setARGB('DFBF91');
 
         //Dimencions width and height
         $rowsExcel = 1;

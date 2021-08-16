@@ -1,7 +1,7 @@
 <?php 
 // session_start();
 require '../config/database.php';
-require '../Dashboard/Sesiones.php';
+require '../dashboard/Sesiones.php';
 require 'validations.php';
 $idUser;
 /*
@@ -90,29 +90,36 @@ if( isset($_FILES["file"]) && isset($_POST["idUser"]) && !empty($_FILES["file"])
   $userId = $_POST["idUser"];
   $file_name = $_FILES["file"]["name"];
   $file_tmpname = $_FILES["file"]["tmp_name"];
+  $file_size = $_FILES['file']['size'];
+  $file_error = $_FILES['file']['error'];
   $file_type = $_FILES["file"]["type"];
-  $path_profile_save = "../../assets/user/profile/";
-  if ( ($file_type == "image/png") || ($file_type == "image/jpeg") || ($file_type == "image/jpg") || ($file_type  == "image/svg") || ($file_type  == "image/svg+xml") ){
-      $file_name_md5 = md5($file_name); 
-       // Prepare
-       $path_profile_user = "../../assets/user/profile/".$file_name;
-       $stmt = $BD->prepare("UPDATE usuarios SET foto=? WHERE id=$userId ");
-       $stmt->bindParam(1, $path_profile_user);
-       $stmt->execute();
-       if(!file_exists($path_profile_save . $file_name)) {
-          move_uploaded_file ($file_tmpname, $path_profile_save . $file_name );
-          echo $path_profile_user;
-       }else{
-        echo "ya existe este archivo";
-       }
-      //guardamos la imagen en la carpeta
-      // if ( move_uploaded_file( $file_tmpname, $path_profile_save . $file_name ) ) {
-      //     //consultamos la bd
-      //     echo "consultamos y mostramos la imagen";
-      // } else {
-      //     echo 0;
-      // }
+  //Ruta donde se guarda
+  $path_profile_save = "../assets/user/profile/";
 
+  if ( ($file_type == "image/png") || ($file_type == "image/jpeg") || ($file_type == "image/jpg") || ($file_type  == "image/svg") || ($file_type  == "image/svg+xml") ){
+      if ($file_size <= 500000) {
+            if ($file_error == 0){
+
+              // Prepare
+              $path_image_user = "../../assets/user/profile/".$file_name;
+              $stmt = $BD->prepare("UPDATE usuarios SET foto=? WHERE id=$userId ");
+              $stmt->bindParam(1, $path_image_user);
+              $stmt->execute();
+
+              if(!file_exists($path_profile_save . $file_name)) {
+
+                  move_uploaded_file ($file_tmpname, "$path_profile_save".$file_name);
+
+                  echo $path_image_user;
+              }else{
+                echo "ya existe este archivo";
+              }
+
+          } else {
+              echo "No se cambio la foto :(";
+              die();
+          }
+      }
   } else {
     echo 0;
   }
@@ -131,6 +138,7 @@ if( isset($idUser) ){
      $Facebook = $result['facebook'];
      $Whatsapp = $result['whatsapp'];
      $Instagram = $result['instagram'];
+     $Youtube = $result['youtube'];
      $Web = $result['web'];
      $Email = $result['correo'];
    }else{
@@ -141,32 +149,35 @@ if( isset($idUser) ){
  }
 
 //Actuliza los datos de las redes sociales
-if( isset($_POST['useridSocialmedia']) && isset($_POST['facebook']) && isset($_POST['whatsapp']) && isset($_POST['instagram']) && isset($_POST['web']) && isset($_POST['correo']) ){
+if( isset($_POST['useridSocialmedia']) && isset($_POST['facebook']) && isset($_POST['whatsapp']) && isset($_POST['instagram']) && isset($_POST['youtube']) && isset($_POST['web']) && isset($_POST['correo']) ){
   
-  if( !empty($_POST['useridSocialmedia']) && !empty($_POST['facebook']) && !empty($_POST['whatsapp']) && !empty($_POST['instagram']) && !empty($_POST['web']) && !empty($_POST['correo'])  ){
+  if( !empty($_POST['useridSocialmedia']) && !empty($_POST['facebook']) && !empty($_POST['whatsapp']) && !empty($_POST['instagram']) && !empty($_POST['youtube']) && !empty($_POST['web']) && !empty($_POST['correo'])  ){
             
     $userId    = trim($_POST['useridSocialmedia']);
     $facebook  = trim($_POST['facebook']);
     $whatsapp  = trim($_POST['whatsapp']);
     $instagram = trim($_POST['instagram']);
+    $youtube   = trim($_POST['youtube']);
     $web       = trim($_POST['web']);
-    $email    = trim($_POST['correo']);
-    
-    $checkedFacebook  = checkedSocialMedia($facebook);
+    $email     = trim($_POST['correo']);
+
+    $checkedFacebook  = checkedSocialFacebook($facebook);
     $checkedWhatsapp  = checkedPhone($whatsapp);
-    $checkedInstagram = checkedSocialMedia($instagram);
-    $checkedWeb       = checkedSocialMedia($web);
+    $checkedInstagram = checkedSocialInstagram($instagram);
+    $checkedInstagram = checkedSocialYoutube($youtube);
+    $checkedWeb       = checkedSocialWeb($web);
     $checkedCorreo    = checkedEmail($email);
 
-    if( $checkedFacebook && $checkedWhatsapp &&  $checkedInstagram && $checkedWeb &&  $checkedCorreo == true){
+    if( $checkedFacebook && $checkedWhatsapp &&  $checkedInstagram && $checkedInstagram && $checkedWeb &&  $checkedCorreo == true){
         // Prepare
         $ApiWhatsapp = 'https://api.whatsapp.com/send?phone='.$whatsapp;
-        $stmt = $BD->prepare("UPDATE redes_sociales SET facebook=?, whatsapp=?, instagram=?, web=?, correo=? WHERE id=$userId ");
+        $stmt = $BD->prepare("UPDATE redes_sociales SET facebook=?, whatsapp=?, instagram=?, youtube=?, web=?, correo=? WHERE id=$userId ");
         $stmt->bindParam(1, $facebook);
         $stmt->bindParam(2, $ApiWhatsapp);
         $stmt->bindParam(3, $instagram);
-        $stmt->bindParam(4, $web);
-        $stmt->bindParam(5, $email);
+        $stmt->bindParam(4, $youtube);
+        $stmt->bindParam(5, $web);
+        $stmt->bindParam(6, $email);
         // Excecute
         $stmt->execute();
         echo 'true';

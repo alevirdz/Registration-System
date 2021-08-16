@@ -1,37 +1,26 @@
 <?php 
 require '../config/database.php';
 
-if( isset($_POST['sms'])  && isset($_POST['message']) ){
-	var_dump($_POST['sms']);
+if( isset( $_POST['sms'] ) && isset( $_POST['message'] ) ){
 	if( !empty($_POST['message']) ){
 
 		$messageWhatsapp =  $_POST['message'];
 
-		// Preparacion BD Consulta automatica
-		$stmt = $BD->prepare("SELECT * FROM numeros");
+		// 1.-Se realiza la consulta en la tabla
+		$stmt = $BD->prepare("SELECT telefono FROM inscripciones");
 		$stmt->execute();
 		$result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
+		// 2.-Transformo de arreglo
 		foreach( $result as $data ){
-		// Transformacion de arreglo
 		$telefonos[] = $data->telefono;
 		}
-		// de modo que el array original lo separamos por fragmentos de arreglos. 
-		$arrays = array_chunk($telefonos, 1); //print_r($arrays);
+		// 3.-Separo el arreglo original por fragmentos individuales
+		$arrays = array_chunk($telefonos, 1);
 
+		//4.-Agrego las configuraciones
 		$urlApi = 'https://whatzmeapi.com:10501/rest/api/enviar-muchos-mensajes-muchos-contactos';
 		$token = 'juhapwp5m2meca4i';
-
-
-		// El número debe llevar código de pais
 		$contactos =  $arrays;
-
-		// $contactos = [
-		//     [529993181367, "Alevi prueba", "12345"],
-		//     [525582395294, "ejemplo", "12345"]
-
-		// ];
-
 		$mensaje = $messageWhatsapp;
 
 		$body = new stdClass();

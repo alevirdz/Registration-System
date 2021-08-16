@@ -6,6 +6,8 @@ $idUser = $_SESSION['user_id'];
 $rolUser  = $_SESSION['tipo_rol'];
 // $imageUser  = $_SESSION['user_image'];
 // echo $name. '<br>'.$email .' <br>'. $idUser.' <br>'. $rolUser;
+
+
 if(!isset($name) && !isset($email) && !isset($idUser)){
-    header('Location: ../../web/index.php');}
+    header('Location: ../../index.php');}
 ?>

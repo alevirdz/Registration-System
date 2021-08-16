@@ -5,7 +5,7 @@
 
 				<form class="d-none d-sm-inline-block">
 					<div class="input-group input-group-navbar">
-						<input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+						<input type="text" class="form-control" placeholder="Buscar..." aria-label="Search">
 						<button class="btn" type="button">
               				<i class="align-middle" data-feather="search"></i>
             			</button>
@@ -89,7 +89,7 @@
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">
 								<div class="dropdown-menu-header">
 									<div class="position-relative">
-										4 Mensajitos
+										1 Mensaje
 									</div>
 								</div>
 								<div class="list-group">
@@ -100,14 +100,14 @@
 											</div>
 											<div class="col-10 ps-2">
 												<div class="text-dark">Vanessa Tucker</div>
-												<div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
-												<div class="text-muted small mt-1">15m ago</div>
+												<div class="text-muted small mt-1">Hoy la vida tiene para ti algo nuevo que enseñarte y tu mucho por aprender.</div>
+												<div class="text-muted small mt-1">13 agosto</div>
 											</div>
 										</div>
 									</a>
 								</div>
 								<div class="dropdown-menu-footer">
-									<a href="#" class="text-muted">Show all messages</a>
+									<a href="#" class="text-muted">Mostrar todos los mensajes</a>
 								</div>
 							</div>
 						</li>
@@ -124,8 +124,8 @@
 								<a class="dropdown-item" onclick=actionMenu((this.id)) id="profile"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
 								<!-- <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a> -->
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item"onclick=actionMenu((this.id)) id="configurations"><i class="align-middle me-1" data-feather="settings"></i>Configuración</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i>Ayuda</a>
+								<a class="dropdown-item" onclick=actionMenu((this.id)) id="configurations"><i class="align-middle me-1" data-feather="settings"></i>Configuración</a>
+								<a class="dropdown-item" onclick=actionMenu((this.id)) id="helps"><i class="align-middle me-1" data-feather="help-circle"></i>Ayuda</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  id="logoutSesion" onclick=logoutSesion() >Cerrar sesión</a>
 							</div>

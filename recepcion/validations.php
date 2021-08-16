@@ -39,13 +39,33 @@ function checkedPassword($pass){
     //caracteres permitos a z A Z, @#$%-_.
     return (1 === preg_match('/^[a-zA-Z0-9\.@\-_#%$]{6,18}$/', $pass, $isCorrect ));
 }
-
-function checkedSocialMedia($social){
+function checkedLimit($limit){
     $isCorrect = false;
-    return (1 === preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $social, $isCorrect ));
+    return (1 === preg_match('/^[0-9]{2}$/', $limit, $isCorrect ));
 }
-
-
+function checkedSocialFacebook($social){
+    $isCorrect = false;
+    return (1 === preg_match('/https:\/\/www\.facebook\.com\/+/', $social, $isCorrect ));
+}
+function checkedSocialWhatsapp($social){
+    $isCorrect = false;
+    /* return (1 === preg_match('/https:\/\/www\.facebook\.com\/+/', $social, $isCorrect )); */
+    /* return (1 === preg_match('/https:\/\/www\.instagram\.com\/+/', $social, $isCorrect )); */
+    /* return (1 === preg_match('/https:\/\/www\.youtube\.com\/watch\?v=[^&]+/', $social, $isCorrect )); */
+   /*  return (1 === preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $social, $isCorrect )); */
+}
+function checkedSocialInstagram($social){
+    $isCorrect = false;
+    return (1 === preg_match('/https:\/\/www\.instagram\.com\/+/', $social, $isCorrect ));
+}
+function checkedSocialYoutube($social){
+    $isCorrect = false;
+    return (1 === preg_match('/https:\/\/www\.youtube\.com\/+/', $social, $isCorrect ));
+}
+function checkedSocialWeb($social){
+    $isCorrect = false;
+   return (1 === preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $social, $isCorrect ));
+}
 
 
  

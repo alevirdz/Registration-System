@@ -3,16 +3,17 @@ session_start();
 require '../config/database.php';
 require 'validations.php';
 /* Cambiar por sesions */
-if(isset($_POST['correo']) && isset($_POST['contraseña']) ){
-     //Verificacion
-     if( !empty($_POST['correo']) && !empty($_POST['contraseña']) ){
-        $userEmail  = $_POST['correo'];
-        $userPwd    = $_POST['contraseña'];
+if(isset($_POST['correo']) && isset($_POST['contrasena']) ){
 
+     //Verificacion
+     if( !empty($_POST['correo']) && !empty($_POST['contrasena']) ){
+        $userEmail  = $_POST['correo'];
+        $userPwd    = $_POST['contrasena'];
+        
         $checkedEmail = checkedEmail($userEmail);
         $checkedPwd = checkedPassword($userPwd);
-
-        if( $checkedEmail && $checkedPwd === true ){
+        
+        if( $checkedEmail && $checkedPwd ){
 
             // Preparacion BD
             $stmt = $BD->prepare("SELECT nombre, correo, contrasena, id, rol, estado, foto FROM usuarios WHERE correo = :correo");
@@ -24,16 +25,14 @@ if(isset($_POST['correo']) && isset($_POST['contraseña']) ){
               echo "without_session";
             }else{
 
-              //Si coincide
+              //Si coincide?
               if($result > 0 && password_verify($userPwd, $result['contrasena'])){
                 //Variables sesion
-                  $nameUser = $_SESSION['user_name'] = $result['nombre'];
-                  $mailUser = $_SESSION['user_mail'] = $result['correo'];
-                  $idUser   = $_SESSION['user_id']   = $result['id'];
-                  $rolUser  = $_SESSION['tipo_rol']  = $result['rol'];
+                  $nameUser   = $_SESSION['user_name'] = $result['nombre'];
+                  $mailUser   = $_SESSION['user_mail'] = $result['correo'];
+                  $idUser     = $_SESSION['user_id']   = $result['id'];
+                  $rolUser    = $_SESSION['tipo_rol']  = $result['rol'];
                   $imageUser  = $_SESSION['user_image']  = $result['foto'];
-                  // $user = array('nameUser'=>$nameUser , 'idUser'=>$idUser);
-                  // echo json_encode($user);
                   echo "true";
 
                 }else{

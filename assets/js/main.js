@@ -4,7 +4,7 @@ var btnSuccess = {"background": '#3ac47d', "transition": 'all 1.3s cubic-bezier(
 var btnWarning = {"background": 'rgb(208 148 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 var btnDanger = {"background": 'rgb(208 80 80)', "transition": 'all 1.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.1s',};
 window.onload = validateForm();
-//Se carga la página inicial
+//Se carga la página inicial__aqui marca el error NETWORK
 $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();$('#item-desktop').addClass("active");});
 
 function validateForm (){  
@@ -64,7 +64,7 @@ function validateForm (){
             },
             telefono: {
                 required: "Este campo es requerido",
-                letters: "Sólo se permiten números de 12 caracteres.",
+                letters: "Asegúrese de estar incluyendo el código de país (52)",
             },
             contraseña: {
               required: "Este campo es requerido",
@@ -104,67 +104,11 @@ function monedaMX(){
         }
     });      
 }
-
-function login (){
-    const data = {
-        "correo":     $('#correo').val(), 
-        "contraseña": $('#contraseña').val(), 
-    };
-    $.ajax({
-        type: "POST",
-        url:"recepcion/form-sesion.php",
-        data: data,
-        cache: false,
-        // dataType: "json",
-        success: function(resp){ 
-            if(resp == "true"){
-                /* window.location="Panel"; */
-                window.location="dashboard/content/Dashboard-panel.php";
-                
-           }else if(resp == 'no_pwd_mail'){
-               Swal.fire({
-                   type: 'question',
-                   title: 'Usuario invalido',
-                   text: 'El usuario/contraseña no son correctos',
-                   showConfirmButton: true,
-                   confirmButtonText: 'Continuar',
-                   timer: 2100,
-               });
-           }else if(resp == 'data_invalid'){
-               Swal.fire({
-                   type: 'question',
-                   title: 'Intento',
-                   text: 'Estás intentando escribir un dato invalido en el sistema',
-                   showConfirmButton: true,
-                   confirmButtonText: 'Continuar',
-                   timer: 2100,
-               });
-           }else if(resp == 'empty_fields'){
-               Swal.fire({
-                   type: 'question',
-                   title: '¡Vaya! No recibí ningún dato',
-                   text: '¿Deseas intentarlo nuevamente?',
-                   showConfirmButton: true,
-                   confirmButtonText: 'Continuar',
-               });
-           }else if(resp == 'without_session'){
-            Swal.fire({
-                type: 'warning',
-                title: '¡Vaya! la cuenta está desactivada',
-                text: 'Comunicate con el administrador',
-                showConfirmButton: true,
-                confirmButtonText: 'Continuar',
-            });
-        }
-        }
-    });
-}
-
 function logoutSesion(){
     Swal.fire({
         type: 'info',
         title: "sesión",
-        text: "¿Estas seguro en cerrar la sesion?",
+        text: "¿Estás seguro en cerrar la sesión?",
         showCancelButton: true,
         showConfirmButton: true,
         confirmButtonText: "Sí, Salir",
@@ -172,26 +116,23 @@ function logoutSesion(){
         })
         .then(resultado => {
         if (resultado.value) {
-            console.log("que pasa?")
             window.location.href="../../recepcion/logout.php";
         }else {
             // console.log("*NO Quiere eliminar*");
         }
         })
 }
-
 function registerdesdeAdmin(){
     $("input:radio:checked").each(function() {
         var select_tipo =  $(this).val();
             console.log(select_tipo);
         if( select_tipo != 1){
-            console.log("se trata de un usuario mortal")
             const data = {
                 "nombre":       $('#nombre').val(), 
                 "correo":       $('#correo').val(), 
                 "contraseña":   $('#contraseña').val(), 
                 "contraseña_d": $('#contraseña_d').val(),
-                "rol_usuario": 2, 
+                "rol_usuario":  2, 
                 "tipo_perfil": "Colaborador"
             };
             $.ajax({
@@ -219,7 +160,7 @@ function registerdesdeAdmin(){
                         Swal.fire({
                             type: 'info',
                             title: 'Un momento',
-                            text: 'Parece que  las contraseñas no coinciden',
+                            text: 'Parece que las contraseñas no coinciden',
                             showConfirmButton: true,
                             confirmButtonText: 'Continuar',
                         })
@@ -312,12 +253,7 @@ function registerdesdeAdmin(){
         }
 
     });
-
-
-
-
 }
-
 function showUser(){
     $('#subtitle-inscriptions').text("Revisa la información detallada");
     $('#actionInscriptions').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="inscriptions"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
@@ -399,7 +335,6 @@ function showUser(){
                         });
                     }
                 });
-                
             } else {
                 const idUserAct = $(this).attr("id_user");
                 const data = {
@@ -412,8 +347,7 @@ function showUser(){
                     success: function(resp){
                         if(resp == "true"){
                             $('#table-users').empty()
-                            showUser();
-                            
+                            showUser(); 
                         }
                     },
                     error: function(resp){
@@ -428,17 +362,13 @@ function showUser(){
                 });
             }
         }); 
-
-        
     }, 'json');
-
 }
-
 function deleteProfile( id ){
     Swal.fire({
         type: 'question',
         title: "Deshacer permanentemente",
-        text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+        text: "Eliminarás este registro de usuario, ¿Deseas continuar?",
         showCancelButton: true,
         showConfirmButton: true,
         confirmButtonText: "Sí, continuar",
@@ -477,7 +407,6 @@ function deleteProfile( id ){
         }
         })
 }
-
 /*link al registro desde el front*/
 function register(){
     const data = {
@@ -505,7 +434,6 @@ function register(){
                 `;
                 $('#messageRegister').html(fila);
                 $("#userRegister").modal("show");
-                // window.location="../public/dashboard/panel.php";
             }
         },
         error: function(resp){
@@ -519,7 +447,6 @@ function register(){
          }
     });
 }
-
 function donations(){
     const data = {
         "nombre":    $('#nombre').val(), 
@@ -605,7 +532,6 @@ function donations(){
         }
     });
 }
-
 function showDonation(){
     $('#subtitle-donations').text("Revisa la información detallada");
     $('#actionDonations').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="donations"><ion-icon name="heart-outline" size="small"></ion-icon><span id="text-option">Nueva donación</span></button>')
@@ -682,12 +608,6 @@ function showDonation(){
                 ],
                 
             });
-            /* table.dataTable().ajax.reload(); */
-            /* getDataEdit("#datable tbody", table); */
-            /* $('tr td:last-child').click(function(){
-                 console.log($(this).parent().find('td:first').text());
-            }); */
-           
         }    
     });
     
@@ -698,7 +618,7 @@ function deleteDonation(){
         Swal.fire({
             type: 'info',
             title: "Deshacer",
-            text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+            text: "Eliminarás este registro de usuario, ¿Deseas continuar?",
             showCancelButton: true,
             showConfirmButton: true,
             confirmButtonText: "Sí, continuar",
@@ -718,7 +638,6 @@ function deleteDonation(){
                         if(resp == "true"){
                             $('#table-register').empty()
                             showDonation();
-                            
                         }
                     },
                     error: function(resp){
@@ -783,26 +702,18 @@ function deleteDonationAll( ){
         }
         });
 }
-
-function inscriptions(ext){
+function limitInscripcions(){
     const data = {
-        "nombre":    $('#nombre').val(), 
-        "apellidos": $('#apellidos').val(),
-        "edad":      $('#edad').val(),
-        "telefono":  $('#telefono').val(), 
-        "correo":    $('#correo').val(),
-        "createInscriptions": true,
+        "stop": $('#limit').val(),
+        "limit": true,
     };
-    if(ext == 1){url = "../recepcion/form-inscriptions.php";}
-    else{url = "../../recepcion/form-inscriptions.php";}
-    
     $.ajax({
         type: "POST",
-        url: url,
+        url: "../../recepcion/form-inscriptions.php",
         data: data,
         success: function(resp){
             if(resp == "true"){
-                var btnDonate = $("#btn-donation");
+                var btnDonate = $("#btn-limit");
                 btnDonate.css(btnSuccess);
                 btnDonate.text("Se ha registrado");
                 btnDonate.animate({
@@ -821,7 +732,7 @@ function inscriptions(ext){
                         height: '100%', 
                         opacity: '1',
                     }, 800,);
-                    btnDonate.text("¡Inscribirme!");
+                    btnDonate.text("Guardar");
                     $('#formG').trigger("reset");
                 }, 1000);
                 Swal.fire({
@@ -831,13 +742,71 @@ function inscriptions(ext){
                     showCloseButton: true
                 })
             }
-            else if(resp == "false"){
-                var userUpdate =  $("#btn-donation");
-                    userUpdate.css(btnWarning);
-                    userUpdate.text("Sin registro, Se detectaron campos erroneos");
+        },
+        error: function(resp){
+           Swal.fire({
+            type: 'error',
+            title: 'Houston, tenemos un problema...',
+            text: 'Se perdió la conexión, contacta al proveedor.',
+            showConfirmButton: true,
+            confirmButtonText: 'Continuar',
+        })
+        }
+    });
+}
+function inscriptions(ext){
+    const data = {
+        "nombre":    $('#nombre').val(), 
+        "apellidos": $('#apellidos').val(),
+        "edad":      $('#edad').val(),
+        "telefono":  $('#telefono').val(), 
+        "correo":    $('#correo').val(),
+        "createInscriptions": true,
+    };
+    if(ext == 1){url = "../recepcion/form-inscriptions.php";} //url externa
+    else{url = "../../recepcion/form-inscriptions.php";}
+    
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function(resp){
+            if(resp == "true"){
+                var btnInscription = $("#btn-inscription");
+                btnInscription.css(btnSuccess);
+                btnInscription.text("Se ha registrado");
+                btnInscription.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    btnInscription.css(btnSuccess);
+                    btnInscription.text("Se ha registrado");
+                    btnInscription.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    btnInscription.css(btnStatic);
+                    btnInscription.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 800,);
+                    btnInscription.text("¡Inscribirme!");
+                    $('#formG').trigger("reset");
+                }, 1000);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Gracias por registrarte',
+                    showConfirmButton: false,
+                    showCloseButton: true
+                })
+            }else if(resp == "false"){
+                var btnInscription =  $("#btn-inscription");
+                btnInscription.css(btnWarning);
+                btnInscription.text("Sin registro, Se detectaron campos erroneos");
                     setTimeout(function() {
-                        userUpdate.css(btnStatic);
-                        userUpdate.text("¡Inscribirme!");
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
                     }, 1000);
                     Swal.fire({
                         type: 'warning',
@@ -846,13 +815,28 @@ function inscriptions(ext){
                         showConfirmButton: true,
                         confirmButtonText: 'Continuar',
                     })
-            }else if(resp == "empty_fields"){
-                var userUpdate =  $("#btn-donation");
-                    userUpdate.css(btnDanger);
-                    userUpdate.text("Los campos estan vacios");
+            }else if(resp == "reached_limit"){
+                var btnInscription =  $("#btn-inscription");
+                btnInscription.css(btnWarning);
+                btnInscription.text("Sin registro, Se acompletó la cifra indicada");
                     setTimeout(function() {
-                        userUpdate.css(btnStatic);
-                        userUpdate.text("¡Inscribirme!");
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
+                    }, 1000);
+                    Swal.fire({
+                        type: 'info',
+                        title: 'Houston, llegamos al límite asignado...',
+                        text: 'Se ha alcanzado el espacio máximo de registros',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }else if(resp == "empty_fields"){
+                var btnInscription =  $("#btn-inscription");
+                btnInscription.css(btnDanger);
+                btnInscription.text("Los campos estan vacios");
+                    setTimeout(function() {
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
                     }, 1000);
                     Swal.fire({
                         type: 'question',
@@ -949,7 +933,7 @@ function showInscriptions(){
                     {"data" : 'edad'},
                     {"data" : 'telefono'},
                     {"data" : 'correo'},
-                    {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editInscriptions()'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteInscriptions__()'><ion-icon name='trash-outline'></ion-icon></button>`}
+                    {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editInscriptions(this)'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteInscriptions(this)'><ion-icon name='trash-outline'></ion-icon></button>`}
                 ],
                 
             });
@@ -963,10 +947,8 @@ function showInscriptions(){
     });
 
 }
-function editInscriptions(){
-    $('tr td:last-child').click(function(){
-        console.log("CLICK")
-        const id = $(this).parent().find('td:first').text();
+function editInscriptions(ids){
+        const id = $(ids).parent().parent().find('td:first').text()
             // Send the request
             $.post("../../recepcion/form-inscriptions.php", {'editInscription': id}, function(resp) {
             $("#modalInscriptions").modal('show');
@@ -1004,7 +986,7 @@ function editInscriptions(){
             
         }, 'json');
 
-    });
+    
 }
 function updateInscriptions( id ){
     console.log(id);
@@ -1069,14 +1051,12 @@ function updateInscriptions( id ){
         }
     });
 }
-function deleteInscriptions(){
-    $('tr td:last-child').click(function(){
-        console.log("CLICK delete")
-        const id = $(this).parent().find('td:first').text();
+function deleteInscriptions(ids){
+        const id = $(ids).parent().parent().find('td:first').text()
         Swal.fire({
             type: 'info',
             title: "Deshacer",
-            text: "Eliminaras este registro de usuario, ¿Deseas continuar?",
+            text: "Eliminarás este registro de usuario, ¿Deseas continuar?",
             showCancelButton: true,
             showConfirmButton: true,
             confirmButtonText: "Sí, continuar",
@@ -1113,7 +1093,7 @@ function deleteInscriptions(){
                 // console.log("*NO Quiere eliminar*");
             }
             });
-    })
+    
 }
 function inscriptionDeleteAll( ){
     Swal.fire({
@@ -1157,14 +1137,12 @@ function inscriptionDeleteAll( ){
         }
         });
 }
-
 function Updateprofile(){
     $("#nombre").prop('disabled', false);
     $("#correo").prop('disabled', false);
     $("#btn-profile").css("display", "none");
     $("#btn-profileUpdate").removeClass("d-none");
 }
-
 function Saveprofile( id ){
     const data = {
         "nombre": $('#nombre').val(), 
@@ -1409,7 +1387,6 @@ $('#rememberEdit').html(fila);
 $("#editremember").modal("show");
 
 }
-
 function updateRemember( id ){
     const data = {
         "recordatorio": $('#textremember').val(), 
@@ -1503,6 +1480,7 @@ function socialMedia( id ){
     var valueFacebook = $('#link-facebook').attr('href');
     var APIWhatsapp = $('#link-whatsapp').attr('href');
     var valueInstagram = $('#link-instagram').attr('href');
+    var valueYotube = $('#link-youtube').attr('href');
     var valueWeb = $('#link-web').attr('href');
     var Mailto = $('#link-email').attr('href');
     const valueWhatsapp = APIWhatsapp.substring(36);
@@ -1515,24 +1493,28 @@ function socialMedia( id ){
             <div class="modal-body">
                 <form class="form-donation" id="formG">
                 <div class="mb-3">
-                    <label for="recordatorio" class="form-label">Facebook</label>
-                    <input type="text" class="form-control" name="remember" id="url_facebook" placeholder="www.facebook.com" value="${valueFacebook}"required>
+                    <label for="social-media" class="form-label">Facebook</label>
+                    <input type="text" class="form-control" name="facebook" id="url_facebook" placeholder="https://www.facebook.com" value="${valueFacebook}"required>
                 </div>
                 <div class="mb-3">
-                    <label for="recordatorio" class="form-label">Whatsapp</label>
-                    <input type="text" class="form-control" name="remember" id="url_whatsapp" placeholder="número con prefijo" value="${valueWhatsapp}"required>
+                    <label for="social-media" class="form-label">Whatsapp</label>
+                    <input type="text" class="form-control" name="whatsapp" id="url_whatsapp" placeholder="número con prefijo" value="${valueWhatsapp}"required>
                 </div>
                 <div class="mb-3">
-                    <label for="recordatorio" class="form-label">Instagram</label>
-                    <input type="text" class="form-control" name="remember" id="url_instagram" placeholder="www.instagram.com" value="${valueInstagram}" required>
+                    <label for="social-media" class="form-label">Instagram</label>
+                    <input type="text" class="form-control" name="instagram" id="url_instagram" placeholder="https://www.instagram.com" value="${valueInstagram}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="recordatorio" class="form-label">Web</label>
-                    <input type="text" class="form-control" name="remember" id="url_web" placeholder="www.paginaweb.com" value="${valueWeb}" required>
+                    <label for="social-media" class="form-label">YouTube</label>
+                    <input type="text" class="form-control" name="youtube" id="url_youtube" placeholder="https://www.youtube.com" value="${valueYotube}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="recordatorio" class="form-label">Correo electrónico</label>
-                    <input type="text" class="form-control" name="remember" id="url_correo" placeholder="correo@hotmail.com" value="${valueEmail}" required>
+                    <label for="social-media" class="form-label">Web</label>
+                    <input type="text" class="form-control" name="web" id="url_web" placeholder="https://www.paginaweb.com" value="${valueWeb}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="social-media" class="form-label">Correo electrónico</label>
+                    <input type="text" class="form-control" name="email" id="url_correo" placeholder="correo@hotmail.com" value="${valueEmail}" required>
                 </div>
                 <div class="d-grid gap-2">
                     <a type="button" class="btn btn-dark" name="btn-update-social" id="btn-update-social-media" onclick="saveSocialMedia(${id})"><ion-icon name="checkmark-outline"></ion-icon>Guardar</a>
@@ -1553,6 +1535,7 @@ function saveSocialMedia( id ){
         "facebook": $('#url_facebook').val(), 
         "whatsapp": $('#url_whatsapp').val(), 
         "instagram": $('#url_instagram').val(), 
+        "youtube": $('#url_youtube').val(), 
         "web": $('#url_web').val(), 
         "correo": $('#url_correo').val(), 
         "useridSocialmedia": id,
@@ -1731,56 +1714,62 @@ $("#btn-update-photo").on('click', function() {
                     });
                 }, 1300);
             } else {
-                alert('Formato de imagen incorrecto.');
+                alert('Formato de imágen incorrecto ó imagen muy pesada.');
             }
         }
     });
     return false;
 });
 }
-
-function smss(){
+function sms(){
     const data = {
         "message":    $('#message').val(), 
-        "smss": true, //Intencionalmente
+        "sms": true,
     };
     $.ajax({
         type: "POST",
         url: "../../recepcion/form-whatsapp.php",
         data: data,
         success: function(resp){
-            if(resp == "inscrito"){
-                var btnDonate = $("#btn-donation");
-                btnDonate.css(btnSuccess);
-                btnDonate.text("Se ha registrado");
-                btnDonate.animate({
+            if(resp == "true"){
+                var btnMessage = $("#btn-message");
+                btnMessage.css(btnSuccess);
+                btnMessage.text("Se ha enviado");
+                btnMessage.animate({
                     height: '10px', 
                     opacity: '0.4',
                 }, 500,);
                 setTimeout(function() {
-                    btnDonate.css(btnSuccess);
-                    btnDonate.text("Se ha registrado");
-                    btnDonate.animate({
+                    btnMessage.css(btnSuccess);
+                    btnMessage.text("Se ha enviado");
+                    btnMessage.animate({
                         height: '100%', 
                         opacity: '0.8',
                     }, 800,);
-                    btnDonate.css(btnStatic);
-                    btnDonate.animate({
+                    btnMessage.css(btnStatic);
+                    btnMessage.animate({
                         height: '100%', 
                         opacity: '1',
                     }, 800,);
-                    btnDonate.text("¡Inscribirme!");
+                    btnMessage.text("Enviar mensaje");
                     $('#formG').trigger("reset");
                 }, 1000);
             }
-            else if(resp == "error_letters" || "error_email"){
-                var userUpdate =  $("#btn-donation");
-                    userUpdate.css(btnWarning);
-                    userUpdate.text("Sin registro");
+            else if(resp == "error_send"){
+                var btnMessage =  $("#btn-message");
+                    btnMessage.css(btnWarning);
+                    btnMessage.text("No enviado");
                     setTimeout(function() {
-                        userUpdate.css(btnStatic);
-                        userUpdate.text("¡Inscribirme!");
+                        btnMessage.css(btnStatic);
+                        btnMessage.text("Enviar mensaje");
                     }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Mensaje no enviado',
+                        text: 'Ha ocurrido un error al enviar, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
             }
         },
         error: function(resp){
@@ -1794,8 +1783,9 @@ function smss(){
         }
     });
 }
-
 function actionMenu( item ){
+    
+    console.log(item);
     switch (item) {
         case 'panel':
             $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
@@ -1813,12 +1803,13 @@ function actionMenu( item ){
             $.post("../Profile.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
             $('#item-profile').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
+        
         case 'configurations':
             $.post("../Configurations.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
             $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar') });
           break;
         case 'createUser':
-            $.post("../SignUp.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
+            $.post("../Signup.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
             $('#item-user-management').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         case 'showUsers':
@@ -1835,7 +1826,11 @@ function actionMenu( item ){
           break;
           case 'sms':
             $.post("../mensajes.php", function(contents){ $("#content").html(contents); cleanItemMenu();
-            $('#item-sms').addClass("active");});
+            $('#item-sms').addClass("active");  $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
+          break;
+        case 'helps':
+            $.post("../Helps.php", function(contents){ $("#content").html(contents); cleanItemMenu();
+            $('#item-help').addClass("active");  $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
         default:
           console.log('No existe' + item + '.');
@@ -1854,6 +1849,7 @@ function cleanItemMenu (){
         'item-direction',
         'item-maps',
         'item-sms',
+        'item-help',
     ]
     jQuery.each( itemsMenu, function( i, item ) {
        $('#'+item).removeClass("active");

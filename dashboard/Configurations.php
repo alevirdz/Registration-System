@@ -4,8 +4,8 @@
         <div class="card-body">
         <div class="row">
             <div class="col-lg-7">
-                <h1 class="font-weight-bold">Bienvenido Configuraciones</h1>
-                <p class="lead text-muted" id="subtitle-configuration">Revisa la informacion</p>
+                <h1 class="font-weight-bold">Configuraciones del Sistema</h1>
+                <p class="lead text-muted" id="subtitle-configuration">Revisa la información</p>
             </div>
         </div>
         </div>
@@ -23,7 +23,7 @@
                 
                 <div class="card">
                     <div class="card-body">
-                        Morado
+                        Colores de panel
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 
                 <div class="card">
                     <div class="card-body">
-                        Negro
+                    Modo noche
                     </div>
                 </div>
             </div>
@@ -39,62 +39,11 @@
                 
                 <div class="card">
                     <div class="card-body">
-                        Azul
-                    </div>
-                </div>
-            </div>
-            <h3>Que me puedan contactar</h3>
-            <h3>Cambiar color de los botones</h3>
-            <div class="col">
-                
-                <div class="card">
-                    <div class="card-body">
-                        Morado
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                
-                <div class="card">
-                    <div class="card-body">
-                        Negro
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                
-                <div class="card">
-                    <div class="card-body">
-                        Azul
+                        Contacto
                     </div>
                 </div>
             </div>
 
-            <div class="col">
-                
-                <div class="card">
-                    <div class="card-body">
-                        Modo noche
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                
-                <div class="card">
-                    <div class="card-body">
-                        Agregar redes sociales
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                
-                <div class="card">
-                    <div class="card-body">
-                        Layout izquierdo?
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

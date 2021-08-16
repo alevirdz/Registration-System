@@ -1,7 +1,4 @@
-
-
-
-  <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -13,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/main.css"/>
     <link rel="stylesheet" href="assets/css/sweetalert2.min.css"/>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-    
+    <link rel="shortcut icon" href="assets/theme/favicon/diseno-de-interfaz-de-usuario.svg" />
     <!-- Title -->
     <title>Site Web</title>
   </head>
