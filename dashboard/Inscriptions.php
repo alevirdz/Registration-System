@@ -86,6 +86,14 @@ $limitConfigInscriptions = $result[0]->limite_inscripciones;
                             <label for="user" class="form-label">Correo electrónico</label>
                             <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico">
                         </div>
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Tipo de Asignación</label>
+                            <input type="text" class="form-control" name="asignacion" id="asignacion" placeholder="Escriba una asignación Invitado ó Servidor" value="Invitado">
+                        </div>
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Abono</label>
+                            <input type="number" class="form-control" name="abono" id="abono" placeholder="¿Cuánto abono?">
+                        </div>
                         <div class="d-grid gap-2">
                             <a type="button" class="btn btn-dark" name="btn-donation" id="btn-inscription" onclick="inscriptions()">¡Inscribirme!</a>
                         </div>

@@ -761,8 +761,22 @@ function inscriptions(ext){
         "edad":      $('#edad').val(),
         "telefono":  $('#telefono').val(), 
         "correo":    $('#correo').val(),
+        "asignacion":$('#asignacion').val(),
+        "abono":     $('#abono').val(),
         "createInscriptions": true,
     };
+
+    /* switch (ext) {
+        case "1":
+            url = "../recepcion/form-inscriptions.php";
+          break;
+        case "0":
+            url = "../../recepcion/form-inscriptions.php";
+          break;
+        default: "NA";
+          break;
+      }
+ */
     if(ext == 1){url = "../recepcion/form-inscriptions.php";} //url externa
     else{url = "../../recepcion/form-inscriptions.php";}
     
@@ -877,6 +891,8 @@ function showInscriptions(){
         <th scope="col">Edad</th>
         <th scope="col">Telefono</th>
         <th scope="col">Correo</th>
+        <th scope="col">Asignacion</th>
+        <th scope="col">Abonos</th>
         <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -933,6 +949,8 @@ function showInscriptions(){
                     {"data" : 'edad'},
                     {"data" : 'telefono'},
                     {"data" : 'correo'},
+                    {"data" : 'asignacion'},
+                    {"data" : 'abono'},
                     {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editInscriptions(this)'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteInscriptions(this)'><ion-icon name='trash-outline'></ion-icon></button>`}
                 ],
                 
@@ -955,7 +973,7 @@ function editInscriptions(ids){
             
             var fila=`
             <form class="form-donation" id="formG">
-            <h2 class="text-center">Inscripcion</h2>
+            <h2 class="text-center">Modificación de Inscripción</h2>
             <div class="mb-3">
                 <label for="user" class="form-label">Nombres</label>
                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="${resp.nombre}" required>
@@ -976,6 +994,14 @@ function editInscriptions(ids){
                 <label for="user" class="form-label">Correo electrónico</label>
                 <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico" value="${resp.correo}" >
             </div>
+            <div class="mb-3">
+                <label for="user" class="form-label">Tipo de Asginación</label>
+                <input type="text" class="form-control" name="asignacion" id="asignacion" placeholder="Escriba una asignación Invitado ó Servidor" value="${resp.asignacion}" >
+            </div>
+            <div class="mb-3">
+                <label for="user" class="form-label">Abono</label>
+                <input type="number" class="form-control" name="abono" id="abono" placeholder="¿Cuánto abono?" value="${resp.abono}" >
+            </div>
             <div class="d-grid gap-2">
                 <a type="button" class="btn btn-dark" name="btn-update-register" id="btn-update-register" onclick="updateInscriptions(${id})"><ion-icon name="checkmark-outline"></ion-icon>Actualizar</a>
             </div>
@@ -989,13 +1015,14 @@ function editInscriptions(ids){
     
 }
 function updateInscriptions( id ){
-    console.log(id);
     const data = {
         "nombre":    $('#nombre').val(), 
         "apellidos": $('#apellidos').val(),
         "edad":      $('#edad').val(),
         "telefono":  $('#telefono').val(), 
         "correo":    $('#correo').val(),
+        "asignacion":$('#asignacion').val(),
+        "abono":     $('#abono').val(),
         "updateInscriptions": id,
     };
     $.ajax({

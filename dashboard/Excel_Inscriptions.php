@@ -4,14 +4,14 @@ require '../config/database.php';
 require '../assets/lib/PHPExcel/Classes/PHPExcel.php';
 
 
-//excel
-// Preparacion BD Consulta automatica
+    //excel
+    //Preparacion BD Consulta automatica
     $stmt = $BD->prepare("SELECT * FROM inscripciones");
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
     
-     if($result > 1){ 
-         
+     if($result > 1)
+     {    
         $objPHPExcel = new PHPExcel();
         //Properties file
         $objPHPExcel->getProperties()
@@ -36,7 +36,7 @@ require '../assets/lib/PHPExcel/Classes/PHPExcel.php';
 
         //Dimencions width and height
         $rowsExcel = 1;
-        $columnsExcel = array("A","B","C","D","E","F");
+        $columnsExcel = array("A","B","C","D","E","F","G","H");
         $count = count($columnsExcel);
         for ($i = 0; $i < $count; ++$i){
         $objPHPExcel->getActiveSheet()->getRowDimension($rowsExcel)->setRowHeight(20);
@@ -50,8 +50,10 @@ require '../assets/lib/PHPExcel/Classes/PHPExcel.php';
         $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nombre');
         $objPHPExcel->getActiveSheet()->setCellValue('C1', 'Apellidos');
         $objPHPExcel->getActiveSheet()->setCellValue('D1', 'Edad');
-        $objPHPExcel->getActiveSheet()->setCellValue('E1', 'Telefono');
+        $objPHPExcel->getActiveSheet()->setCellValue('E1', 'Teléfono');
         $objPHPExcel->getActiveSheet()->setCellValue('F1', 'Correo');
+        $objPHPExcel->getActiveSheet()->setCellValue('G1', 'Asignación');
+        $objPHPExcel->getActiveSheet()->setCellValue('H1', 'Abonó');
         foreach ($data as $value) {
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $value['id']);
         $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $value['nombre']);
@@ -59,6 +61,8 @@ require '../assets/lib/PHPExcel/Classes/PHPExcel.php';
         $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $value['edad']);
         $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $value['telefono']);
         $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $value['correo']);
+        $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $value['asignacion']);
+        $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $value['abono']);
         $i++;
         }
         
