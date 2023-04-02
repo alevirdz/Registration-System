@@ -60,6 +60,19 @@ The files are in the folder: Migrations
  
 ```
 
+# Tecnología
+- HTML 5
+- PHP 
+- CSS
+- Mysql
+- Bootstrap v5.0.2
+- Javascript
+- Jquery  v3.3.1
+- Sweetalert 2
+- DataTable 1.10.25
+- FPDF v1.84
+
+
 
 # Reference
 
