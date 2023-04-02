@@ -8,7 +8,7 @@ Access to a quick view to have information and graphs of each of the modules.
 
 ### Donation:
 Module where you can have a record of the donation, the data requested, the name (Optional) and Amount donated (Required).
-The records remain marked in the database, so within the module you will find three buttons: New, Records and Delete.
+The register remain marked in the database, so within the module you will find three buttons: New, Register and Delete.
 > <strong>New:</strong> As the name indicates, more records can be added here.
 
 > <strong>Register:</strong> Viewing the records, each registered thing can be modified or deleted (If you have the permissions).
@@ -22,7 +22,7 @@ Module where you can manage any type of event:
 (Workshop, Course, Congress, Webinar, Fair, Festival, Concert, Party, Convention...).
 Basic registration:
 Name, maternal surname, paternal surname, age, cell phone number, email and subscription (Optional).
-The records remain marked in the database, so within the module you will find three buttons: New, Records and Delete.
+The register remain marked in the database, so within the module you will find three buttons: New, Register and Delete.
 > <strong>New:</strong> As the name indicates, more records can be added here.
 
 > <strong>Register:</strong> Viewing the records, each registered thing can be modified or deleted (If you have the permissions).
